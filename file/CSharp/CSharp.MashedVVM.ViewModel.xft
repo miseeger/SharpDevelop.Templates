@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<Template author="Michael Seeger" version="1.0">
+	
+	<Config
+		  name        = "MashedVVM ViewModel"
+		  icon        = "C#.File.NewClass"
+		  category    = "MashedVVM"
+		  subcategory = "ViewModels"
+		  defaultname = "ViewModel${Number}.cs"
+		  language    = "C#"/>
+	 
+	<Description>ViewModel Class based on MashedVVM.Framework.ViewModelBase</Description>
+	
+	<!-- 
+	Special new file templates:
+		${StandardNamespace}        -> Standardnamespace of the current project or FileNameWithoutExtension
+		${FullName}                 -> Full generated path name
+		${FileName}                 -> File name with extension
+		${FileNameWithoutExtension} -> File name without extension
+		${Extension}                -> Extension in the form ".cs"
+		${Path}                     -> Full path of the file
+		${ClassName}                -> Class name (generally FileNameWithoutExtension w/o 'bad' characters)
+	-->
+
+	<Files>
+		<File name="${FullName}" language="C#"><![CDATA[${StandardHeader.C#}
+
+using System.Collections.ObjectModel; 
+using System.Linq; 
+using MashedVVM.Framework; 
+using MashedVVM.Framework.Contracts; 
+using MashedVVM.Framework.ViewModel; 
+
+namespace ${StandardNamespace}
+{
+
+	/// <summary>
+	/// Description of ${ClassName}.
+	/// </summary>
+	public class ${ClassName} : ViewModelBase
+	{
+
+		public ${ClassName}() : base() 
+		{
+		}
+
+		public ${ClassName}(IView view) : base(view) 
+		{
+		}
+
+	}
+
+}]]>
+		</File>
+	</Files>
+	
+	<AdditionalOptions/>
+
+</Template>
+

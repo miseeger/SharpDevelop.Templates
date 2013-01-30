@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<Template author="Michael Seeger" version="1.0">
+	
+	<Config
+		  name        = "MashedVVM UserControlView"
+		  icon        = "C#.File.WPFUserControl"
+		  category    = "MashedVVM"
+		  subcategory = "Views"
+		  defaultname = "View${Number}.xaml"
+		  language    = "C#"/>
+	 
+	<Description>A WPF UserControl based on MashedVVM.Framework.View.UserControlViewBase</Description>
+	
+	<References>
+		<Reference include="PresentationCore">
+			<RequiredTargetFramework>4.0</RequiredTargetFramework>
+		</Reference>
+		<Reference include="PresentationFramework">
+			<RequiredTargetFramework>4.0</RequiredTargetFramework>
+		</Reference>
+		<Reference include="WindowsBase">
+			<RequiredTargetFramework>4.0</RequiredTargetFramework>
+		</Reference>
+	</References>
+	
+	<!-- 
+	Special new file templates:
+		${StandardNamespace}        -> Standardnamespace of the current project or FileNameWithoutExtension
+		${FullName}                 -> Full generated path name
+		${FileName}                 -> File name with extension
+		${FileNameWithoutExtension} -> File name without extension
+		${Extension}                -> Extension in the form ".cs"
+		${Path}                     -> Full path of the file
+	 -->
+	<Files>
+		<File name="${FullName}" language="XML" buildAction="Page"><![CDATA[<mv:UserControlViewBase
+	x:Class="${StandardNamespace}.${ClassName}"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"  
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+	xmlns:mv="clr-namespace:MashedVVM.Framework.View;assembly=MashedVVM"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    mc:Ignorable="d"
+	Height="300" Width="300">
+
+	<!-- To enable design-time data just configure and move the following into the tag, above:
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:designdata="clr-namespace:<NamespaceToDesignData>"
+    mc:Ignorable="d" -->
+	
+	<mv:UserControlViewBase.Resources> 
+	</mv:UserControlViewBase.Resources> 
+
+	<!-- To assign design-time data just configure the following code and uncomment it,
+		 removing the original Grid tag:
+		 Grid d:DataContext="{d:DesignInstance designdata:<Viewname>DesignViewModel, IsDesignTimeCreatable=True} -->
+	<Grid>
+		
+	</Grid>
+</mv:UserControlViewBase>]]>
+		</File>
+		<File name="${FullName}.cs" language="C#" DependentUpon="${FileName}" SubType="Code"><![CDATA[${StandardHeader.C#}
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using MashedVVM.Framework.Contracts;
+using MashedVVM.Framework.View;
+
+namespace ${StandardNamespace}
+{
+	/// <summary>
+	/// Interaction logic for ${FileName}
+	/// </summary>
+	public partial class ${ClassName} : UserControlViewBase
+	{
+
+		public ${ClassName}()
+		{
+			InitializeComponent();
+
+			// TODO: Create and assign appropriate ViewModel to the View.
+			// ViewModel = new ${ClassName}ViewModel();
+		}
+
+	}
+
+}]]>
+		</File>
+	</Files>
+	
+	<AdditionalOptions/>
+</Template>
+
+

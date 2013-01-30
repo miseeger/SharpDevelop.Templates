@@ -1,0 +1,213 @@
+<?xml version="1.0"?>
+<Template originator = "Michael Seeeger" created = "01/04/2012">
+	
+	<!-- Template Header -->
+	<TemplateConfiguration>
+		<Name>${res:Templates.Project.PRISMModuleUnity.Name}</Name>
+		<Category>C#</Category>
+		<Subcategory>PRISM</Subcategory>
+		<Icon>C#.Project.PRISMModule</Icon>
+		<Description>${res:Templates.Project.PRISMModuleUnity.Description}</Description>
+		<SupportedTargetFrameworks>v4.0;v4.0Client</SupportedTargetFrameworks>
+	</TemplateConfiguration>
+	
+	<!-- Actions -->
+	<Actions>
+		<Open filename = "ModuleInitializer.cs"/>
+		<RunCommand path="/AddIns/PackageManagement/TemplateCommands/InstallPackages"/>
+	</Actions>
+	
+	<Project language = "C#">
+		<ProjectItems>
+			<Reference Include="MashedVVM" />
+			<Reference Include="Microsoft.Practices.Prism" />
+			<Reference Include="Microsoft.Practices.Prism.UnityExtensions" />
+			<Reference Include="Microsoft.Practices.Unity" />
+			<Reference Include="PresentationCore" />
+			<Reference Include="PresentationFramework" />
+			<Reference Include="System" />
+			<Reference Include="System.Data" />
+			<Reference Include="System.Xaml" />
+			<Reference Include="System.Xml" />
+			<Reference Include="System.Xml.Linq" />
+			<Reference Include="WindowsBase" />
+		</ProjectItems>
+
+
+		<PropertyGroup>
+			<OutputType>Library</OutputType>
+			<ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC};{60DC8134-EBA5-43B8-BCC9-BB4BC16C2548}</ProjectTypeGuids>
+			<AppDesignerFolder>Properties</AppDesignerFolder>
+		</PropertyGroup>
+		
+		<PropertyGroup configuration="Debug">
+			<OutputPath>..\..\Application\Debug\Modules</OutputPath>
+		</PropertyGroup>
+
+		<PropertyGroup configuration="Release">
+			<OutputPath>..\..\Application\Release\Modules</OutputPath>
+		</PropertyGroup>
+		
+		<Files>
+			<File name="Views\View1.xaml" buildAction="Page" language="XML">
+<![CDATA[<mv:UserControlViewBase x:Class="${ProjectName}.Views.View1"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:mv="clr-namespace:MashedVVM.Framework.View;assembly=MashedVVM">
+
+	<Grid>
+		<TextBlock Margin="10">View #1</TextBlock>
+	</Grid>
+</mv:UserControlViewBase>]]>
+			</File>
+
+			<File name="Views\View1.xaml.cs" SubType="Code" DependentUpon="Views\View1.xaml">
+<![CDATA[using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using MashedVVM.Framework.Contracts;
+using MashedVVM.Framework.View;
+
+namespace ${ProjectName}.Views
+{
+
+	/// <summary>
+	/// Interaction logic for View1.xaml
+	/// </summary>
+	public partial class View1 : UserControlViewBase
+	{
+
+		public View1()
+		{
+			InitializeComponent();
+		}
+
+	}
+
+}]]>
+			</File>
+
+			<File name="ViewModels\View1ViewModel.cs">
+<![CDATA[using System;
+using System.ComponentModel;
+using System.Linq;
+using System.Windows;
+using MashedVVM.Framework;
+using MashedVVM.Framework.ViewModel;
+using Microsoft.Practices.Prism.Regions;
+using Microsoft.Practices.Prism.ViewModel;
+
+namespace ${ProjectName}.ViewModels
+{
+
+	/// <summary>
+	/// View1ViewModel
+	/// </summary>
+	public class View1ViewModel : ViewModelBase
+	{
+	}
+
+}]]>
+			</File>
+			<File name="packages.config">
+<![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<packages>
+	<package id="MashedVVM" version="1.0.1.7" targetFramework="net40" />
+</packages>]]>
+			</File>
+			<File name="ModuleInitializer.cs">
+<![CDATA[using System;
+using MashedVVM.Framework.Contracts;
+using Microsoft.Practices.Prism.Modularity;
+using Microsoft.Practices.Prism.Regions;
+using Microsoft.Practices.Unity;
+using ${ProjectName}.ViewModels;
+using ${ProjectName}.Views;
+
+namespace ${StandardNamespace}
+{
+
+	/// <summary>
+	/// (Initializing) Module class for ${ProjectName}
+	/// having UnityContainer and Regionmanager injected.
+	/// </summary>
+	
+	// Module will be initialized "as available" (by default)
+	// Use this attribute when the module is rarely used:
+	//[Module(ModuleName="${ProjectName}", OnDemand=true)] 
+	[Module(ModuleName="${ProjectName}")]
+	public class ModuleInitializer : IModule
+	{
+		
+		IUnityContainer _container;
+		IRegionManager _regionManager;
+		
+
+		public ModuleInitializer(IUnityContainer container, IRegionManager regionManager)
+		{
+			// Get conatiner and region manager
+			_container = container;
+			_regionManager = regionManager;
+		}
+		
+
+		public void Initialize()
+		{
+			// ViewModel Registration:
+			_container.RegisterType(typeof(IViewModel), typeof(View1ViewModel), Names.View1ViewModel);
+
+			// View Registration:
+			_container.RegisterType(typeof(IView), typeof(View1), Names.View1);
+
+			// View Injection:
+			// View1
+			var vmView1 = (IViewModel)_container.Resolve(typeof(IViewModel), Names.View1ViewModel);
+			var vView1 = (IView)_container.Resolve(typeof(IView), Names.View1);
+			vmView1.View = vView1;
+			// TODO: Register View with Region like in this example this:
+			//
+			//		 _regionManager.Regions[RegionNames.MenuRegion].Add(vmFm.View);
+			//
+			//		 The RegionNames are typically stored in the Base-Assembly of the Solution.
+			//		 So you have to reference to it in order to use it here.
+
+			// TODO: Further code to initialize the module.
+		}
+
+	}
+
+}]]>
+			</File>
+			<File name="Names.cs">
+<![CDATA[using System;
+
+namespace ${StandardNamespace}
+{
+	/// <summary>
+	/// Names for Views and ViewModels.
+	/// </summary>
+	public static class Names
+	{
+
+		public const String View1 = "View1";
+		public const String View1ViewModel = "View1ViewModel";
+
+	}
+
+}]]>
+			</File>
+			<File name="Properties\WPFAssemblyInfo.cs" src="WPFAssemblyInfo.cs" />
+			<File name="Properties\AssemblyInfo.cs" src="DefaultAssemblyInfo.cs" />
+		</Files>
+	</Project>
+</Template>
