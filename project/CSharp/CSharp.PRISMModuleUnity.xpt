@@ -13,26 +13,24 @@
 	
 	<!-- Actions -->
 	<Actions>
-		<Open filename = "ModuleInitializer.cs"/>
-		<RunCommand path="/AddIns/PackageManagement/TemplateCommands/InstallPackages"/>
+		<Open filename = "ModuleInit.cs"/>
 	</Actions>
 	
 	<Project language = "C#">
 		<ProjectItems>
-			<Reference Include="MashedVVM" />
-			<Reference Include="Microsoft.Practices.Prism" />
-			<Reference Include="Microsoft.Practices.Prism.UnityExtensions" />
-			<Reference Include="Microsoft.Practices.Unity" />
+			<Reference Include="MashedVVM" HintPath="..\..\..\Lib\MashedVVM\MashedVVM.dll"/>
+			<Reference Include="Microsoft.Practices.Prism" HintPath="..\..\..\Lib\Prism\Microsoft.Practices.Prism.dll"/>
+			<Reference Include="Microsoft.Practices.Prism.UnityExtensions" HintPath="..\..\..\Lib\Prism\Microsoft.Practices.Prism.UnityExtensions.dll"/>
+			<Reference Include="Microsoft.Practices.Unity" HintPath="..\..\..\Lib\Prism\Microsoft.Practices.Units.dll"/>
 			<Reference Include="PresentationCore" />
 			<Reference Include="PresentationFramework" />
 			<Reference Include="System" />
-			<Reference Include="System.Data" />
+			<Reference Include="System.Core" />
 			<Reference Include="System.Xaml" />
 			<Reference Include="System.Xml" />
 			<Reference Include="System.Xml.Linq" />
 			<Reference Include="WindowsBase" />
 		</ProjectItems>
-
 
 		<PropertyGroup>
 			<OutputType>Library</OutputType>
@@ -41,30 +39,149 @@
 		</PropertyGroup>
 		
 		<PropertyGroup configuration="Debug">
-			<OutputPath>..\..\Application\Debug\Modules</OutputPath>
+			<OutputPath>..\..\..\Bin\Debug\Modules</OutputPath>
 		</PropertyGroup>
 
 		<PropertyGroup configuration="Release">
-			<OutputPath>..\..\Application\Release\Modules</OutputPath>
+			<OutputPath>..\..\..\Bin\Release\Modules</OutputPath>
 		</PropertyGroup>
 		
 		<Files>
-			<File name="Views\View1.xaml" buildAction="Page" language="XML">
-<![CDATA[<mv:UserControlViewBase x:Class="${ProjectName}.Views.View1"
-	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:mv="clr-namespace:MashedVVM.Framework.View;assembly=MashedVVM">
 
-	<Grid>
-		<TextBlock Margin="10">View #1</TextBlock>
-	</Grid>
-</mv:UserControlViewBase>]]>
+			<!-- NavigationView -->
+			<File name="ViewModels\Interfaces\INavigationViewModel.cs">
+<![CDATA[using System;
+using MashedVVM.Framework.Contracts;
+
+namespace ${ProjectName}.ViewModels.Interfaces
+{
+
+	public interface INavigationViewModel : IViewModel
+	{
+	}
+
+}]]>
 			</File>
+			<File name="ViewModels\NavigationViewModel.cs">
+<![CDATA[using System;
+using System.Collections.ObjectModel;
+using MashedVVM.Framework.ViewModel;
+using Microsoft.Practices.Prism;
+using Microsoft.Practices.Prism.Regions;
+using <SolutionName>.Base.Interfaces.Services;
+using <SolutionName>.Base.Navigation;
+using <SolutionName>.Base.Resource;
+using ${ProjectName}.ViewModels.Interfaces;
+using ${ProjectName}.Views;
 
-			<File name="Views\View1.xaml.cs" SubType="Code" DependentUpon="Views\View1.xaml">
+
+namespace ${ProjectName}.ViewModels
+{
+
+	public class NavigationViewModel : ViewModelBase, INavigationViewModel
+	{
+		
+ 		private IAppResourceService _appResourceService;
+		
+		private ObservableCollection<NavigationItem> _navItems;
+        public ObservableCollection<NavigationItem> NavItems
+        {
+            get { return _navItems; }
+            set
+            {
+                _navItems = value;
+                RaisePropertyChanged(() => this.NavItems);
+            }
+        }
+        
+ 
+        public NavigationViewModel(IAppResourceService AppResourceService)
+		{
+        	_appResourceService = AppResourceService;
+        	VmTitle =  Names.NavTitle;
+        	InitializeMenu();
+		}
+        
+
+        void InitializeMenu()
+		{
+			NavItems = new ObservableCollection<NavigationItem>();
+			
+			NavItems.Add(new NavigationItem() 
+			          		{ 
+			              		Caption = Names.NavItem1
+			              		, NavigationPath = CreateNavigationPath(Names.NavItem1)
+			              		, ItemImage = _appResourceService.GetPng16("globe")
+			              	});
+			NavItems.Add(new NavigationItem() 
+			              	{ 
+			              		Caption = Names.NavItem2
+			              		, NavigationPath = CreateNavigationPath(Names.NavItem2)
+			              		, ItemImage = _appResourceService.GetPng16("jar")
+			              	});
+		}
+		
+		
+        private string CreateNavigationPath(string navItemName)
+        {
+            UriQuery query = new UriQuery();
+            query.Add(Names.NavKey, navItemName);
+            
+            switch (navItemName) 
+            {
+            	case Names.NavItem1:
+            		return typeof(View1).FullName + query;
+            	case Names.NavItem2:
+            		return typeof(View2).FullName + query;
+            	default:
+            		return null;
+            }
+            
+        }
+        
+	}
+	
+}
+]]>
+			</File>						
+			<File name="Views\NavigationView.xaml" buildAction="Page" language="XML">
+<![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<mv:UserControlViewBase
+	x:Class="${ProjectName}.Views.NavigationView" 
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+	xmlns:mv="clr-namespace:MashedVVM.Framework.View;assembly=MashedVVM" 
+	xmlns:base="clr-namespace:<SolutionName>.Base;assembly=<SolutionName>.Base">
+	
+	<Grid>
+		<StackPanel>
+			<ItemsControl
+				ItemsSource="{Binding NavItems}">
+				<ItemsControl.ItemTemplate>
+					<DataTemplate>
+						<Button
+							Command="base:GlobalCommands.NavigateMainRegionCommand"
+							CommandParameter="{Binding NavigationPath}">
+							<StackPanel
+								Orientation="Horizontal">
+								<Image
+									Margin="0,0,10,0"						
+									Source="{Binding ItemImage}"
+									RenderOptions.BitmapScalingMode="NearestNeighbor" />
+								<TextBlock Text="{Binding Caption}"/>
+							</StackPanel>
+						</Button>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
+		</StackPanel>
+	</Grid>
+
+</mv:UserControlViewBase>]]>
+			</File>		
+			<File name="Views\NavigationView.xaml.cs" SubType="Code" DependentUpon="Views\NavigationView.xaml">				
 <![CDATA[using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -72,88 +189,348 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using MashedVVM.Framework.Contracts;
-using MashedVVM.Framework.View;
+using ${ProjectName}.ViewModels;
+using ${ProjectName}.ViewModels.Interfaces;
 
 namespace ${ProjectName}.Views
 {
 
-	/// <summary>
-	/// Interaction logic for View1.xaml
-	/// </summary>
-	public partial class View1 : UserControlViewBase
+	public partial class NavigationView
 	{
-
-		public View1()
+		
+		public NavigationView(INavigationViewModel viewModel)
 		{
 			InitializeComponent();
+			ViewModel = viewModel;
+		}
+		
+	}
+
+}]]>
+			</File>
+
+			<!-- TaskView -->
+			<File name="ViewModels\Interfaces\ITaskViewModel.cs">
+<![CDATA[using System;
+using MashedVVM.Framework.Contracts;
+
+namespace ${ProjectName}.ViewModels.Interfaces
+{
+
+	public interface ITaskViewModel : IViewModel
+	{
+	}
+
+}
+]]>
+			</File>			
+			<File name="ViewModels\TaskViewModel.cs">
+<![CDATA[using System;
+using System.Linq;
+using MashedVVM.Framework;
+using MashedVVM.Framework.Contracts;
+using MashedVVM.Framework.ViewModel;
+using Microsoft.Practices.Prism;
+using Microsoft.Practices.Prism.Regions;
+using <SolutionName>.Base.Interfaces.Services;
+using <SolutionName>.Base.Names;
+using <SolutionName>.Base.Navigation;
+using ${ProjectName}.ViewModels.Interfaces;
+using ${ProjectName}.Views;
+
+namespace ${ProjectName}.ViewModels
+{
+
+	public class TaskViewModel : ViewModelBase, ITaskViewModel
+	{
+
+		private IRegionManager _regionManager;
+		private IAppResourceService _appResourceService;
+		
+		public TaskViewModel(IRegionManager regionManager, IAppResourceService appResourceService)
+		{
+			_regionManager = regionManager;
+			_appResourceService = appResourceService;
+			VmTitle = Names.TaskItem;
+			VmImage = _appResourceService.GetPng16("users");
+		}
+		
+		
+		private RelayCommand _navigateCommand;
+		public RelayCommand NavigateCommand
+		{
+			get { return _navigateCommand ?? (_navigateCommand = new RelayCommand(Navigate)); }
+		}
+		
+		private void Navigate()
+		{
+			var moduleNavigation = new Uri(typeof(NavigationView).FullName, UriKind.Relative);
+			var initialViewNavigation = new Uri(typeof(View1).FullName, UriKind.Relative);
+			var moduleNavRegion = _regionManager.Regions[RegionNames.ModuleNavigationRegion];
+			
+			foreach (var view in moduleNavRegion.Views)
+			{
+				moduleNavRegion.Remove(view);
+			}
+			
+			_regionManager.RequestNavigate(RegionNames.ModuleNavigationRegion, moduleNavigation);
+			_regionManager.RequestNavigate(RegionNames.MainRegion, initialViewNavigation);
+		}
+		
+	}
+
+}
+]]>
+			</File>			
+			<File name="Views\TaskView.xaml" buildAction="Page" language="XML">
+<![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<mv:UserControlViewBase
+	x:Class="${ProjectName}.Views.TaskView" 
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+	xmlns:mv="clr-namespace:MashedVVM.Framework.View;assembly=MashedVVM">
+
+	<Grid>
+		<StackPanel>
+			<Button
+				Command="{Binding NavigateCommand}">
+				<StackPanel
+					Orientation="Horizontal">
+					<Image
+						Margin="0,0,10,0"						
+						Source="{Binding VmImage}" 
+						RenderOptions.BitmapScalingMode="NearestNeighbor" />
+					<TextBlock Text="{Binding VmTitle}"/>
+				</StackPanel>
+			</Button>
+		</StackPanel>
+	</Grid>
+
+</mv:UserControlViewBase>]]>
+			</File>
+			<File name="Views\TaskView.xaml.cs" SubType="Code" DependentUpon="Views\TaskView.xaml">				
+<![CDATA[using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using ${ProjectName}.ViewModels;
+using ${ProjectName}.ViewModels.Interfaces;
+
+namespace ${ProjectName}.Views
+{
+
+	public partial class TaskView
+	{
+		
+		public TaskView(ITaskViewModel viewModel)
+		{
+			InitializeComponent();
+			ViewModel = viewModel;
+		}
+		
+	}
+
+}]]>
+			</File>
+			
+			<!-- View1 -->
+			<File name="ViewModels\Interfaces\IViewModel1.cs">
+<![CDATA[using System;
+using MashedVVM.Framework.Contracts;
+
+namespace ${ProjectName}.ViewModels.Interfaces
+{
+
+	public interface IViewModel1 : IViewModel
+	{
+	}
+
+}]]>
+			</File>			
+			<File name="ViewModels\ViewModel1.cs">
+<![CDATA[using System;
+using MashedVVM.Framework.ViewModel;
+using ${ProjectName}.ViewModels.Interfaces;
+
+namespace ${ProjectName}.ViewModels
+{
+
+	public class ViewModel1 : ViewModelBase, IViewModel1
+	{
+		
+		public ViewModel1()
+		{
+			VmTitle = Names.View1;
+		}
+	
+	}
+
+}]]>
+			</File>			
+			<File name="Views\View1.xaml" buildAction="Page" language="XML">
+<![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<mv:UserControlViewBase
+	x:Class="${ProjectName}.Views.View1" 
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+	xmlns:mv="clr-namespace:MashedVVM.Framework.View;assembly=MashedVVM" 
+	xmlns:ui="clr-namespace:<SolutionName>.Base.Navigation;assembly=<SolutionName>.Base">
+	<Grid>
+		<TextBlock
+			FontSize="24"
+			FontWeight="Bold"
+			Text="{Binding VmTitle}"/>
+	</Grid>
+</mv:UserControlViewBase>]]>
+			</File>	
+			<File name="Views\View1.xaml.cs" SubType="Code" DependentUpon="Views\View1.xaml">
+<![CDATA[using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+
+using ${ProjectName}.ViewModels.Interfaces;
+
+namespace ${ProjectName}.Views
+{
+
+	public partial class View1
+	{
+
+		public View1(IViewModel1 viewModel)
+		{
+			InitializeComponent();
+			ViewModel = viewModel;
 		}
 
 	}
 
 }]]>
-			</File>
-
-			<File name="ViewModels\View1ViewModel.cs">
+			</File>	
+			
+			<!-- View2 -->
+			<File name="ViewModels\Interfaces\IViewModel2.cs">
 <![CDATA[using System;
-using System.ComponentModel;
-using System.Linq;
-using System.Windows;
-using MashedVVM.Framework;
-using MashedVVM.Framework.ViewModel;
-using Microsoft.Practices.Prism.Regions;
-using Microsoft.Practices.Prism.ViewModel;
+using MashedVVM.Framework.Contracts;
 
-namespace ${ProjectName}.ViewModels
+namespace ${ProjectName}.ViewModels.Interfaces
 {
 
-	/// <summary>
-	/// View1ViewModel
-	/// </summary>
-	public class View1ViewModel : ViewModelBase
+	public interface IViewModel2 : IViewModel
 	{
 	}
 
 }]]>
-			</File>
-			<File name="packages.config">
+			</File>			
+			<File name="ViewModels\ViewModel2.cs">
+<![CDATA[using System;
+using MashedVVM.Framework.ViewModel;
+using ${ProjectName}.ViewModels.Interfaces;
+
+namespace ${ProjectName}.ViewModels
+{
+
+	public class ViewModel2 : ViewModelBase, IViewModel2
+	{
+		
+		public ViewModel2()
+		{
+			VmTitle = Names.View2;
+		}
+	
+	}
+
+}]]>
+			</File>			
+			<File name="Views\View2.xaml" buildAction="Page" language="XML">
 <![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<packages>
-	<package id="MashedVVM" version="1.0.1.7" targetFramework="net40" />
-</packages>]]>
-			</File>
-			<File name="ModuleInitializer.cs">
+<mv:UserControlViewBase
+	x:Class="${ProjectName}.Views.View2" 
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+	xmlns:mv="clr-namespace:MashedVVM.Framework.View;assembly=MashedVVM" 
+	xmlns:ui="clr-namespace:<SolutionName>.Base.Navigation;assembly=<SolutionName>.Base">
+	<Grid>
+		<TextBlock
+			FontSize="24"
+			FontWeight="Bold"
+			Text="{Binding VmTitle}"/>
+	</Grid>
+</mv:UserControlViewBase>]]>
+			</File>	
+			<File name="Views\View2.xaml.cs" SubType="Code" DependentUpon="Views\View2.xaml">
+<![CDATA[using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+
+using ${ProjectName}.ViewModels.Interfaces;
+
+namespace ${ProjectName}.Views
+{
+
+	public partial class View2
+	{
+
+		public View2(IViewModel2 viewModel)
+		{
+			InitializeComponent();
+			ViewModel = viewModel;
+		}
+
+	}
+
+}]]>
+			</File>				
+			
+			<File name="ModuleInit.cs">
 <![CDATA[using System;
 using MashedVVM.Framework.Contracts;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
+using <SolutionName>.Base.Names;
+using <SolutionName>.Base.Navigation;
 using ${ProjectName}.ViewModels;
+using ${ProjectName}.ViewModels.Interfaces;
 using ${ProjectName}.Views;
 
-namespace ${StandardNamespace}
+namespace ${ProjectName}
 {
 
 	/// <summary>
 	/// (Initializing) Module class for ${ProjectName}
-	/// having UnityContainer and Regionmanager injected.
+	/// having UnityContainer and Regionmanager injected
 	/// </summary>
 	
 	// Module will be initialized "as available" (by default)
 	// Use this attribute when the module is rarely used:
 	//[Module(ModuleName="${ProjectName}", OnDemand=true)] 
 	[Module(ModuleName="${ProjectName}")]
-	public class ModuleInitializer : IModule
+	public class ModuleInit : IModule
 	{
 		
 		IUnityContainer _container;
 		IRegionManager _regionManager;
 		
 
-		public ModuleInitializer(IUnityContainer container, IRegionManager regionManager)
+		public ModuleInit(IUnityContainer container, IRegionManager regionManager)
 		{
 			// Get conatiner and region manager
 			_container = container;
@@ -163,25 +540,28 @@ namespace ${StandardNamespace}
 
 		public void Initialize()
 		{
-			// ViewModel Registration:
-			_container.RegisterType(typeof(IViewModel), typeof(View1ViewModel), Names.View1ViewModel);
 
-			// View Registration:
-			_container.RegisterType(typeof(IView), typeof(View1), Names.View1);
+			// ViewModel Registration:
+			_container.RegisterType<ITaskViewModel, TaskViewModel>();
+			_container.RegisterType<INavigationViewModel, NavigationViewModel>();
+			_container.RegisterType<IViewModel1, ViewModel1>();
+			_container.RegisterType<IViewModel2, ViewModel2>();			
+			
+			// Registrations for ViewNavigation:
+			_container.RegisterTypeForNavigation<NavigationView>();
+			_container.RegisterTypeForNavigation<View1>();
+			_container.RegisterTypeForNavigation<View2>();
+
+			// View Registration for ViewInjection:
+			_container.RegisterType(typeof(IView), typeof(TaskView), typeof(TaskView).FullName);
 
 			// View Injection:
-			// View1
-			var vmView1 = (IViewModel)_container.Resolve(typeof(IViewModel), Names.View1ViewModel);
-			var vView1 = (IView)_container.Resolve(typeof(IView), Names.View1);
-			vmView1.View = vView1;
-			// TODO: Register View with Region like in this example this:
-			//
-			//		 _regionManager.Regions[RegionNames.MenuRegion].Add(vmFm.View);
-			//
-			//		 The RegionNames are typically stored in the Base-Assembly of the Solution.
-			//		 So you have to reference to it in order to use it here.
+			var viewTask = _container.Resolve(typeof(IView), typeof(TaskView).FullName);
+			_regionManager.Regions[RegionNames.ModuleRegion].Add(viewTask);
+			
+			// TODO: Replace all occurences of <SolutionName> in this Project with the name of your Solution!
+			// TODO: Insert references to the Projects "Solution".Base and "Solution".Base.Resource
 
-			// TODO: Further code to initialize the module.
 		}
 
 	}
@@ -191,20 +571,28 @@ namespace ${StandardNamespace}
 			<File name="Names.cs">
 <![CDATA[using System;
 
-namespace ${StandardNamespace}
+namespace ${ProjectName}
 {
 	/// <summary>
-	/// Names for Views and ViewModels.
+	/// Description of Names.
 	/// </summary>
 	public static class Names
 	{
-
-		public const String View1 = "View1";
-		public const String View1ViewModel = "View1ViewModel";
+	
+		public const string TaskKey = "Task";
+		public const string TaskItem = "Module";
+		
+		public const string NavKey = "View";
+		public const string NavTitle = "Module";
+		public const string NavItem1 = "View1";
+		public const string NavItem2 = "View2";
+		
+		public const string View1 = "${ProjectName} - View 1";
+		public const string View2 = "${ProjectName} - View 2";
 
 	}
-
-}]]>
+}
+]]>
 			</File>
 			<File name="Properties\WPFAssemblyInfo.cs" src="WPFAssemblyInfo.cs" />
 			<File name="Properties\AssemblyInfo.cs" src="DefaultAssemblyInfo.cs" />
