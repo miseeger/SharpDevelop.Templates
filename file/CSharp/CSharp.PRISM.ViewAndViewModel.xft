@@ -9,7 +9,7 @@
 		  defaultname = ""
 		  language    = "C#"/>
 	 
-	<Description>A WPF UserControl based on MashedVVM.Framework.View.UserControlViewBase and an According ViewModel</Description>
+	<Description>A View based on a WPF UserControl with an According ViewModel</Description>
 	
 	<References>
 		<Reference include="PresentationCore">
@@ -32,108 +32,25 @@
 		${Extension}                -> Extension in the form ".cs"
 		${Path}                     -> Full path of the file
 	 -->
+	
 	<Files>
-		<File name="${Path}\Views\${FileNameWithoutExtension}View.xaml" buildAction="Page" language="XML">
-<![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<mv:UserControlViewBase
-	x:Class="${StandardNamespace}.Views.${FileNameWithoutExtension}View" 
-	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
-	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-	xmlns:mv="clr-namespace:MashedVVM.Framework.View;assembly=MashedVVM" 
-	xmlns:ui="clr-namespace:<SolutionName>.Base.Navigation;assembly=<SolutionName>.Base">
-	<Grid>
-		<TextBlock
-			FontSize="24"
-			FontWeight="Bold"
-			Text="{Binding VmTitle}"/>
-	</Grid>
-</mv:UserControlViewBase>]]>
-			</File>	
-			<File name="${Path}\Views\${FileNameWithoutExtension}View.xaml.cs" SubType="Code" DependentUpon="Views\${FileNameWithoutExtension}View.xaml">
-<![CDATA[using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-
-using ${StandardNamespace}.ViewModels.Interfaces;
-
-namespace ${StandardNamespace}.Views
-{
-
-	public partial class ${FileNameWithoutExtension}
-	{
-
-		public ${FileNameWithoutExtension}View(I${FileNameWithoutExtension}ViewModel viewModel)
-		{
-			InitializeComponent();
-			ViewModel = viewModel;
-		}
-
-	}
-
-}]]>
-			</File>	
-
-			<File name="${Path}\ViewModels\Interfaces\I${FileNameWithoutExtension}ViewModel.cs">
-<![CDATA[using System;
-using MashedVVM.Framework.Contracts;
-
-namespace ${StandardNamespace}.ViewModels.Interfaces
-{
-
-	public interface I${FileNameWithoutExtension}ViewModel : IViewModel
-	{
-	}
-
-}]]>
-			</File>			
-			<File name="${Path}\ViewModels\${FileNameWithoutExtension}ViewModel.cs">
-<![CDATA[using System;
-using MashedVVM.Framework.ViewModel;
-using ${StandardNamespace}.ViewModels.Interfaces;
-
-namespace ${StandardNamespace}.ViewModels
-{
-
-	// TODO: Register ViewModel and View in ModuleInit
-	// TODO: ViewModel-Registration
-	//       _container.RegisterType<I${FileNameWithoutExtension}ViewModel, ${FileNameWithoutExtension}ViewModel>();
-	// TODO: Registration for ViewNavigation
-	//       _container.RegisterTypeForNavigation<${FileNameWithoutExtension}View>();
-	
-	// TODO: Add Names
-	//       public const string ${FileNameWithoutExtension}NavItem = "${FileNameWithoutExtension}";
-	//       public const string ${FileNameWithoutExtension}View = "${FileNameWithoutExtension}";
-	
-	// TODO: Add Navigation Item to NavigationViewModel
-	//		 NavItems.Add(new NavigationItem() 
-	//						{ 
-	//		              		Caption = Names.${FileNameWithoutExtension}NavItem
-	//		              		, NavigationPath = CreateNavigationPath(Names.${FileNameWithoutExtension}NavItem)
-	//		              		, ItemImage = _appResourceService.GetPng16("jar")
-	//		              	});
-
-	public class ${FileNameWithoutExtension}ViewModel : ViewModelBase, I${FileNameWithoutExtension}ViewModel
-	{
-		
-		public ${FileNameWithoutExtension}ViewModel()
-		{
-			VmTitle = Names.${FileNameWithoutExtension}View;
-		}
-	
-	}
-
-}]]>
-			</File>			
+		<File name="${Path}\Views\${FileNameWithoutExtension}View.xaml" 
+		      buildAction="Page" 
+		      language="XML"
+			  src="PRISM\ViewAndViewModel\Views\View.xaml"/>
+		<File name="${Path}\Views\${FileNameWithoutExtension}View.xaml.cs" 
+		      SubType="Code" 
+		      DependentUpon="Views\${FileNameWithoutExtension}View.xaml"
+			  src="PRISM\ViewAndViewModel\Views\View.xaml.cs"/>
+		<File name="${Path}\ViewModels\Interfaces\I${FileNameWithoutExtension}ViewModel.cs"
+			  src="PRISM\ViewAndViewModel\ViewModels\Interfaces\IViewModel.cs"/>
+		<File name="${Path}\ViewModels\${FileNameWithoutExtension}ViewModel.cs"
+			  src="PRISM\ViewAndViewModel\ViewModels\ViewModel.cs"/>
 			
 	</Files>
 	
 	<AdditionalOptions/>
+
 </Template>
 
 

@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<mv:UserControlViewBase
+	x:Class="${ProjectName}.Views.NavigationView" 
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+	xmlns:mv="clr-namespace:<SolutionName>.Base.Mvvm;assembly=<SolutionName>.Base"
+	xmlns:base="clr-namespace:<SolutionName>.Base;assembly=<SolutionName>.Base">
+	
+	<Grid>
+		<StackPanel>
+			<ItemsControl
+				ItemsSource="{Binding NavItems}">
+				<ItemsControl.ItemTemplate>
+					<DataTemplate>
+						<Button
+							Command="base:GlobalCommands.NavigateMainRegionCommand"
+							CommandParameter="{Binding NavigationPath}">
+							<StackPanel
+								Orientation="Horizontal">
+								<Image
+									Margin="0,0,10,0"						
+									Source="{Binding ItemImage}"
+									RenderOptions.BitmapScalingMode="NearestNeighbor" />
+								<TextBlock Text="{Binding Caption}"/>
+							</StackPanel>
+						</Button>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
+		</StackPanel>
+	</Grid>
+
+</mv:UserControlViewBase>
