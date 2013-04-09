@@ -544,7 +544,7 @@ namespace ${StandardNamespace}
 
 		<PropertyGroup>
 			<OutputType>Library</OutputType>
-			<!-- ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC};{60DC8134-EBA5-43B8-BCC9-BB4BC16C2548}</ProjectTypeGuids -->
+			<!-- ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids -->
 			<AppDesignerFolder>Properties</AppDesignerFolder>
 		</PropertyGroup>
 		
@@ -783,7 +783,7 @@ namespace ${ProjectName}
 
 			<PropertyGroup>
 				<OutputType>WinExe</OutputType>
-				<!-- ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC};{60DC8134-EBA5-43B8-BCC9-BB4BC16C2548}</ProjectTypeGuids -->
+				<!-- ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids -->
 				<AppDesignerFolder>Properties</AppDesignerFolder>
 			</PropertyGroup>
 
