@@ -7,8 +7,11 @@
 
 	<Grid>
 		<StackPanel>
-			<Button
-				Command="{Binding NavigateCommand}">
+			<RadioButton
+				GroupName="TaskGroup"
+				Style="{StaticResource {x:Type ToggleButton}}"
+				Command="{Binding NavigateCommand}"
+				IsChecked="{Binding IsActive, UpdateSourceTrigger=PropertyChanged}">
 				<StackPanel
 					Orientation="Horizontal">
 					<Image
@@ -17,7 +20,7 @@
 						RenderOptions.BitmapScalingMode="NearestNeighbor" />
 					<TextBlock Text="{Binding VmTitle}"/>
 				</StackPanel>
-			</Button>
+			</RadioButton>
 		</StackPanel>
 	</Grid>
 

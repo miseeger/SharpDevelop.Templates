@@ -1,5 +1,5 @@
 ﻿using System;
-using <SolutionName>.Base;
+using Microsoft.Practices.Prism.Regions;
 using <SolutionName>.Base.Mvvm;
 using ${StandardNamespace}.ViewModels.Interfaces;
 
@@ -31,12 +31,49 @@ namespace ${StandardNamespace}.ViewModels
     //       	return typeof(${FileNameWithoutExtension}View).FullName + query;
 
 
-	public class ${FileNameWithoutExtension}ViewModel : ViewModelBase, I${FileNameWithoutExtension}ViewModel
+	public class ${FileNameWithoutExtension}ViewModel : ViewModelBase, I${FileNameWithoutExtension}ViewModel, IConfirmNavigationRequest, IRegionMemberLifetime
 	{
 		
 		public ${FileNameWithoutExtension}ViewModel()
 		{
 			VmTitle = Names.${FileNameWithoutExtension}View;
+		}
+		
+		
+		public bool IsNavigationTarget(NavigationContext navigationContext)
+		{
+			return true;
+		}
+
+
+		public void OnNavigatedTo(NavigationContext navigationContext)
+		{
+			// TODO: Implement code ...
+		}
+		
+		
+		public void OnNavigatedFrom(NavigationContext navigationContext)
+		{
+			// TODO: Implement code ...
+		}
+		
+		
+		public void ConfirmNavigationRequest(NavigationContext navigationContext, Action<bool> continuationCallback)
+		{
+			bool result = true;
+			
+			// TODO: Implement code to set result
+			
+			continuationCallback(result);
+		}
+		
+		
+		public bool KeepAlive
+		{
+			get
+			{
+				return true;
+			}
 		}
 	
 	}

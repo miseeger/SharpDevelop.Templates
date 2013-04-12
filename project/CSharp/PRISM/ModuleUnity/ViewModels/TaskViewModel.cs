@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Microsoft.Practices.Prism;
 using Microsoft.Practices.Prism.Regions;
 using <SolutionName>.Base.Interfaces.Services;
@@ -19,6 +18,21 @@ namespace ${ProjectName}.ViewModels
 		private IRegionManager _regionManager;
 		private IAppResourceService _appResourceService;
 		
+		private bool _isActive;
+		public bool IsActive
+		{
+			get { return _isActive; }
+			set
+			{
+				if(_isActive != value)
+				{
+					_isActive = value;
+					RaisePropertyChanged(() => IsActive);
+				}
+			}
+		}
+
+		
 		public TaskViewModel(IRegionManager regionManager, IAppResourceService appResourceService)
 		{
 			_regionManager = regionManager;
@@ -36,17 +50,8 @@ namespace ${ProjectName}.ViewModels
 		
 		private void Navigate()
 		{
-			var moduleNavigation = new Uri(typeof(NavigationView).FullName, UriKind.Relative);
-			var initialViewNavigation = new Uri(typeof(View1).FullName, UriKind.Relative);
-			var moduleNavRegion = _regionManager.Regions[RegionNames.ModuleNavigationRegion];
-			
-			foreach (var view in moduleNavRegion.Views)
-			{
-				moduleNavRegion.Remove(view);
-			}
-			
-			_regionManager.RequestNavigate(RegionNames.ModuleNavigationRegion, moduleNavigation);
-			_regionManager.RequestNavigate(RegionNames.MainRegion, initialViewNavigation);
+			_regionManager.RequestNavigate(RegionNames.ModuleNavigationRegion, 
+			                               new Uri(typeof(NavigationView).FullName, UriKind.Relative));
 		}
 		
 	}

@@ -6,6 +6,7 @@ namespace ${ProjectName}.ViewModels.Interfaces
 
 	public interface ITaskViewModel : IViewModel
 	{
+		bool IsActive {get; set;}
 	}
 
 }

@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using Microsoft.Practices.Prism;
 using Microsoft.Practices.Prism.Regions;
+using <SolutionName>.Base.Names;
 using <SolutionName>.Base.Interfaces.Services;
 using <SolutionName>.Base.Mvvm;
 using <SolutionName>.Base.Navigation;
@@ -13,10 +14,11 @@ using ${ProjectName}.Views;
 namespace ${ProjectName}.ViewModels
 {
 
-	public class NavigationViewModel : ViewModelBase, INavigationViewModel
+	public class NavigationViewModel : ViewModelBase, INavigationViewModel, INavigationAware, IRegionMemberLifetime
 	{
 		
  		private IAppResourceService _appResourceService;
+ 		private IRegionManager _regionManager;
 		
 		private ObservableCollection<NavigationItem> _navItems;
         public ObservableCollection<NavigationItem> NavItems
@@ -29,16 +31,47 @@ namespace ${ProjectName}.ViewModels
             }
         }
         
+		private RelayCommand<string> _navigateCommand;
+		public RelayCommand<string> NavigateCommand
+		{
+			get { return _navigateCommand ?? (_navigateCommand = new RelayCommand<string>(Navigate)); }
+		}
+
+        private void Navigate(string NavigationPath)
+        {
+        	_regionManager.NavigateToMainRegion(NavigationPath);
+        }
  
-        public NavigationViewModel(IAppResourceService AppResourceService)
+        public NavigationViewModel(IAppResourceService AppResourceService, IRegionManager RegionManager)
 		{
         	_appResourceService = AppResourceService;
+        	_regionManager = RegionManager;
+
         	VmTitle =  Names.NavTitle;
-        	InitializeMenu();
+
+        	InitializeNavigation();
 		}
+		
+		
+        private string CreateNavigationPath(string navItemName)
+        {
+            UriQuery query = new UriQuery();
+            query.Add(Names.NavKey, navItemName);
+            
+            switch (navItemName) 
+            {
+            	case Names.NavItem1:
+            		return typeof(View1).FullName + query;
+            	case Names.NavItem2:
+            		return typeof(View2).FullName + query;
+            	default:
+            		return null;
+            }
+		
+		}			
         
 
-        void InitializeMenu()
+        void InitializeNavigation()
 		{
 			NavItems = new ObservableCollection<NavigationItem>();
 			
@@ -57,23 +90,28 @@ namespace ${ProjectName}.ViewModels
 		}
 		
 		
-        private string CreateNavigationPath(string navItemName)
-        {
-            UriQuery query = new UriQuery();
-            query.Add(Names.NavKey, navItemName);
+		public bool IsNavigationTarget(NavigationContext navigationContext)
+		{
+			return true;
+		}
+
+
+		public void OnNavigatedTo(NavigationContext navigationContext)
+		{
+			NavItems.NavigateToActiveItem(_regionManager, RegionNames.MainRegion);
+		}
+		
+		
+		public void OnNavigatedFrom(NavigationContext navigationContext)
+		{
+		}
+
+		
+		public bool KeepAlive
+		{
+			get { return true; }
+		}
             
-            switch (navItemName) 
-            {
-            	case Names.NavItem1:
-            		return typeof(View1).FullName + query;
-            	case Names.NavItem2:
-            		return typeof(View2).FullName + query;
-            	default:
-            		return null;
-            }
-            
-        }
-        
 	}
 	
 }
