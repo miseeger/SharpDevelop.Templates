@@ -1,8 +1,8 @@
 ﻿using System;
-using PrismApp.Base.Mvvm;
-using PrismApp.Base.Data.Model.Interfaces;
+using ${SolutionName}.Base.Mvvm;
+using ${SolutionName}.Base.Data.Model.Interfaces;
 
-namespace PrismApp.Base.Data.Model
+namespace ${SolutionName}.Base.Data.Model
 {
 
 	public class Address : DataObject, IAddress

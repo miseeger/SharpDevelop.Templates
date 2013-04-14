@@ -2,7 +2,7 @@
 using Microsoft.Practices.Prism.Commands;
 using System.Windows.Input;
 
-namespace PrismApp.Base
+namespace ${SolutionName}.Base
 {
    
 	public class GlobalCommands

@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <Template originator="Michael Seeger" created="01/11/2012">
 
 	<!-- Template Header -->
@@ -14,12 +14,12 @@
 
 	<!-- Actions -->
 	<Actions>
-		<Open filename="${ProjectName}\Bootstrapper.cs" />
+		<Open filename="Src\${ProjectName}\Bootstrapper.cs" />
 	</Actions>
 
 
 	<!-- The PRISM-Solution -->
-	<Solution name = "${ProjectName}" directory = ".">
+	<Solution name = "${ProjectName}" directory = "Src">
 	
 		<!-- The Startup-Project is the Shell-Project -->
 		<Options>
@@ -28,13 +28,14 @@
 
 
 		<!-- Base SolutionFolder containing Base-Projects -->
-		<SolutionFolder name = "Base" directory="Base">
+		<SolutionFolder name = "Base" directory="Src\Base">
 
 			<!-- Base-Project -->
-			<Project name="${ProjectName}.Base" directory="Base\${ProjectName}.Base" language="C#">
+			<Project name="${ProjectName}.Base" directory="Src\Base\${ProjectName}.Base" language="C#">
 
 				<PropertyGroup>
 					<OutputType>Library</OutputType>
+				    <ProjectGuid>68965282-719f-4ebc-8338-9da9ecd6f50e</ProjectGuid>
 					<AppDesignerFolder>Properties</AppDesignerFolder>
 				</PropertyGroup>
 				
@@ -52,7 +53,11 @@
 					<Reference Include="Microsoft.Practices.Prism.Interactivity" />
 					<Reference Include="Microsoft.Practices.ServiceLocation" />
 					<Reference Include="Microsoft.Practices.Unity" />
-					<Reference Include="NLog" />
+					<Reference Include="NLog">
+                		<HintPath>$(ProgramFiles)\SDDotNetLib\NLog\NLog.dll</HintPath>
+                		<SpecificVersion>False</SpecificVersion>
+                		<Private>False</Private>
+            		</Reference>
 					<Reference Include="PresentationCore" />
 					<Reference Include="PresentationFramework" />
 					<Reference Include="System" />
@@ -63,7 +68,7 @@
 					<Reference Include="System.Xaml" />
 					<Reference Include="System.Xml" />
 					<Reference Include="System.Xml.Linq" />
-					<Reference Include="System.WindowsBase" />
+					<Reference Include="WindowsBase" />
 				</ProjectItems>
 
 				<Files>
@@ -103,10 +108,11 @@
 			</Project>
 
 			<!-- Base.Business-Project -->
-			<Project name="${ProjectName}.Base.Business" directory="Base\${ProjectName}.Base.Business" language="C#">
+			<Project name="${ProjectName}.Base.Business" directory="Src\Base\${ProjectName}.Base.Business" language="C#">
 
 				<PropertyGroup>
 					<OutputType>Library</OutputType>
+				    <ProjectGuid>68965282-719f-4ebc-8338-9da9ecd6f50e</ProjectGuid>
 					<AppDesignerFolder>Properties</AppDesignerFolder>
 				</PropertyGroup>
 				
@@ -129,8 +135,8 @@
 				</ProjectItems>
 
 				<ProjectItems>
-					<ProjectReference Include="..\Base\${SolutionName}.Base\${SolutionName}.Base.csproj" />
-					<ProjectReference Include="..\Base\${SolutionName}.Business.Model\${SolutionName}.Business.Model.csproj" />
+					<ProjectReference Include="..\${SolutionName}.Base\${SolutionName}.Base.csproj" />
+					<ProjectReference Include="..\${SolutionName}.Base.Business.Model\${SolutionName}.Base.Business.Model.csproj" />
 				</ProjectItems>
 
 				<Files>
@@ -140,11 +146,13 @@
 			</Project>
 
 			<!-- Base.Business.Model-Project -->
-			<Project name="${ProjectName}.Base.Business.Model" directory="Base\${ProjectName}.Base.Business.Model" language="C#">
+			<Project name="${ProjectName}.Base.Business.Model" directory="Src\Base\${ProjectName}.Base.Business.Model" language="C#">
 
 				<PropertyGroup>
 					<OutputType>Library</OutputType>
+				    <ProjectGuid>68965282-719f-4ebc-8338-9da9ecd6f50e</ProjectGuid>
 					<AppDesignerFolder>Properties</AppDesignerFolder>
+
 				</PropertyGroup>
 				
 				<PropertyGroup configuration="Debug">
@@ -153,6 +161,7 @@
 
 				<PropertyGroup configuration="Release">
 					<OutputPath>..\..\..\Bin\Debug\</OutputPath>
+				
 				</PropertyGroup>
 
 				<ProjectItems>
@@ -163,7 +172,7 @@
 				</ProjectItems>
 
 				<ProjectItems>
-					<ProjectReference Include="..\Base\${SolutionName}.Data.Model\${SolutionName}.Data.Model.csproj" />
+					<ProjectReference Include="..\${SolutionName}.Base.Data.Model\${SolutionName}.Base.Data.Model.csproj" />
 				</ProjectItems>
 
 				<Files>
@@ -172,10 +181,11 @@
 			</Project>
 
 			<!-- Base.Data-Project -->
-			<Project name="${ProjectName}.Base.Data" directory="Base\${ProjectName}.Base.Data" language="C#">
+			<Project name="${ProjectName}.Base.Data" directory="Src\Base\${ProjectName}.Base.Data" language="C#">
 
 				<PropertyGroup>
 					<OutputType>Library</OutputType>
+				    <ProjectGuid>68965282-719f-4ebc-8338-9da9ecd6f50e</ProjectGuid>
 					<AppDesignerFolder>Properties</AppDesignerFolder>
 				</PropertyGroup>
 				
@@ -201,8 +211,8 @@
 				</ProjectItems>
 
 				<ProjectItems>
-					<ProjectReference Include="..\Base\${SolutionName}.Base\${SolutionName}.Base.csproj" />
-					<ProjectReference Include="..\Base\${SolutionName}.Data.Model\${SolutionName}.Data.Model.csproj" />
+					<ProjectReference Include="..\${SolutionName}.Base\${SolutionName}.Base.csproj" />
+					<ProjectReference Include="..\${SolutionName}.Base.Data.Model\${SolutionName}.Base.Data.Model.csproj" />
 				</ProjectItems>
 
 				<Files>
@@ -211,15 +221,16 @@
 					<File name="Names.cs" src="PRISM\ApplicationUnity\Base\Solution.Base.Data\Names.cs"/>
 					<File name="XmlService.cs" src="PRISM\ApplicationUnity\Base\Solution.Base.Data\XmlService.cs"/>
 					<File name="x64\SQLite.Interop.dll" src="PRISM\ApplicationUnity\Base\Solution.Base.Data\x64\SQLite.Interop.dll" BuildAction="None" CopyToOutputDirectory="Always"/>
-					<File name="x64\SQLite.Interop.dll" src="PRISM\ApplicationUnity\Base\Solution.Base.Data\x64\SQLite.Interop.dll" BuildAction="None" CopyToOutputDirectory="Always"/>
+					<File name="x86\SQLite.Interop.dll" src="PRISM\ApplicationUnity\Base\Solution.Base.Data\x86\SQLite.Interop.dll" BuildAction="None" CopyToOutputDirectory="Always"/>
 				</Files>
 			</Project>
 
 			<!-- Base.Data.Model-Project -->
-			<Project name="${ProjectName}.Base.Data.Model" directory="Base\${ProjectName}.Base.Data.Model" language="C#">
+			<Project name="${ProjectName}.Base.Data.Model" directory="Src\Base\${ProjectName}.Base.Data.Model" language="C#">
 
 				<PropertyGroup>
 					<OutputType>Library</OutputType>
+				    <ProjectGuid>68965282-719f-4ebc-8338-9da9ecd6f50e</ProjectGuid>
 					<AppDesignerFolder>Properties</AppDesignerFolder>
 				</PropertyGroup>
 				
@@ -239,7 +250,7 @@
 				</ProjectItems>
 
 				<ProjectItems>
-					<ProjectReference Include="..\Base\${SolutionName}.Base\${SolutionName}.Base.csproj" />
+					<ProjectReference Include="..\${SolutionName}.Base\${SolutionName}.Base.csproj" />
 				</ProjectItems>
 
 				<Files>
@@ -255,10 +266,11 @@
 
 
 			<!-- Base.Resource-Project -->
-			<Project name="${ProjectName}.Base.Resource" directory="Base\${ProjectName}.Base.Resource" language="C#">
+			<Project name="${ProjectName}.Base.Resource" directory="Src\Base\${ProjectName}.Base.Resource" language="C#">
 
 				<PropertyGroup>
 					<OutputType>Library</OutputType>
+				    <ProjectGuid>68965282-719f-4ebc-8338-9da9ecd6f50e</ProjectGuid>
 					<AppDesignerFolder>Properties</AppDesignerFolder>
 				</PropertyGroup>
 				
@@ -282,7 +294,7 @@
 				</ProjectItems>
 
 				<ProjectItems>
-					<ProjectReference Include="..\Base\${SolutionName}.Base\${SolutionName}.Base.csproj" />
+					<ProjectReference Include="..\${SolutionName}.Base\${SolutionName}.Base.csproj" />
 				</ProjectItems>
 
 				<Files>
@@ -290,7 +302,7 @@
 					<File name="Images\16x16\globe.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\16x16\globe.png" BuildAction="EmbeddedResource" />
 					<File name="Images\16x16\jar.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\16x16\jar.png" BuildAction="EmbeddedResource" />
 					<File name="Images\16x16\users.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\16x16\users.png" BuildAction="EmbeddedResource" />
-					<File name="Images\256x256\PrsimAppShell.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\256x256\PrsimAppShell" BuildAction="EmbeddedResource" />
+					<File name="Images\256x256\PrismAppShell.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\256x256\PrismAppShell" BuildAction="EmbeddedResource" />
 					<File name="Images\Misc\${ProjectName}.Base.Resource.MiscImages.txt"><![CDATA[// Project ${ProjectName} created on ${Date} at ${Time}]]></File>
 					<File name="Service.cs" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Service.cs" />
 				</Files>
@@ -300,13 +312,15 @@
 
 
 		<!-- Modules SolutionFolder containing Module-Projects -->
-		<SolutionFolder name = "Modules" directory="Modules">
+		<SolutionFolder name = "Modules" directory="Src\Modules">
 
 			<!-- Modules.Main-Project -->
-			<Project name="${ProjectName}.Modules.Main" directory="Modules\${ProjectName}.Modules.Main" language="C#">
+			<Project name="${ProjectName}.Modules.Main" directory="Src\Modules\${ProjectName}.Modules.Main" language="C#">
 
 				<PropertyGroup>
-					<OutputType>Library</OutputType>
+				    <OutputType>library</OutputType>
+    				<ProjectGuid>{DBEA4B38-E043-41FC-BA1B-F4194DD43588}</ProjectGuid>
+    				<ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
 					<AppDesignerFolder>Properties</AppDesignerFolder>
 				</PropertyGroup>
 		
@@ -336,7 +350,7 @@
 
 				<ProjectItems>
 					<ProjectReference Include="..\..\Base\${SolutionName}.Base\${SolutionName}.Base.csproj" />
-					<ProjectReference Include="..\..\Base\${SolutionName}.Resource\${SolutionName}.Resource.csproj" />
+					<ProjectReference Include="..\..\Base\${SolutionName}.Base.Resource\${SolutionName}.Base.Resource.csproj" />
 				</ProjectItems>
 
 		
@@ -346,17 +360,19 @@
 					<File name="ViewModels\Interfaces\IFileMenuViewModel.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Main\ViewModels\Interfaces\IFileMenuViewModel.cs" />
 					<File name="ViewModels\FileMenuViewModel.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Main\ViewModels\FileMenuViewModel.cs" />
 					<File name="Views\FileMenuView.xaml" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Main\Views\FileMenuView.xaml" BuildAction="Page" language="XML" />
-   					<File name="Views\FileMenuView.xaml.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Main\Views\FileMenuView.xaml.cs" SubType="Code" DependentUpon="Views\FileMenuView.xaml" />
+   					<File name="Views\FileMenuView.xaml.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Main\Views\FileMenuView.xaml.cs" SubType="Code" DependentUpon="FileMenuView.xaml" />
 					<File name="ModuleInit.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Main\ModuleInit.cs" />
 					<File name="Names.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Main\Names.cs" />
 				</Files>
 			</Project>
 		
 			<!-- Modules.Accounts-Project -->
-			<Project name="${ProjectName}.Modules.Accounts" directory="Modules\${ProjectName}.Modules.Accounts" language="C#">
+			<Project name="${ProjectName}.Modules.Accounts" directory="Src\Modules\${ProjectName}.Modules.Accounts" language="C#">
 
 				<PropertyGroup>
-					<OutputType>Library</OutputType>
+				    <OutputType>library</OutputType>
+    				<ProjectGuid>{DBEA4B38-E043-41FC-BA1B-F4194DD43588}</ProjectGuid>
+    				<ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
 					<AppDesignerFolder>Properties</AppDesignerFolder>
 				</PropertyGroup>
 		
@@ -385,7 +401,7 @@
 
 				<ProjectItems>
 					<ProjectReference Include="..\..\Base\${SolutionName}.Base\${SolutionName}.Base.csproj" />
-					<ProjectReference Include="..\..\Base\${SolutionName}.Resource\${SolutionName}.Resource.csproj" />
+					<ProjectReference Include="..\..\Base\${SolutionName}.Base.Resource\${SolutionName}.Base.Resource.csproj" />
 				</ProjectItems>
 
 				<Files>
@@ -400,23 +416,25 @@
 					<File name="ViewModels\ViewModel1.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\ViewModels\ViewModel1.cs" />
 					<File name="ViewModels\ViewModel2.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\ViewModels\ViewModel2.cs" />
 					<File name="Views\NavigationView.xaml" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\Views\NavigationView.xaml" BuildAction="Page" language="XML" />
-   					<File name="Views\NavigationView.xaml.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\Views\NavigationView.xaml.cs" SubType="Code" DependentUpon="Views\NavigationView.xaml" />
+   					<File name="Views\NavigationView.xaml.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\Views\NavigationView.xaml.cs" SubType="Code" DependentUpon="NavigationView.xaml" />
 					<File name="Views\TaskView.xaml" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\Views\TaskView.xaml" BuildAction="Page" language="XML" />
-   					<File name="Views\TaskView.xaml.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\Views\TaskView.xaml.cs" SubType="Code" DependentUpon="Views\TaskView.xaml" />
+   					<File name="Views\TaskView.xaml.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\Views\TaskView.xaml.cs" SubType="Code" DependentUpon="TaskView.xaml" />
 					<File name="Views\View1.xaml" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\Views\View1.xaml" BuildAction="Page" language="XML" />
-   					<File name="Views\View1.xaml.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\Views\View1.xaml.cs" SubType="Code" DependentUpon="Views\View1.xaml" />
+   					<File name="Views\View1.xaml.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\Views\View1.xaml.cs" SubType="Code" DependentUpon="View1.xaml" />
 					<File name="Views\View2.xaml" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\Views\View2.xaml" BuildAction="Page" language="XML" />
-   					<File name="Views\View2.xaml.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\Views\View2.xaml.cs" SubType="Code" DependentUpon="Views\View2.xaml" />
+   					<File name="Views\View2.xaml.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\Views\View2.xaml.cs" SubType="Code" DependentUpon="View2.xaml" />
 					<File name="ModuleInit.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\ModuleInit.cs" />
 					<File name="Names.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\Names.cs" />
 				</Files>
 			</Project>
 
 			<!-- Modules.Contacts-Project -->
-			<Project name="${ProjectName}.Modules.Contacts" directory="Modules\${ProjectName}.Modules.Contacts" language="C#">
+			<Project name="${ProjectName}.Modules.Contacts" directory="Src\Modules\${ProjectName}.Modules.Contacts" language="C#">
 
 				<PropertyGroup>
-					<OutputType>Library</OutputType>
+				    <OutputType>library</OutputType>
+    				<ProjectGuid>{DBEA4B38-E043-41FC-BA1B-F4194DD43588}</ProjectGuid>
+    				<ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
 					<AppDesignerFolder>Properties</AppDesignerFolder>
 				</PropertyGroup>
 		
@@ -445,7 +463,7 @@
 
 				<ProjectItems>
 					<ProjectReference Include="..\..\Base\${SolutionName}.Base\${SolutionName}.Base.csproj" />
-					<ProjectReference Include="..\..\Base\${SolutionName}.Resource\${SolutionName}.Resource.csproj" />
+					<ProjectReference Include="..\..\Base\${SolutionName}.Base.Resource\${SolutionName}.Base.Resource.csproj" />
 				</ProjectItems>
 
 				<Files>
@@ -460,13 +478,13 @@
 					<File name="ViewModels\ViewModel1.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\ViewModels\ViewModel1.cs" />
 					<File name="ViewModels\ViewModel2.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\ViewModels\ViewModel2.cs" />
 					<File name="Views\NavigationView.xaml" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\Views\NavigationView.xaml" BuildAction="Page" language="XML" />
-   					<File name="Views\NavigationView.xaml.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\Views\NavigationView.xaml.cs" SubType="Code" DependentUpon="Views\NavigationView.xaml" />
+   					<File name="Views\NavigationView.xaml.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\Views\NavigationView.xaml.cs" SubType="Code" DependentUpon="NavigationView.xaml" />
 					<File name="Views\TaskView.xaml" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\Views\TaskView.xaml" BuildAction="Page" language="XML" />
-   					<File name="Views\TaskView.xaml.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\Views\TaskView.xaml.cs" SubType="Code" DependentUpon="Views\TaskView.xaml" />
+   					<File name="Views\TaskView.xaml.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\Views\TaskView.xaml.cs" SubType="Code" DependentUpon="TaskView.xaml" />
 					<File name="Views\View1.xaml" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\Views\View1.xaml" BuildAction="Page" language="XML" />
-   					<File name="Views\View1.xaml.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\Views\View1.xaml.cs" SubType="Code" DependentUpon="Views\View1.xaml" />
+   					<File name="Views\View1.xaml.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\Views\View1.xaml.cs" SubType="Code" DependentUpon="View1.xaml" />
 					<File name="Views\View2.xaml" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\Views\View2.xaml" BuildAction="Page" language="XML" />
-   					<File name="Views\View2.xaml.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\Views\View2.xaml.cs" SubType="Code" DependentUpon="Views\View2.xaml" />
+   					<File name="Views\View2.xaml.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\Views\View2.xaml.cs" SubType="Code" DependentUpon="View2.xaml" />
 					<File name="ModuleInit.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\ModuleInit.cs" />
 					<File name="Names.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\Names.cs" />
 				</Files>
@@ -475,7 +493,7 @@
 		</SolutionFolder>
 
 		<!-- PRISM Shell (Main-)Project resides in the base directory of the Solution -->
-		<Project name="${ProjectName}" directory="${ProjectName}" language="C#" defaultPlatform="x86">
+		<Project name="${ProjectName}" directory="Src\${ProjectName}" language="C#" defaultPlatform="x86">
 
 			<ProjectItems>
 				<Reference Include="Microsoft.Practices.Prism" />
@@ -488,6 +506,7 @@
 				<Reference Include="PresentationFramework" />
 				<Reference Include="System" />
 				<Reference Include="System.Configuration" />
+				<Reference Include="System.Data" />
 				<Reference Include="System.Windows.Interactivity" />
 				<Reference Include="System.Xaml" />
 				<Reference Include="System.Xml" />
@@ -499,8 +518,10 @@
 				<ProjectReference Include="..\Base\${SolutionName}.Base\${SolutionName}.Base.csproj" />
 			</ProjectItems>
 
-			<PropertyGroup>
-				<OutputType>WinExe</OutputType>
+			<PropertyGroup escapeValue="False">
+			    <OutputType>WinExe</OutputType>
+    			<ProjectGuid>{3270270F-AC82-4475-88D3-1A61DBE82F0C}</ProjectGuid>
+    			<ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
 				<AppDesignerFolder>Properties</AppDesignerFolder>
 				<ApplicationIcon>Shell.ico</ApplicationIcon>
     			<ApplicationManifest>app.manifest</ApplicationManifest>
@@ -525,8 +546,10 @@
 				<File name="Bootstrapper.cs" src="PRISM\ApplicationUnity\Solution\Bootstrapper.cs" />
 				<File name="nlog.config" src="PRISM\ApplicationUnity\Solution\nlog.config" CopyToOutputDirectory="Always" />
 				<File name="unity.config" src="PRISM\ApplicationUnity\Solution\unity.config" CopyToOutputDirectory="Always" />
+				<File name="Shell.ico" src="PRISM\ApplicationUnity\Solution\Shell.ico" />
 				<File name="Shell.xaml" src="PRISM\ApplicationUnity\Solution\Shell.xaml" BuildAction="Page" language="XML" />
 				<File name="Shell.xaml.cs" src="PRISM\ApplicationUnity\Solution\Shell.xaml.cs" SubType="Code" DependentUpon="Shell.xaml" />
+				<File name="ShellViewModel.cs" src="PRISM\ApplicationUnity\Solution\ShellViewModel.cs" />
 				<File name="${SolutionName}Db.s3db" src="PRISM\ApplicationUnity\Solution\SolutionDb.s3db" CopyToOutputDirectory="Always" />
 			</Files>
 

@@ -23,7 +23,7 @@ namespace ${SolutionName}.Modules.Main
 		IRegionManager _regionManager;
 		
 
-		public MainModule(IUnityContainer container, IRegionManager regionManager)
+		public ModuleInit(IUnityContainer container, IRegionManager regionManager)
 		{
 			// Get conatiner and region manager
 			_container = container;
