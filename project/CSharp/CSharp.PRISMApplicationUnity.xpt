@@ -317,7 +317,7 @@
 			<!-- Modules.Main-Project -->
 			<Project name="${ProjectName}.Modules.Main" directory="Src\Modules\${ProjectName}.Modules.Main" language="C#">
 
-				<PropertyGroup>
+				<PropertyGroup escapeValue="False">
 				    <OutputType>library</OutputType>
     				<ProjectGuid>{DBEA4B38-E043-41FC-BA1B-F4194DD43588}</ProjectGuid>
     				<ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -369,7 +369,7 @@
 			<!-- Modules.Accounts-Project -->
 			<Project name="${ProjectName}.Modules.Accounts" directory="Src\Modules\${ProjectName}.Modules.Accounts" language="C#">
 
-				<PropertyGroup>
+				<PropertyGroup escapeValue="False">
 				    <OutputType>library</OutputType>
     				<ProjectGuid>{DBEA4B38-E043-41FC-BA1B-F4194DD43588}</ProjectGuid>
     				<ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -431,7 +431,7 @@
 			<!-- Modules.Contacts-Project -->
 			<Project name="${ProjectName}.Modules.Contacts" directory="Src\Modules\${ProjectName}.Modules.Contacts" language="C#">
 
-				<PropertyGroup>
+				<PropertyGroup escapeValue="False">
 				    <OutputType>library</OutputType>
     				<ProjectGuid>{DBEA4B38-E043-41FC-BA1B-F4194DD43588}</ProjectGuid>
     				<ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
