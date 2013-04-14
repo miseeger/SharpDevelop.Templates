@@ -302,7 +302,7 @@
 					<File name="Images\16x16\globe.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\16x16\globe.png" BuildAction="EmbeddedResource" />
 					<File name="Images\16x16\jar.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\16x16\jar.png" BuildAction="EmbeddedResource" />
 					<File name="Images\16x16\users.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\16x16\users.png" BuildAction="EmbeddedResource" />
-					<File name="Images\256x256\PrismAppShell.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\256x256\PrismAppShell" BuildAction="EmbeddedResource" />
+					<File name="Images\256x256\${ProjectName}Shell.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\256x256\${ProjectName}Shell.png" BuildAction="EmbeddedResource" />
 					<File name="Images\Misc\${ProjectName}.Base.Resource.MiscImages.txt"><![CDATA[// Project ${ProjectName} created on ${Date} at ${Time}]]></File>
 					<File name="Service.cs" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Service.cs" />
 				</Files>
