@@ -298,11 +298,11 @@
 				</ProjectItems>
 
 				<Files>
-					<File name="Images\16x16\door-open-out.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\16x16\door-open-out.png" BuildAction="EmbeddedResource" />
-					<File name="Images\16x16\globe.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\16x16\globe.png" BuildAction="EmbeddedResource" />
-					<File name="Images\16x16\jar.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\16x16\jar.png" BuildAction="EmbeddedResource" />
-					<File name="Images\16x16\users.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\16x16\users.png" BuildAction="EmbeddedResource" />
-					<File name="Images\256x256\${ProjectName}Shell.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\256x256\${ProjectName}Shell.png" BuildAction="EmbeddedResource" />
+					<File name="Images\16x16\door-open-out.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\16x16\door-open-out.png" BuildAction="EmbeddedResource" binary="true" />
+					<File name="Images\16x16\globe.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\16x16\globe.png" BuildAction="EmbeddedResource" binary="true" />
+					<File name="Images\16x16\jar.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\16x16\jar.png" BuildAction="EmbeddedResource" binary="true" />
+					<File name="Images\16x16\users.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\16x16\users.png" BuildAction="EmbeddedResource" binary="true" />
+					<File name="Images\256x256\${ProjectName}Shell.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\256x256\SolutionShell.png" BuildAction="EmbeddedResource" binary="true" />
 					<File name="Images\Misc\${ProjectName}.Base.Resource.MiscImages.txt"><![CDATA[// Project ${ProjectName} created on ${Date} at ${Time}]]></File>
 					<File name="Service.cs" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Service.cs" />
 				</Files>
@@ -546,7 +546,7 @@
 				<File name="Bootstrapper.cs" src="PRISM\ApplicationUnity\Solution\Bootstrapper.cs" />
 				<File name="nlog.config" src="PRISM\ApplicationUnity\Solution\nlog.config" CopyToOutputDirectory="Always" />
 				<File name="unity.config" src="PRISM\ApplicationUnity\Solution\unity.config" CopyToOutputDirectory="Always" />
-				<File name="Shell.ico" src="PRISM\ApplicationUnity\Solution\Shell.ico" />
+				<File name="Shell.ico" src="PRISM\ApplicationUnity\Solution\Shell.ico" binary="true"/>
 				<File name="Shell.xaml" src="PRISM\ApplicationUnity\Solution\Shell.xaml" BuildAction="Page" language="XML" />
 				<File name="Shell.xaml.cs" src="PRISM\ApplicationUnity\Solution\Shell.xaml.cs" SubType="Code" DependentUpon="Shell.xaml" />
 				<File name="ShellViewModel.cs" src="PRISM\ApplicationUnity\Solution\ShellViewModel.cs" />
