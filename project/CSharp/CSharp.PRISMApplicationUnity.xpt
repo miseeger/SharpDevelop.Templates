@@ -15,11 +15,12 @@
 	<!-- Actions -->
 	<Actions>
 		<Open filename="Src\${ProjectName}\Bootstrapper.cs" />
+		<RunCommand path="/AddIns/PackageManagement/TemplateCommands/InstallPackages"/>
 	</Actions>
 
 
 	<!-- The PRISM-Solution -->
-	<Solution name = "${ProjectName}" directory = "Src">
+	<Solution name = "${ProjectName}" directory = ".">
 	
 		<!-- The Startup-Project is the Shell-Project -->
 		<Options>
@@ -104,6 +105,7 @@
 					<File name="Services\MessageBoxService.cs" src="PRISM\ApplicationUnity\Base\Solution.Base\Services\MessageBoxService.cs" />
 					<File name="GlobalCommands.cs" src="PRISM\ApplicationUnity\Base\Solution.Base\GlobalCommands.cs" />
 					<File name="GlobalEvents.cs" src="PRISM\ApplicationUnity\Base\Solution.Base\GlobalEvents.cs" />
+					<File name="packages.config" src="PRISM\ApplicationUnity\Base\Solution.Base\packages.config" />
 				</Files>
 			</Project>
 
@@ -142,6 +144,7 @@
 				<Files>
 					<File name="Properties\AssemblyInfo.cs" src="PRISM\ApplicationUnity\Base\Solution.Base.Business\Properties\AssemblyInfo.cs"/>
 					<File name="Service.cs" src="PRISM\ApplicationUnity\Base\Solution.Base.Business\Service.cs"/>
+					<File name="packages.config" src="PRISM\ApplicationUnity\Base\Solution.Base.Business\packages.config" />
 				</Files>
 			</Project>
 
@@ -220,8 +223,7 @@
 					<File name="DbService.cs" src="PRISM\ApplicationUnity\Base\Solution.Base.Data\DbService.cs"/>
 					<File name="Names.cs" src="PRISM\ApplicationUnity\Base\Solution.Base.Data\Names.cs"/>
 					<File name="XmlService.cs" src="PRISM\ApplicationUnity\Base\Solution.Base.Data\XmlService.cs"/>
-					<File name="x64\SQLite.Interop.dll" src="PRISM\ApplicationUnity\Base\Solution.Base.Data\x64\SQLite.Interop.dll" BuildAction="None" CopyToOutputDirectory="Always"/>
-					<File name="x86\SQLite.Interop.dll" src="PRISM\ApplicationUnity\Base\Solution.Base.Data\x86\SQLite.Interop.dll" BuildAction="None" CopyToOutputDirectory="Always"/>
+					<File name="packages.config" src="PRISM\ApplicationUnity\Base\Solution.Base.Data\packages.config" />					
 				</Files>
 			</Project>
 
@@ -298,11 +300,11 @@
 				</ProjectItems>
 
 				<Files>
-					<File name="Images\16x16\door-open-out.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\16x16\door-open-out.png" BuildAction="EmbeddedResource" binary="true" />
-					<File name="Images\16x16\globe.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\16x16\globe.png" BuildAction="EmbeddedResource" binary="true" />
-					<File name="Images\16x16\jar.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\16x16\jar.png" BuildAction="EmbeddedResource" binary="true" />
-					<File name="Images\16x16\users.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\16x16\users.png" BuildAction="EmbeddedResource" binary="true" />
-					<File name="Images\256x256\${ProjectName}Shell.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\256x256\SolutionShell.png" BuildAction="EmbeddedResource" binary="true" />
+					<File name="Images\16x16\door-open-out.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\16x16\door-open-out.png" buildAction="EmbeddedResource" binary="true" />
+					<File name="Images\16x16\globe.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\16x16\globe.png" buildAction="EmbeddedResource" binary="true" />
+					<File name="Images\16x16\jar.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\16x16\jar.png" buildAction="EmbeddedResource" binary="true" />
+					<File name="Images\16x16\users.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\16x16\users.png" buildAction="EmbeddedResource" binary="true" />
+					<File name="Images\256x256\Shell.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\256x256\SolutionShell.png" buildAction="EmbeddedResource" binary="true" />
 					<File name="Images\Misc\${ProjectName}.Base.Resource.MiscImages.txt"><![CDATA[// Project ${ProjectName} created on ${Date} at ${Time}]]></File>
 					<File name="Service.cs" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Service.cs" />
 				</Files>
@@ -341,7 +343,6 @@
 					<Reference Include="System" />
 					<Reference Include="System.Core" />
 					<Reference Include="System.Data" />
-					<Reference Include="System.DataSetExtensions" />
 					<Reference Include="System.Xaml" />
 					<Reference Include="System.Xml" />
 					<Reference Include="System.Xml.Linq" />
@@ -359,10 +360,11 @@
 					<File name="Properties\WPFAssemblyInfo.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Main\Properties\WPFAssemblyInfo.cs" />
 					<File name="ViewModels\Interfaces\IFileMenuViewModel.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Main\ViewModels\Interfaces\IFileMenuViewModel.cs" />
 					<File name="ViewModels\FileMenuViewModel.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Main\ViewModels\FileMenuViewModel.cs" />
-					<File name="Views\FileMenuView.xaml" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Main\Views\FileMenuView.xaml" BuildAction="Page" language="XML" />
+					<File name="Views\FileMenuView.xaml" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Main\Views\FileMenuView.xaml" buildAction="Page" language="XML" />
    					<File name="Views\FileMenuView.xaml.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Main\Views\FileMenuView.xaml.cs" SubType="Code" DependentUpon="FileMenuView.xaml" />
 					<File name="ModuleInit.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Main\ModuleInit.cs" />
 					<File name="Names.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Main\Names.cs" />
+					<File name="packages.config" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Main\packages.config" />										
 				</Files>
 			</Project>
 		
@@ -415,16 +417,17 @@
 					<File name="ViewModels\TaskViewModel.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\ViewModels\TaskViewModel.cs" />
 					<File name="ViewModels\ViewModel1.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\ViewModels\ViewModel1.cs" />
 					<File name="ViewModels\ViewModel2.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\ViewModels\ViewModel2.cs" />
-					<File name="Views\NavigationView.xaml" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\Views\NavigationView.xaml" BuildAction="Page" language="XML" />
+					<File name="Views\NavigationView.xaml" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\Views\NavigationView.xaml" buildAction="Page" language="XML" />
    					<File name="Views\NavigationView.xaml.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\Views\NavigationView.xaml.cs" SubType="Code" DependentUpon="NavigationView.xaml" />
-					<File name="Views\TaskView.xaml" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\Views\TaskView.xaml" BuildAction="Page" language="XML" />
+					<File name="Views\TaskView.xaml" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\Views\TaskView.xaml" buildAction="Page" language="XML" />
    					<File name="Views\TaskView.xaml.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\Views\TaskView.xaml.cs" SubType="Code" DependentUpon="TaskView.xaml" />
-					<File name="Views\View1.xaml" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\Views\View1.xaml" BuildAction="Page" language="XML" />
+					<File name="Views\View1.xaml" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\Views\View1.xaml" buildAction="Page" language="XML" />
    					<File name="Views\View1.xaml.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\Views\View1.xaml.cs" SubType="Code" DependentUpon="View1.xaml" />
-					<File name="Views\View2.xaml" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\Views\View2.xaml" BuildAction="Page" language="XML" />
+					<File name="Views\View2.xaml" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\Views\View2.xaml" buildAction="Page" language="XML" />
    					<File name="Views\View2.xaml.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\Views\View2.xaml.cs" SubType="Code" DependentUpon="View2.xaml" />
 					<File name="ModuleInit.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\ModuleInit.cs" />
 					<File name="Names.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\Names.cs" />
+					<File name="packages.config" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\packages.config" />
 				</Files>
 			</Project>
 
@@ -477,16 +480,17 @@
 					<File name="ViewModels\TaskViewModel.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\ViewModels\TaskViewModel.cs" />
 					<File name="ViewModels\ViewModel1.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\ViewModels\ViewModel1.cs" />
 					<File name="ViewModels\ViewModel2.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\ViewModels\ViewModel2.cs" />
-					<File name="Views\NavigationView.xaml" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\Views\NavigationView.xaml" BuildAction="Page" language="XML" />
+					<File name="Views\NavigationView.xaml" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\Views\NavigationView.xaml" buildAction="Page" language="XML" />
    					<File name="Views\NavigationView.xaml.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\Views\NavigationView.xaml.cs" SubType="Code" DependentUpon="NavigationView.xaml" />
-					<File name="Views\TaskView.xaml" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\Views\TaskView.xaml" BuildAction="Page" language="XML" />
+					<File name="Views\TaskView.xaml" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\Views\TaskView.xaml" buildAction="Page" language="XML" />
    					<File name="Views\TaskView.xaml.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\Views\TaskView.xaml.cs" SubType="Code" DependentUpon="TaskView.xaml" />
-					<File name="Views\View1.xaml" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\Views\View1.xaml" BuildAction="Page" language="XML" />
+					<File name="Views\View1.xaml" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\Views\View1.xaml" buildAction="Page" language="XML" />
    					<File name="Views\View1.xaml.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\Views\View1.xaml.cs" SubType="Code" DependentUpon="View1.xaml" />
-					<File name="Views\View2.xaml" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\Views\View2.xaml" BuildAction="Page" language="XML" />
+					<File name="Views\View2.xaml" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\Views\View2.xaml" buildAction="Page" language="XML" />
    					<File name="Views\View2.xaml.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\Views\View2.xaml.cs" SubType="Code" DependentUpon="View2.xaml" />
 					<File name="ModuleInit.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\ModuleInit.cs" />
 					<File name="Names.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\Names.cs" />
+					<File name="packages.config" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\packages.config" />
 				</Files>
 			</Project>
 
@@ -538,19 +542,20 @@
 			<Files>
 				<File name="Properties\AssemblyInfo.cs" src="PRISM\ApplicationUnity\Solution\Properties\AssemblyInfo.cs" />
 				<File name="Properties\WPFAssemblyInfo.cs" src="PRISM\ApplicationUnity\Solution\Properties\WPFAssemblyInfo.cs" />
-				<File name="Themes\Generic.xaml" src="PRISM\ApplicationUnity\Solution\Themes\Generic.xaml" BuildAction="Page" CustomTool="MSBuild:Compile" language="XML" />
+				<File name="Themes\Generic.xaml" src="PRISM\ApplicationUnity\Solution\Themes\Generic.xaml" buildAction="Page" CustomTool="MSBuild:Compile" language="XML" />
  				<File name="app.config" src="PRISM\ApplicationUnity\Solution\app.config" CopyToOutputDirectory="Always"/>
  				<File name="app.manifest" src="PRISM\ApplicationUnity\Solution\app.manifest" />
-				<File name="App.xaml" src="PRISM\ApplicationUnity\Solution\App.xaml" BuildAction="ApplicationDefinition" language="XML" />
+				<File name="App.xaml" src="PRISM\ApplicationUnity\Solution\App.xaml" buildAction="ApplicationDefinition" language="XML" />
 				<File name="App.xaml.cs" src="PRISM\ApplicationUnity\Solution\App.xaml.cs" SubType="Code" DependentUpon="App.xaml" />
 				<File name="Bootstrapper.cs" src="PRISM\ApplicationUnity\Solution\Bootstrapper.cs" />
 				<File name="nlog.config" src="PRISM\ApplicationUnity\Solution\nlog.config" CopyToOutputDirectory="Always" />
 				<File name="unity.config" src="PRISM\ApplicationUnity\Solution\unity.config" CopyToOutputDirectory="Always" />
 				<File name="Shell.ico" src="PRISM\ApplicationUnity\Solution\Shell.ico" binary="true"/>
-				<File name="Shell.xaml" src="PRISM\ApplicationUnity\Solution\Shell.xaml" BuildAction="Page" language="XML" />
+				<File name="Shell.xaml" src="PRISM\ApplicationUnity\Solution\Shell.xaml" buildAction="Page" language="XML" />
 				<File name="Shell.xaml.cs" src="PRISM\ApplicationUnity\Solution\Shell.xaml.cs" SubType="Code" DependentUpon="Shell.xaml" />
 				<File name="ShellViewModel.cs" src="PRISM\ApplicationUnity\Solution\ShellViewModel.cs" />
-				<File name="${SolutionName}Db.s3db" src="PRISM\ApplicationUnity\Solution\SolutionDb.s3db" CopyToOutputDirectory="Always" />
+				<File name="${ProjectName}.s3db" src="PRISM\ApplicationUnity\Solution\SolutionDb.s3db" binary="true" CopyToOutputDirectory="Always" />
+				<File name="packages.config" src="PRISM\ApplicationUnity\Solution\packages.config" />
 			</Files>
 
 		</Project>

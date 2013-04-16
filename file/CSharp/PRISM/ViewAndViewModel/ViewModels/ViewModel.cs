@@ -29,6 +29,10 @@ namespace ${StandardNamespace}.ViewModels
 	// TODO: Add code to create a navigation path
 	//       case Names.${FileNameWithoutExtension}NavItem:
     //       	return typeof(${FileNameWithoutExtension}View).FullName + query;
+	
+	// TODO: Finally!
+	//       Replace all occurences of <SolutionName> in this Project with the name of your Solution!
+
 
 
 	public class ${FileNameWithoutExtension}ViewModel : ViewModelBase, I${FileNameWithoutExtension}ViewModel, IConfirmNavigationRequest, IRegionMemberLifetime

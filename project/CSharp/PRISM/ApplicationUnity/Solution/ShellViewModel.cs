@@ -18,7 +18,7 @@ namespace ${SolutionName}
 		
 		public ShellViewModel(IAppResourceService ResourceService)
 		{
-			MainImage = ResourceService.GetPng256("${SolutionName}Shell");
+			MainImage = ResourceService.GetPng256("Shell");
 		}
 
 	}

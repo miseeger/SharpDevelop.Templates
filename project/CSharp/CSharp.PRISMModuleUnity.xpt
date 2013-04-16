@@ -14,6 +14,7 @@
 	<!-- Actions -->
 	<Actions>
 		<Open filename = "ModuleInit.cs"/>
+		<RunCommand path="/AddIns/PackageManagement/TemplateCommands/InstallPackages"/>		
 	</Actions>
 	
 	<Project language = "C#">
@@ -49,71 +50,40 @@
 		<Files>
 
 			<!-- NavigationView -->
-			<File name="ViewModels\Interfaces\INavigationViewModel.cs" 
-			      src="PRISM\ModuleUnity\ViewModels\Interfaces\INavigationViewModel.cs"/>
-			<File name="ViewModels\NavigationViewModel.cs" 
-			      src="PRISM\ModuleUnity\ViewModels\NavigationViewModel.cs"/>
-			<File name="Views\NavigationView.xaml" 
-			      buildAction="Page" 
-			      language="XML"
-				  src="PRISM\ModuleUnity\Views\NavigationView.xaml"/>
-			<File name="Views\NavigationView.xaml.cs" 
-			      SubType="Code" 
-			      DependentUpon="Views\NavigationView.xaml"
-				  src="PRISM\ModuleUnity\Views\NavigationView.xaml.cs"/>
+			<File name="ViewModels\Interfaces\INavigationViewModel.cs" src="PRISM\ModuleUnity\ViewModels\Interfaces\INavigationViewModel.cs"/>
+			<File name="ViewModels\NavigationViewModel.cs" src="PRISM\ModuleUnity\ViewModels\NavigationViewModel.cs"/>
+			<File name="Views\NavigationView.xaml" buildAction="Page" language="XML" src="PRISM\ModuleUnity\Views\NavigationView.xaml"/>
+			<File name="Views\NavigationView.xaml.cs" SubType="Code" DependentUpon="Views\NavigationView.xaml" src="PRISM\ModuleUnity\Views\NavigationView.xaml.cs"/>
 
 			<!-- TaskView -->
-			<File name="ViewModels\Interfaces\ITaskViewModel.cs"
-			      src="PRISM\ModuleUnity\ViewModels\Interfaces\ITaskViewModel.cs"/>
-			<File name="ViewModels\TaskViewModel.cs"
-				  src="PRISM\ModuleUnity\ViewModels\TaskViewModel.cs"/>
-			<File name="Views\TaskView.xaml" 
-			      buildAction="Page" 
-			      language="XML"
-				  src="PRISM\ModuleUnity\Views\TaskView.xaml"/>
-			<File name="Views\TaskView.xaml.cs" 
-				  SubType="Code" 
-				  DependentUpon="Views\TaskView.xaml"
-				  src="PRISM\ModuleUnity\Views\TaskView.xaml.cs"/>
+			<File name="ViewModels\Interfaces\ITaskViewModel.cs" src="PRISM\ModuleUnity\ViewModels\Interfaces\ITaskViewModel.cs"/>
+			<File name="ViewModels\TaskViewModel.cs" src="PRISM\ModuleUnity\ViewModels\TaskViewModel.cs"/>
+			<File name="Views\TaskView.xaml" buildAction="Page" language="XML" src="PRISM\ModuleUnity\Views\TaskView.xaml"/>
+			<File name="Views\TaskView.xaml.cs" SubType="Code" DependentUpon="Views\TaskView.xaml" src="PRISM\ModuleUnity\Views\TaskView.xaml.cs"/>
 			
 			<!-- View1 -->
-			<File name="ViewModels\Interfaces\IViewModel1.cs"
-				  src="PRISM\ModuleUnity\ViewModels\Interfaces\IViewModel1.cs"/>
-			<File name="ViewModels\ViewModel1.cs"
-				  src="PRISM\ModuleUnity\ViewModels\ViewModel1.cs"/>
-			<File name="Views\View1.xaml" 
-				  buildAction="Page" 
-				  language="XML"
-				  src="PRISM\ModuleUnity\Views\View1.xaml"/>
-			<File name="Views\View1.xaml.cs" 
-				  SubType="Code" 
-				  DependentUpon="Views\View1.xaml"
-				  src="PRISM\ModuleUnity\Views\View1.xaml.cs"/>
+			<File name="ViewModels\Interfaces\IViewModel1.cs" src="PRISM\ModuleUnity\ViewModels\Interfaces\IViewModel1.cs"/>
+			<File name="ViewModels\ViewModel1.cs" src="PRISM\ModuleUnity\ViewModels\ViewModel1.cs"/>
+			<File name="Views\View1.xaml" buildAction="Page" language="XML" src="PRISM\ModuleUnity\Views\View1.xaml"/>
+			<File name="Views\View1.xaml.cs" SubType="Code" DependentUpon="Views\View1.xaml" src="PRISM\ModuleUnity\Views\View1.xaml.cs"/>
 			
 			<!-- View2 -->
-			<File name="ViewModels\Interfaces\IViewModel2.cs"
-				  src="PRISM\ModuleUnity\ViewModels\Interfaces\IViewModel2.cs"/>
-			<File name="ViewModels\ViewModel2.cs"
-				  src="PRISM\ModuleUnity\ViewModels\ViewModel2.cs"/>
-			<File name="Views\View2.xaml" 
-				  buildAction="Page" 
-				  language="XML"
-				  src="PRISM\ModuleUnity\Views\View2.xaml"/>
-			<File name="Views\View2.xaml.cs" 
-				  SubType="Code" 
-				  DependentUpon="Views\View2.xaml"
-				  src="PRISM\ModuleUnity\Views\View2.xaml.cs"/>
+			<File name="ViewModels\Interfaces\IViewModel2.cs" src="PRISM\ModuleUnity\ViewModels\Interfaces\IViewModel2.cs"/>
+			<File name="ViewModels\ViewModel2.cs" src="PRISM\ModuleUnity\ViewModels\ViewModel2.cs"/>
+			<File name="Views\View2.xaml" buildAction="Page" language="XML" src="PRISM\ModuleUnity\Views\View2.xaml"/>
+			<File name="Views\View2.xaml.cs" SubType="Code" DependentUpon="Views\View2.xaml" src="PRISM\ModuleUnity\Views\View2.xaml.cs"/>
 		
 			<!-- Module -->			
-			<File name="ModuleInit.cs"
-				  src="PRISM\ModuleUnity\ModuleInit.cs"/>
-			<File name="Names.cs"
-				  src="PRISM\ModuleUnity\Names.cs"/>
+			<File name="ModuleInit.cs" src="PRISM\ModuleUnity\ModuleInit.cs"/>
+			<File name="Names.cs" src="PRISM\ModuleUnity\Names.cs"/>
 
 			<!-- Properties -->
 			<File name="Properties\WPFAssemblyInfo.cs" src="WPFAssemblyInfo.cs" />
 			<File name="Properties\AssemblyInfo.cs" src="DefaultAssemblyInfo.cs" />
-		
+			
+			<!-- Packages -->
+			<File name="packages.config" src="PRISM\ModuleUnity\packages.config" />										
+
 		</Files>
 	
 	</Project>
