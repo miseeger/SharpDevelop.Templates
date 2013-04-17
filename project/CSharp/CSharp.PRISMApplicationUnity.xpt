@@ -54,11 +54,7 @@
 					<Reference Include="Microsoft.Practices.Prism.Interactivity" />
 					<Reference Include="Microsoft.Practices.ServiceLocation" />
 					<Reference Include="Microsoft.Practices.Unity" />
-					<Reference Include="NLog">
-                		<HintPath>$(ProgramFiles)\SDDotNetLib\NLog\NLog.dll</HintPath>
-                		<SpecificVersion>False</SpecificVersion>
-                		<Private>False</Private>
-            		</Reference>
+					<Reference Include="NLog" />
 					<Reference Include="PresentationCore" />
 					<Reference Include="PresentationFramework" />
 					<Reference Include="System" />
