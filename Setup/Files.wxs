@@ -1,0 +1,412 @@
+﻿<?xml version="1.0"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+		<DirectoryRef Id="TARGETDIR">
+			<Directory Id="ProgramFilesFolder" Name="PFiles">
+				<Directory Id="SharpDevelop" Name="SharpDevelop">
+					<Directory Id="SharpDevelop.43" Name="4.3">
+						<Directory Id="SharpDevelop.43.Data" Name="data">
+							<!-- Instlalationsverzeichnis -->
+							<Directory Id="INSTALLDIR" Name="templates">
+								<!-- Packages -->
+								<Directory Id="Packages" Name="packages">
+									<Component Id="Packages" Guid="CD003F19-21D8-400E-8A18-CE5ECD22DB1F" DiskId="1">
+										<File Id="packages.CommonServiceLocator.1.0.nupkg" Name="CommonServiceLocator.1.0.nupkg" Source="..\packages\CommonServiceLocator.1.0.nupkg" />
+										<File Id="packages.NLog.2.0.1.2.nupkg" Name="NLog.2.0.1.2.nupkg" Source="..\packages\NLog.2.0.1.2.nupkg" />
+										<File Id="packages.Prism.4.1.0.0.nupkg" Name="Prism.4.1.0.0.nupkg" Source="..\packages\Prism.4.1.0.0.nupkg" />
+										<File Id="packages.Prism.UnityExtensions.4.1.0.0.nupkg" Name="Prism.UnityExtensions.4.1.0.0.nupkg" Source="..\packages\Prism.UnityExtensions.4.1.0.0.nupkg" />
+										<File Id="packages.System.Data.SQLite.1.0.84.0.nupkg" Name="System.Data.SQLite.1.0.84.0.nupkg" Source="..\packages\System.Data.SQLite.1.0.84.0.nupkg" />
+										<File Id="packages.Unity.2.1.505.2.nupkg" Name="Unity.2.1.505.2.nupkg" Source="..\packages\Unity.2.1.505.2.nupkg" />
+									</Component>
+								</Directory>
+								<!-- File-Templates -->
+								<Directory Id="File" Name="file">
+									<Directory Id="FileCSharp" Name="CSharp">
+										<Component Id="CSharp.PRISM.Files" Guid="19D6E6A8-D6A5-4E75-B072-E9D914DB4293" DiskId="1">
+											<File Id="file.CSharp.CSharp.PRISM.ViewAndViewModel.xft" Name="CSharp.PRISM.ViewAndViewModel.xft" Source="..\file\CSharp\CSharp.PRISM.ViewAndViewModel.xft" />
+										</Component>
+										<Directory Id="FileDirCSharpPRISM" Name="PRISM">
+											<Directory Id="FileDirCSharpPRISMViewAndViewModel" Name="ViewAndViewModel">
+												<Directory Id="FileDirCSharpPRISMViewModels" Name="ViewModels">
+													<Component Id="ViewsAndViewModels.ViewModels" Guid="6CB36113-77AC-4168-A7CA-372E70FB0D81" DiskId="1">
+														<File Id="ViewModel.cs" Name="ViewModel.cs" Source="..\file\CSharp\PRISM\ViewAndViewModel\ViewModels\ViewModel.cs" />
+													</Component>
+													<Directory Id="FileDirCSharpPRISMViewModelsInterfaces" Name="Interfaces">
+														<Component Id="ViewsAndViewModels.ViewModels.Interfaces" Guid="9EA46800-5BE2-4452-A76E-B5C6D0C58A75" DiskId="1">
+															<File Id="IViewModel.cs" Name="IViewModel.cs" Source="..\file\CSharp\PRISM\ViewAndViewModel\ViewModels\Interfaces\IViewModel.cs" />
+														</Component>
+													</Directory>												
+												</Directory>
+												<Directory Id="FileDirCSharpPRISMViews" Name="Views">
+													<Component Id="ViewsAndViewModels.Views" Guid="5EDE4529-7C6C-47E9-9237-4139C290EB01" DiskId="1">
+														<File Id="View.xaml" Name="View.xaml" Source="..\file\CSharp\PRISM\ViewAndViewModel\Views\View.xaml" />
+														<File Id="View.xaml.cs" Name="View.xaml.cs" Source="..\file\CSharp\PRISM\ViewAndViewModel\Views\View.xaml.cs" />
+													</Component>
+												</Directory>
+											</Directory>
+										</Directory>
+									</Directory>
+								</Directory>
+								<!-- Project-Templates -->
+								<Directory Id="Project" Name="project">
+									<Directory Id="ProjectCSharp" Name="CSharp">
+										<Component Id="CSharp.PRISM.Projects" Guid="234B3B84-2C3C-4D2B-99E6-2F0E6768E165" DiskId="1">
+											<File Id="CSharp.PRISMApplicationUnity.xpt" Name="CSharp.PRISMApplicationUnity.xpt" Source="..\project\CSharp\CSharp.PRISMApplicationUnity.xpt"  />
+											<File Id="CSharp.PRISMModuleUnity.xpt" Name="CSharp.PRISMModuleUnity.xpt" Source="..\project\CSharp\CSharp.PRISMModuleUnity.xpt"  />
+										</Component>
+										<Directory Id="ProjectCSharpPRISM" Name="PRISM">
+											<Directory Id="ApplicationUnity" Name="ApplicationUnity">
+												<Directory Id="ApplicationUnityBase" Name="Base">
+													<Directory Id="ApplicationUnitySolutionBase" Name="Solution.Base">
+														<Component Id="ApplicationUnity.Base" Guid="6CEA4D25-9094-42C7-8AB5-532FE0E32CA1" DiskId="1">
+															<File Id="GlobalCommands.cs" Name="GlobalCommands.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base\GlobalCommands.cs"  />
+															<File Id="GlobalEvents.cs" Name="GlobalEvents.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base\GlobalEvents.cs"  />
+															<File Id="packages.config" Name="packages.config" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base\packages.config"  />
+														</Component>
+														<Directory Id="ApplicationUnityBaseInterfaces" Name="Interfaces">
+															<Directory Id="ApplicationUnityInterfacesServices" Name="Services">
+																<Component Id="ApplicationUnity.Base.Interfaces.Services" Guid="E1A2DBE8-20F9-4E0C-90BF-88CB415B239B" DiskId="1">
+																	<File Id="IAppResourceService.cs" Name="IAppResourceService.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base\Interfaces\Services\IAppResourceService.cs"  />
+																	<File Id="IBusinessService.cs" Name="IBusinessService.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base\Interfaces\Services\IBusinessService.cs"  />
+																	<File Id="IDataService.cs" Name="IDataService.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base\Interfaces\Services\IDataService.cs"  />
+																	<File Id="IMessageBoxService.cs" Name="IMessageBoxService.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base\Interfaces\Services\IMessageBoxService.cs"  />
+																</Component>
+															</Directory>
+														</Directory>
+														<Directory Id="ApplicationUnityBaseLogger" Name="Logger">
+															<Component Id="ApplicationUnity.Base.Logger" Guid="4A055C20-1454-40C2-8A9C-74E13F23A628" DiskId="1">
+																<File Id="NLogLogger.cs" Name="NLogLogger.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base\Logger\NLogLogger.cs"  />
+															</Component>
+														</Directory>
+														<Directory Id="ApplicationUnityBaseMvvm" Name="Mvvm">
+															<Component Id="ApplicationUnity.Base.Mvvm" Guid="66538F4A-5326-490F-A74C-B04EC395714D" DiskId="1">
+																<File Id="DataObject.cs" Name="DataObject.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base\Mvvm\DataObject.cs"  />
+																<File Id="EditableDataObject.cs" Name="EditableDataObject.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base\Mvvm\EditableDataObject.cs"  />
+																<File Id="Names.cs" Name="Names.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base\Mvvm\Names.cs"  />
+																<File Id="NotifyableObject.cs" Name="NotifyableObject.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base\Mvvm\NotifyableObject.cs"  />
+																<File Id="RelayCommand.cs" Name="RelayCommand.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base\Mvvm\RelayCommand.cs"  />
+																<File Id="UserControlViewBase.cs" Name="UserControlViewBase.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base\Mvvm\UserControlViewBase.cs"  />
+																<File Id="ValidatableDataObject.cs" Name="ValidatableDataObject.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base\Mvvm\ValidatableDataObject.cs"  />
+																<File Id="ViewModelBase.cs" Name="ViewModelBase.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base\Mvvm\ViewModelBase.cs"  />
+																<File Id="WindowViewBase.cs" Name="WindowViewBase.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base\Mvvm\WindowViewBase.cs"  />
+															</Component>
+															<Directory Id="ApplicationUnityBaseMvvmAttributes" Name="Attributes">
+																<Component Id="ApplicationUnity.Base.Mvvm.Attribute" Guid="260EFC4A-42EE-417B-98E7-0C2ABDFDBEE7" DiskId="1">
+																	<File Id="IgnoreObjectStatusAttribute.cs" Name="IgnoreObjectStatusAttribute.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base\Mvvm\Attributes\IgnoreObjectStatusAttribute.cs"  />
+																</Component>
+															</Directory>
+															<Directory Id="ApplicationUnityBaseMvvmEnum" Name="Enum">
+																<Component Id="ApplicationUnity.Base.Mvvm.Enum" Guid="96565C63-5072-4A24-9FFE-6461CC6B42CD" DiskId="1">
+																	<File Id="DataObjectStatus.cs" Name="DataObjectStatus.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base\Mvvm\Enum\DataObjectStatus.cs"  />
+																</Component>
+															</Directory>
+															<Directory Id="ApplicationUnityBaseMvvmEvents" Name="Events">
+																<Component Id="ApplicationUnity.Base.Mvvm.Events" Guid="6C56AC18-6A0F-43E9-B765-7BCFA67C93FD" DiskId="1">
+																	<File Id="DataErrorChangedEventArgs.cs" Name="DataErrorChangedEventArgs.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base\Mvvm\Events\DataErrorChangedEventArgs.cs"  />
+																</Component>
+															</Directory>
+															<Directory Id="ApplicationUnityBaseMvvmInterfaces" Name="Interfaces">
+																<Component Id="ApplicationUnity.Base.Mvvm.Interfaces" Guid="EA3809D0-D455-47A7-A5B7-2E6E22729A60" DiskId="1">
+																	<File Id="IDataObject.cs" Name="IDataObject.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base\Mvvm\Interfaces\IDataObject.cs"  />
+																	<File Id="IEditableDataObject.cs" Name="IEditableDataObject.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base\Mvvm\Interfaces\IEditableDataObject.cs"  />
+																	<File Id="INotifyDataErrorInfo.cs" Name="INotifyDataErrorInfo.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base\Mvvm\Interfaces\INotifyDataErrorInfo.cs"  />
+																	<File Id="IValidatableDataObject.cs" Name="IValidatableDataObject.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base\Mvvm\Interfaces\IValidatableDataObject.cs"  />
+																	<File Id="IView.cs" Name="IView.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base\Mvvm\Interfaces\IView.cs"  />
+																	<File Id="Interfaces.IViewModel.cs" Name="IViewModel.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base\Mvvm\Interfaces\IViewModel.cs"  />
+																</Component>
+															</Directory>
+														</Directory>
+														<Directory Id="ApplicationUnityBaseNames" Name="Names">
+															<Component Id="ApplicationUnity.Base.Names" Guid="A8CC596E-8A2B-4EF3-966B-85662677E14C" DiskId="1">
+																<File Id="RegionNames.cs" Name="RegionNames.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base\Names\RegionNames.cs"  />
+															</Component>
+														</Directory>
+														<Directory Id="ApplicationUnityBaseNavigation" Name="Navigation">
+															<Component Id="ApplicationUnity.Base.Navigation" Guid="DB609807-4EBC-4B8F-859B-5E78B2F375AD" DiskId="1">
+																<File Id="NavigationExtensions.cs" Name="NavigationExtensions.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base\Navigation\NavigationExtensions.cs"  />
+																<File Id="NavigationItem.cs" Name="NavigationItem.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base\Navigation\NavigationItem.cs"  />
+															</Component>
+														</Directory>
+														<Directory Id="ApplicationUnityBasePersistence" Name="Persistence">
+															<Directory Id="ApplicationUnityBasePersistencePetaPoco" Name="PetaPoco">
+																<Component Id="ApplicationUnity.Base.Base.PetaPoco" Guid="F7574842-0C2B-4E20-9E03-250A81347D30" DiskId="1">
+																	<File Id="PetaPoco.cs" Name="PetaPoco.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base\Persistence\PetaPoco\PetaPoco.cs"  />
+																	<File Id="PetaPocoRepoUow.cs" Name="PetaPocoRepoUow.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base\Persistence\PetaPoco\PetaPocoRepoUow.cs"  />
+																</Component>
+															</Directory>
+														</Directory>
+														<Directory Id="ApplicationUnityBaseProperties" Name="Properties">
+															<Component Id="ApplicationUnity.Base.Properties" Guid="141BCCE6-26CD-445A-B4AA-08742A56B5C8" DiskId="1">
+																<File Id="AssemblyInfo.cs" Name="AssemblyInfo.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base\Properties\AssemblyInfo.cs"  />
+															</Component>
+														</Directory>
+														<Directory Id="ApplicationUnityBaseServices" Name="Services">
+															<Component Id="ApplicationUnity.Base.Services" Guid="3F2C01F9-E111-478E-8F31-6DDF47F85AD5" DiskId="1">
+																<File Id="MessageBoxService.cs" Name="MessageBoxService.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base\Services\MessageBoxService.cs"  />
+															</Component>
+														</Directory>
+													</Directory>
+													<Directory Id="ApplicationUnityBaseBusiness" Name="Solution.Base.Business">
+														<Component Id="ApplicationUnity.Base.Business" Guid="F5898069-F6D4-49C4-943B-F1F5313888D4" DiskId="1">
+															<File Id="Solution.Base.Business.packages.config" Name="packages.config" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base.Business\packages.config"  />
+															<File Id="Service.cs" Name="Service.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base.Business\Service.cs"  />
+														</Component>
+														<Directory Id="ApplicationUnityBaseBusinessProperties" Name="Properties">
+															<Component Id="ApplicationUnity.Base.Business.Properties" Guid="0D2056BB-29AB-4D18-B0D8-99DC627A60D9" DiskId="1">
+																<File Id="Properties.AssemblyInfo.cs" Name="AssemblyInfo.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base.Business\Properties\AssemblyInfo.cs"  />
+															</Component>
+														</Directory>
+													</Directory>
+													<Directory Id="ApplicationUnityBaseBusinessModel" Name="Solution.Base.Business.Model">
+														<Directory Id="ApplicationUnityBaseBusinessModelProperties" Name="Properties">
+															<Component Id="ApplicationUnity.Base.Business.Model.Properties" Guid="3283F580-20B9-44DA-A230-0E543AE9852D" DiskId="1">
+																<File Id="Properties.AssemblyInfo1.cs" Name="AssemblyInfo.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base.Business.Model\Properties\AssemblyInfo.cs"  />
+															</Component>
+														</Directory>
+													</Directory>
+													<Directory Id="ApplicationUnityBaseData" Name="Solution.Base.Data">
+														<Component Id="ApplicationUnity.Base.Data" Guid="98B1B5C3-49C9-4B25-A7FC-783E550AA760" DiskId="1">
+															<File Id="DbService.cs" Name="DbService.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base.Data\DbService.cs"  />
+															<File Id="Solution.Base.Data.Names.cs" Name="Names.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base.Data\Names.cs"  />
+															<File Id="Solution.Base.Data.packages.config" Name="packages.config" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base.Data\packages.config"  />
+															<File Id="XmlService.cs" Name="XmlService.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base.Data\XmlService.cs"  />
+														</Component>
+														<Directory Id="ApplicationUnityBaseDataDataProperties" Name="Properties">
+															<Component Id="ApplicationUnity.Base.Data.Properties" Guid="9F748085-48C9-4F45-A18E-3C4B93BF1C50" DiskId="1">
+																<File Id="Properties.AssemblyInfo2.cs" Name="AssemblyInfo.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base.Data\Properties\AssemblyInfo.cs"  />
+															</Component>
+														</Directory>
+													</Directory>
+													<Directory Id="ApplicationUnityBaseDataModel" Name="Solution.Base.Data.Model">
+														<Component Id="ApplicationUnity.Base.Data.Model" Guid="BDB74591-1E06-45EB-998A-72684379244A" DiskId="1">
+															<File Id="Account.cs" Name="Account.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base.Data.Model\Account.cs"  />
+															<File Id="Address.cs" Name="Address.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base.Data.Model\Address.cs"  />
+															<File Id="Contact.cs" Name="Contact.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base.Data.Model\Contact.cs"  />
+														</Component>
+														<Directory Id="ApplicationUnityBaseDataModelInterfaces" Name="Interfaces">
+															<Component Id="ApplicationUnity.Base.Data.Model.Interfaces" Guid="31DDA654-B65B-4CF5-9AE6-2930DB8C3D54" DiskId="1">
+																<File Id="IAccount.cs" Name="IAccount.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base.Data.Model\Interfaces\IAccount.cs"  />
+																<File Id="IAddress.cs" Name="IAddress.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base.Data.Model\Interfaces\IAddress.cs"  />
+																<File Id="IContact.cs" Name="IContact.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base.Data.Model\Interfaces\IContact.cs"  />
+															</Component>
+														</Directory>
+														<Directory Id="ApplicationUnityBaseDataModelProperties" Name="Properties">
+															<Component Id="ApplicationUnity.Base.Data.Model.Properties" Guid="419C9E4D-99D3-44DB-B87D-1748D84E8AB6" DiskId="1">
+																<File Id="Properties.AssemblyInfo3.cs" Name="AssemblyInfo.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base.Data.Model\Properties\AssemblyInfo.cs"  />
+															</Component>
+														</Directory>
+													</Directory>
+													<Directory Id="ApplicationUnityBaseResource" Name="Solution.Base.Resource">
+														<Component Id="ApplicationUnity.Base.Resource" Guid="DC33572A-0C5F-4F7B-85F0-04B63CC2B885" DiskId="1">
+															<File Id="Solution.Base.Resource.Service.cs" Name="Service.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base.Resource\Service.cs"  />
+														</Component>
+														<Directory Id="ApplicationUnityBaseResourceImages" Name="Images">
+															<Directory Id="ApplicationUnityBaseResourceImages16" Name="16x16">
+																<Component Id="ApplicationUnity.Base.Resource.Images.16x16" Guid="7C22E742-1A49-473A-B821-57865D8E7EBE" DiskId="1">
+																	<File Id="door_open_out.png" Name="door-open-out.png" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\16x16\door-open-out.png"  />
+																	<File Id="globe.png" Name="globe.png" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\16x16\globe.png"  />
+																	<File Id="jar.png" Name="jar.png" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\16x16\jar.png"  />
+																	<File Id="users.png" Name="users.png" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\16x16\users.png"  />
+																</Component>
+															</Directory>
+															<Directory Id="ApplicationUnityBaseResourceImages256" Name="256x256">
+																<Component Id="ApplicationUnity.Base.Resource.Images.256x256" Guid="A05FBA47-BB43-4546-A0C0-0CFFC37E67F6" DiskId="1">
+																	<File Id="SolutionShell.png" Name="SolutionShell.png" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\256x256\SolutionShell.png"  />
+																</Component>
+															</Directory>
+														</Directory>
+														<Directory Id="ApplicationUnityBaseResourceProperties" Name="Properties">
+															<Component Id="ApplicationUnity.Base.Resource.Properties" Guid="79F01DE7-3AF7-40E8-8598-B1F348E538D4" DiskId="1">
+																<File Id="Properties.AssemblyInfo4.cs" Name="AssemblyInfo.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Base\Solution.Base.Resource\Properties\AssemblyInfo.cs"  />
+															</Component>
+														</Directory>
+													</Directory>
+												</Directory>
+												<Directory Id="ApplicationUnityModules" Name="Modules">
+													<Directory Id="ApplicationUnityModulesAccounts" Name="Solution.Modules.Accounts">
+														<Component Id="ApplicationUnity.Modules.Accounts" Guid="AA6F33A1-0D57-4393-9311-7BB5D2F8A107" DiskId="1">
+															<File Id="ModuleInit.cs" Name="ModuleInit.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\ModuleInit.cs"  />
+															<File Id="Solution.Modules.Accounts.Names.cs" Name="Names.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\Names.cs"  />
+															<File Id="Solution.Modules.Accounts.packages.config" Name="packages.config" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\packages.config"  />
+														</Component>
+														<Directory Id="ApplicationUnityModulesAccountsProperties" Name="Properties">
+															<Component Id="ApplicationUnity.Modules.Accounts.Properties" Guid="848ACB0E-980B-4F78-9D6E-84C0EE7BEC31" DiskId="1">
+																<File Id="Properties.AssemblyInfo5.cs" Name="AssemblyInfo.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\Properties\AssemblyInfo.cs"  />
+																<File Id="WPFAssemblyInfo.cs" Name="WPFAssemblyInfo.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\Properties\WPFAssemblyInfo.cs"  />
+															</Component>
+														</Directory>
+														<Directory Id="ApplicationUnityModulesAccountsViewModels" Name="ViewModels">
+															<Component Id="ApplicationUnity.Modules.Accounts.ViewModels" Guid="C82BF191-CCD8-4E12-B12A-E8592321898E" DiskId="1">
+																<File Id="NavigationViewModel.cs" Name="NavigationViewModel.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\ViewModels\NavigationViewModel.cs"  />
+																<File Id="TaskViewModel.cs" Name="TaskViewModel.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\ViewModels\TaskViewModel.cs"  />
+																<File Id="ViewModel1.cs" Name="ViewModel1.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\ViewModels\ViewModel1.cs"  />
+																<File Id="ViewModel2.cs" Name="ViewModel2.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\ViewModels\ViewModel2.cs"  />
+															</Component>
+															<Directory Id="ApplicationUnityModulesAccountsViewModelsInterfaces" Name="Interfaces">
+																<Component Id="ApplicationUnity.Modules.Accounts.ViewModels.Interfaces" Guid="86597E0A-A667-4D1A-BADD-CBC0276C90A0" DiskId="1">
+																	<File Id="INavigationViewModel.cs" Name="INavigationViewModel.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\ViewModels\Interfaces\INavigationViewModel.cs"  />
+																	<File Id="ITaskViewModel.cs" Name="ITaskViewModel.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\ViewModels\Interfaces\ITaskViewModel.cs"  />
+																	<File Id="IViewModel1.cs" Name="IViewModel1.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\ViewModels\Interfaces\IViewModel1.cs"  />
+																	<File Id="IViewModel2.cs" Name="IViewModel2.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\ViewModels\Interfaces\IViewModel2.cs"  />
+																</Component>
+															</Directory>
+														</Directory>
+														<Directory Id="ApplicationUnityModulesAccountsViews" Name="Views">
+															<Component Id="ApplicationUnity.Modules.Accounts.Views" Guid="414E7290-358F-4099-84E1-EABCC9B41537" DiskId="1">
+																<File Id="NavigationView.xaml" Name="NavigationView.xaml" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\Views\NavigationView.xaml"  />
+																<File Id="NavigationView.xaml.cs" Name="NavigationView.xaml.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\Views\NavigationView.xaml.cs"  />
+																<File Id="TaskView.xaml" Name="TaskView.xaml" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\Views\TaskView.xaml"  />
+																<File Id="TaskView.xaml.cs" Name="TaskView.xaml.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\Views\TaskView.xaml.cs"  />
+																<File Id="View1.xaml" Name="View1.xaml" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\Views\View1.xaml"  />
+																<File Id="View1.xaml.cs" Name="View1.xaml.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\Views\View1.xaml.cs"  />
+																<File Id="View2.xaml" Name="View2.xaml" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\Views\View2.xaml"  />
+																<File Id="View2.xaml.cs" Name="View2.xaml.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Accounts\Views\View2.xaml.cs"  />
+															</Component>
+														</Directory>
+													</Directory>
+													<Directory Id="ApplicationUnityModulesContacts" Name="Solution.Modules.Contacts">
+														<Component Id="ApplicationUnity.Modules.Contacts" Guid="7B3890E9-190C-4B1C-9978-0A16F4F8326A" DiskId="1">
+															<File Id="Solution.Modules.Contacts.ModuleInit.cs" Name="ModuleInit.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\ModuleInit.cs"  />
+															<File Id="Solution.Modules.Contacts.Names.cs" Name="Names.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\Names.cs"  />
+															<File Id="Solution.Modules.Contacts.packages.config" Name="packages.config" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\packages.config"  />
+														</Component>
+														<Directory Id="ApplicationUnityModulesContactsProperties" Name="Properties">
+															<Component Id="ApplicationUnity.Modules.Contacts.Properties" Guid="28D5DAC3-72C0-49A9-BC72-94C81566B881" DiskId="1">
+																<File Id="Properties.AssemblyInfo6.cs" Name="AssemblyInfo.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\Properties\AssemblyInfo.cs"  />
+																<File Id="Properties.WPFAssemblyInfo.cs" Name="WPFAssemblyInfo.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\Properties\WPFAssemblyInfo.cs"  />
+															</Component>
+														</Directory>
+														<Directory Id="ApplicationUnity.Modules.Contacts.ViewModels" Name="ViewModels">
+															<Component Id="ApplicationUnity.Modules.Contacts.ViewModels" Guid="4396366E-7098-4532-9F57-B4F8D6ED3402" DiskId="1">
+																<File Id="ViewModels.NavigationViewModel.cs" Name="NavigationViewModel.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\ViewModels\NavigationViewModel.cs"  />
+																<File Id="ViewModels.TaskViewModel.cs" Name="TaskViewModel.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\ViewModels\TaskViewModel.cs"  />
+																<File Id="ViewModels.ViewModel1.cs" Name="ViewModel1.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\ViewModels\ViewModel1.cs"  />
+																<File Id="ViewModels.ViewModel2.cs" Name="ViewModel2.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\ViewModels\ViewModel2.cs"  />
+															</Component>
+															<Directory Id="ApplicationUnityModulesContactsViewModelsInterfaces" Name="Interfaces">
+																<Component Id="ApplicationUnity.Modules.Contacts.ViewModels.Interfaces" Guid="7004E725-9416-4F09-88B8-3111FCC1D8B8" DiskId="1">
+																	<File Id="Interfaces.INavigationViewModel.cs" Name="INavigationViewModel.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\ViewModels\Interfaces\INavigationViewModel.cs"  />
+																	<File Id="Interfaces.ITaskViewModel.cs" Name="ITaskViewModel.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\ViewModels\Interfaces\ITaskViewModel.cs"  />
+																	<File Id="Interfaces.IViewModel1.cs" Name="IViewModel1.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\ViewModels\Interfaces\IViewModel1.cs"  />
+																	<File Id="Interfaces.IViewModel2.cs" Name="IViewModel2.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\ViewModels\Interfaces\IViewModel2.cs"  />
+																</Component>
+															</Directory>
+														</Directory>
+														<Directory Id="ApplicationUnityModulesContactsViews" Name="Views">
+															<Component Id="ApplicationUnity.Modules.Contacts.Views" Guid="97CEE211-D361-4A10-8523-0FEF7F13D352" DiskId="1">
+																<File Id="Views.NavigationView.xaml" Name="NavigationView.xaml" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\Views\NavigationView.xaml"  />
+																<File Id="Views.NavigationView.xaml.cs" Name="NavigationView.xaml.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\Views\NavigationView.xaml.cs"  />
+																<File Id="Views.TaskView.xaml" Name="TaskView.xaml" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\Views\TaskView.xaml"  />
+																<File Id="Views.TaskView.xaml.cs" Name="TaskView.xaml.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\Views\TaskView.xaml.cs"  />
+																<File Id="Views.View1.xaml" Name="View1.xaml" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\Views\View1.xaml"  />
+																<File Id="Views.View1.xaml.cs" Name="View1.xaml.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\Views\View1.xaml.cs"  />
+																<File Id="Views.View2.xaml" Name="View2.xaml" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\Views\View2.xaml"  />
+																<File Id="Views.View2.xaml.cs" Name="View2.xaml.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Contacts\Views\View2.xaml.cs"  />
+															</Component>
+														</Directory>
+													</Directory>
+													<Directory Id="ApplicationUnityModulesMain" Name="Solution.Modules.Main">
+														<Component Id="ApplicationUnity.Modules.Main" Guid="B73D580F-B756-434A-979C-66A909EEDBE0" DiskId="1">
+															<File Id="Solution.Modules.Main.ModuleInit.cs" Name="ModuleInit.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Main\ModuleInit.cs"  />
+															<File Id="Solution.Modules.Main.Names.cs" Name="Names.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Main\Names.cs"  />
+															<File Id="Solution.Modules.Main.packages.config" Name="packages.config" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Main\packages.config"  />
+														</Component>
+														<Directory Id="ApplicationUnityModulesMainProperties" Name="Properties">
+															<Component Id="ApplicationUnity.Modules.Main.Properties" Guid="847C8658-B399-483B-9161-7064E3FA142D" DiskId="1">
+																<File Id="Properties.AssemblyInfo7.cs" Name="AssemblyInfo.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Main\Properties\AssemblyInfo.cs"  />
+																<File Id="Properties.WPFAssemblyInfo1.cs" Name="WPFAssemblyInfo.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Main\Properties\WPFAssemblyInfo.cs"  />
+															</Component>
+														</Directory>
+														<Directory Id="ApplicationUnityModulesMainViewModels" Name="ViewModels">
+															<Component Id="ApplicationUnity.Modules.Main.ViewModels" Guid="86F64A00-1061-4539-BE56-6E46F2D311E1" DiskId="1">
+																<File Id="FileMenuViewModel.cs" Name="FileMenuViewModel.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Main\ViewModels\FileMenuViewModel.cs"  />
+															</Component>
+															<Directory Id="ApplicationUnityModulesMainViewModelsInterfaces" Name="Interfaces">
+																<Component Id="ApplicationUnity.Modules.Main.ViewModels.Interfaces" Guid="33CB623E-277E-468E-8F27-B13D6EDC2B8D" DiskId="1">
+																	<File Id="IFileMenuViewModel.cs" Name="IFileMenuViewModel.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Main\ViewModels\Interfaces\IFileMenuViewModel.cs"  />
+																</Component>
+															</Directory>
+														</Directory>
+														<Directory Id="ApplicationUnityModulesMainViews" Name="Views">
+															<Component Id="ApplicationUnity.Modules.Main.Views" Guid="7E8DB465-16B4-47FF-8659-A8659516CEB7" DiskId="1">
+																<File Id="FileMenuView.xaml" Name="FileMenuView.xaml" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Main\Views\FileMenuView.xaml"  />
+																<File Id="FileMenuView.xaml.cs" Name="FileMenuView.xaml.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Modules\Solution.Modules.Main\Views\FileMenuView.xaml.cs"  />
+															</Component>
+														</Directory>
+													</Directory>
+												</Directory>
+												<Directory Id="ApplicationUnitySolution" Name="Solution">
+													<Component Id="ApplicationUnity.Solution" Guid="79267D4A-D09D-437A-825F-0EF76867DADE" DiskId="1">
+														<File Id="app.config" Name="app.config" Source="..\project\CSharp\PRISM\ApplicationUnity\Solution\app.config"  />
+														<File Id="app.manifest" Name="app.manifest" Source="..\project\CSharp\PRISM\ApplicationUnity\Solution\app.manifest"  />
+														<File Id="App.xaml" Name="App.xaml" Source="..\project\CSharp\PRISM\ApplicationUnity\Solution\App.xaml"  />
+														<File Id="App.xaml.cs" Name="App.xaml.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Solution\App.xaml.cs"  />
+														<File Id="Bootstrapper.cs" Name="Bootstrapper.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Solution\Bootstrapper.cs"  />
+														<File Id="nlog.config" Name="nlog.config" Source="..\project\CSharp\PRISM\ApplicationUnity\Solution\nlog.config"  />
+														<File Id="Solution.packages.config" Name="packages.config" Source="..\project\CSharp\PRISM\ApplicationUnity\Solution\packages.config"  />
+														<File Id="Shell.ico" Name="Shell.ico" Source="..\project\CSharp\PRISM\ApplicationUnity\Solution\Shell.ico"  />
+														<File Id="Shell.xaml" Name="Shell.xaml" Source="..\project\CSharp\PRISM\ApplicationUnity\Solution\Shell.xaml"  />
+														<File Id="Shell.xaml.cs" Name="Shell.xaml.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Solution\Shell.xaml.cs"  />
+														<File Id="ShellViewModel.cs" Name="ShellViewModel.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Solution\ShellViewModel.cs"  />
+														<File Id="SolutionDb.s3db" Name="SolutionDb.s3db" Source="..\project\CSharp\PRISM\ApplicationUnity\Solution\SolutionDb.s3db"  />
+														<File Id="unity.config" Name="unity.config" Source="..\project\CSharp\PRISM\ApplicationUnity\Solution\unity.config"  />
+													</Component>
+													<Directory Id="ApplicationUnitySolutionProperties" Name="Properties">
+														<Component Id="ApplicationUnity.Solution.Properties" Guid="7404B84B-FB23-40F8-9F8E-D7D57DBFB03D" DiskId="1">
+															<File Id="Properties.AssemblyInfo8.cs" Name="AssemblyInfo.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Solution\Properties\AssemblyInfo.cs"  />
+															<File Id="Properties.WPFAssemblyInfo2.cs" Name="WPFAssemblyInfo.cs" Source="..\project\CSharp\PRISM\ApplicationUnity\Solution\Properties\WPFAssemblyInfo.cs"  />
+														</Component>
+													</Directory>
+													<Directory Id="ApplicationUnitySolutionThemes" Name="Themes">
+														<Component Id="ApplicationUnity.Solution.Themes" Guid="69E36EEE-59FB-47AD-ADB0-6EDEA2B8C5B7" DiskId="1">
+															<File Id="Generic.xaml" Name="Generic.xaml" Source="..\project\CSharp\PRISM\ApplicationUnity\Solution\Themes\Generic.xaml"  />
+														</Component>
+													</Directory>
+												</Directory>
+											</Directory>
+											<Directory Id="ModuleUnity" Name="ModuleUnity">
+												<Component Id="ModuleUnity.Base" Guid="4B6D7641-94EB-4EDD-BD1E-8BE003C0B31C" DiskId="1">
+													<File Id="ModuleUnity.ModuleInit.cs" Name="ModuleInit.cs" Source="..\project\CSharp\PRISM\ModuleUnity\ModuleInit.cs"  />
+													<File Id="ModuleUnity.Names.cs" Name="Names.cs" Source="..\project\CSharp\PRISM\ModuleUnity\Names.cs"  />
+													<File Id="ModuleUnity.packages.config" Name="packages.config" Source="..\project\CSharp\PRISM\ModuleUnity\packages.config"  />
+												</Component>
+												<Directory Id="ModuleUnityViewModels" Name="ViewModels">
+													<Component Id="ModuleUnity.ViewModels" Guid="0FF0653D-87A7-4FC7-8424-F2EEB74014F3" DiskId="1">
+														<File Id="ViewModels.NavigationViewModel1.cs" Name="NavigationViewModel.cs" Source="..\project\CSharp\PRISM\ModuleUnity\ViewModels\NavigationViewModel.cs"  />
+														<File Id="ViewModels.TaskViewModel1.cs" Name="TaskViewModel.cs" Source="..\project\CSharp\PRISM\ModuleUnity\ViewModels\TaskViewModel.cs"  />
+														<File Id="ViewModels.ViewModel11.cs" Name="ViewModel1.cs" Source="..\project\CSharp\PRISM\ModuleUnity\ViewModels\ViewModel1.cs"  />
+														<File Id="ViewModels.ViewModel21.cs" Name="ViewModel2.cs" Source="..\project\CSharp\PRISM\ModuleUnity\ViewModels\ViewModel2.cs"  />
+													</Component>
+													<Directory Id="ModuleUnityViewModelsInterfaces" Name="Interfaces">
+														<Component Id="ModuleUnity.ViewModels.Interfaces" Guid="2E3C97DD-70B2-48C6-81CB-449AB00997F7" DiskId="1">
+															<File Id="Interfaces.INavigationViewModel1.cs" Name="INavigationViewModel.cs" Source="..\project\CSharp\PRISM\ModuleUnity\ViewModels\Interfaces\INavigationViewModel.cs"  />
+															<File Id="Interfaces.ITaskViewModel1.cs" Name="ITaskViewModel.cs" Source="..\project\CSharp\PRISM\ModuleUnity\ViewModels\Interfaces\ITaskViewModel.cs"  />
+															<File Id="Interfaces.IViewModel11.cs" Name="IViewModel1.cs" Source="..\project\CSharp\PRISM\ModuleUnity\ViewModels\Interfaces\IViewModel1.cs"  />
+															<File Id="Interfaces.IViewModel21.cs" Name="IViewModel2.cs" Source="..\project\CSharp\PRISM\ModuleUnity\ViewModels\Interfaces\IViewModel2.cs"  />
+														</Component>
+													</Directory>
+												</Directory>
+												<Directory Id="ModuleUnityViews" Name="Views">
+													<Component Id="ModuleUnity.Views" Guid="C45179EF-15A9-4CAB-8C17-3F4DE34B20BB" DiskId="1">
+														<File Id="Views.NavigationView1.xaml" Name="NavigationView.xaml" Source="..\project\CSharp\PRISM\ModuleUnity\Views\NavigationView.xaml"  />
+														<File Id="Views.NavigationView.xaml1.cs" Name="NavigationView.xaml.cs" Source="..\project\CSharp\PRISM\ModuleUnity\Views\NavigationView.xaml.cs"  />
+														<File Id="Views.TaskView1.xaml" Name="TaskView.xaml" Source="..\project\CSharp\PRISM\ModuleUnity\Views\TaskView.xaml"  />
+														<File Id="Views.TaskView.xaml1.cs" Name="TaskView.xaml.cs" Source="..\project\CSharp\PRISM\ModuleUnity\Views\TaskView.xaml.cs"  />
+														<File Id="Views.View11.xaml" Name="View1.xaml" Source="..\project\CSharp\PRISM\ModuleUnity\Views\View1.xaml"  />
+														<File Id="Views.View1.xaml1.cs" Name="View1.xaml.cs" Source="..\project\CSharp\PRISM\ModuleUnity\Views\View1.xaml.cs"  />
+														<File Id="Views.View21.xaml" Name="View2.xaml" Source="..\project\CSharp\PRISM\ModuleUnity\Views\View2.xaml"  />
+														<File Id="Views.View2.xaml1.cs" Name="View2.xaml.cs" Source="..\project\CSharp\PRISM\ModuleUnity\Views\View2.xaml.cs"  />
+													</Component>
+												</Directory>
+											</Directory>
+										</Directory>
+									</Directory>
+								</Directory>
+							</Directory>
+						</Directory>
+					</Directory>
+				</Directory>
+			</Directory>
+		</DirectoryRef>
+	</Fragment>
+</Wix>

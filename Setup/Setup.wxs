@@ -1,0 +1,101 @@
+﻿<?xml version="1.0"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="8CD28DB2-2426-424D-BF95-2AB41F57F8FA"
+		Name="SharpDevelop PRISM Templates"
+		Language="1033"
+		Version="1.0.0.0"
+		UpgradeCode="A3F9A20B-AB05-4E78-B35C-DF4828D9F7DD"
+		Manufacturer="Michael Seeger">
+
+		<Package Description="SharpDevelop 4.3 Prism Templates"
+			InstallerVersion="300"
+			Compressed="yes"/>
+
+		<Property Id="ARPPRODUCTICON">PrismTemplateIcon</Property>
+		<Icon Id="PrismTemplateIcon" SourceFile="..\project\CSharp\PRISM\ApplicationUnity\Solution\Shell.ico"/>	
+
+		<Property Id="ALLUSERS">2</Property>
+		<Property Id="ARPHELPLINK">http://community.sharpdevelop.net/forums/</Property>
+		
+		<Media Id="1" Cabinet="contents.cab" EmbedCab="yes" CompressionLevel="high"/>
+		
+		<!-- Installation directory and files are defined in Files.wxs -->
+		<Directory Id="TARGETDIR" Name="SourceDir"/>
+		
+		<Feature Id="Complete"
+		         Title="SharpDevelop 4.3 PRISM Templates"
+		         Description="Provides PRISM templates for SharpDevelop 4.3 in order to create composite WPF applications."
+		         Level="1">
+		         
+			<!-- Packages -->
+			<ComponentRef Id="Packages"/>
+
+			<!-- PRISM File Templates -->
+			<ComponentRef Id="CSharp.PRISM.Files"/>
+
+			<!-- Views and ViewModels Sources -->
+			<ComponentRef Id="ViewsAndViewModels.ViewModels"/>
+			<ComponentRef Id="ViewsAndViewModels.ViewModels.Interfaces"/>
+			
+			<ComponentRef Id="ViewsAndViewModels.Views"/>
+		
+			
+			<!-- PRISM Procject Templates -->
+			<ComponentRef Id="CSharp.PRISM.Projects"/>
+		
+			<!-- Application Unity Sources -->
+			<ComponentRef Id="ApplicationUnity.Base"/>
+			<ComponentRef Id="ApplicationUnity.Base.Interfaces.Services"/>
+			<ComponentRef Id="ApplicationUnity.Base.Logger"/>
+			<ComponentRef Id="ApplicationUnity.Base.Mvvm"/>
+			<ComponentRef Id="ApplicationUnity.Base.Mvvm.Attribute"/>
+			<ComponentRef Id="ApplicationUnity.Base.Mvvm.Enum"/>
+			<ComponentRef Id="ApplicationUnity.Base.Mvvm.Events"/>
+			<ComponentRef Id="ApplicationUnity.Base.Mvvm.Interfaces"/>
+			<ComponentRef Id="ApplicationUnity.Base.Names"/>
+			<ComponentRef Id="ApplicationUnity.Base.Navigation"/>
+			<ComponentRef Id="ApplicationUnity.Base.Base.PetaPoco"/>
+			<ComponentRef Id="ApplicationUnity.Base.Properties"/>
+			<ComponentRef Id="ApplicationUnity.Base.Services"/>
+			<ComponentRef Id="ApplicationUnity.Base.Business"/>
+			<ComponentRef Id="ApplicationUnity.Base.Business.Properties"/>
+			<ComponentRef Id="ApplicationUnity.Base.Business.Model.Properties"/>
+			<ComponentRef Id="ApplicationUnity.Base.Data"/>
+			<ComponentRef Id="ApplicationUnity.Base.Data.Properties"/>
+			<ComponentRef Id="ApplicationUnity.Base.Data.Model"/>
+			<ComponentRef Id="ApplicationUnity.Base.Data.Model.Interfaces"/>
+			<ComponentRef Id="ApplicationUnity.Base.Data.Model.Properties"/>
+			<ComponentRef Id="ApplicationUnity.Base.Resource"/>
+			<ComponentRef Id="ApplicationUnity.Base.Resource.Properties"/>
+			<ComponentRef Id="ApplicationUnity.Base.Resource.Images.16x16"/>
+			<ComponentRef Id="ApplicationUnity.Base.Resource.Images.256x256"/>
+			<ComponentRef Id="ApplicationUnity.Modules.Accounts"/>
+			<ComponentRef Id="ApplicationUnity.Modules.Accounts.Properties"/>
+			<ComponentRef Id="ApplicationUnity.Modules.Accounts.ViewModels"/>
+			<ComponentRef Id="ApplicationUnity.Modules.Accounts.ViewModels.Interfaces"/>
+			<ComponentRef Id="ApplicationUnity.Modules.Accounts.Views"/>
+			<ComponentRef Id="ApplicationUnity.Modules.Contacts"/>
+			<ComponentRef Id="ApplicationUnity.Modules.Contacts.Properties"/>
+			<ComponentRef Id="ApplicationUnity.Modules.Contacts.ViewModels"/>
+			<ComponentRef Id="ApplicationUnity.Modules.Contacts.ViewModels.Interfaces"/>
+			<ComponentRef Id="ApplicationUnity.Modules.Contacts.Views"/>
+			<ComponentRef Id="ApplicationUnity.Modules.Main"/>
+			<ComponentRef Id="ApplicationUnity.Modules.Main.Properties"/>
+			<ComponentRef Id="ApplicationUnity.Modules.Main.ViewModels"/>
+			<ComponentRef Id="ApplicationUnity.Modules.Main.ViewModels.Interfaces"/>
+			<ComponentRef Id="ApplicationUnity.Modules.Main.Views"/>
+			<ComponentRef Id="ApplicationUnity.Solution"/>
+			<ComponentRef Id="ApplicationUnity.Solution.Properties"/>
+			<ComponentRef Id="ApplicationUnity.Solution.Themes"/>
+		
+			<!-- Module Unity Sources -->
+			<ComponentRef Id="ModuleUnity.Base"/>
+			<ComponentRef Id="ModuleUnity.ViewModels"/>
+			<ComponentRef Id="ModuleUnity.ViewModels.Interfaces"/>
+			<ComponentRef Id="ModuleUnity.Views"/>
+		
+		</Feature>
+		
+		<UIRef Id="WixUI_Minimal"/>
+	</Product>
+</Wix>
