@@ -19,7 +19,7 @@ namespace ${SolutionName}.Modules.Contacts.Views
 		public NavigationView(INavigationViewModel viewModel)
 		{
 			InitializeComponent();
-			ViewModel = viewModel;
+			viewModel.View = this;
 		}
 		
 	}

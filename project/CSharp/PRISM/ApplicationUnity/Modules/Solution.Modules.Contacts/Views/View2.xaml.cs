@@ -18,7 +18,7 @@ namespace ${SolutionName}.Modules.Contacts.Views
 		public View2(IViewModel2 viewModel)
 		{
 			InitializeComponent();
-			ViewModel = viewModel;
+			viewModel.View = this;
 		}
 
 	}

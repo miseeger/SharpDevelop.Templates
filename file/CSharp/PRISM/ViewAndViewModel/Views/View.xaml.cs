@@ -19,7 +19,7 @@ namespace ${StandardNamespace}.Views
 		public ${FileNameWithoutExtension}View(I${FileNameWithoutExtension}ViewModel viewModel)
 		{
 			InitializeComponent();
-			ViewModel = viewModel;
+			viewModel.View = this;
 		}
 
 	}

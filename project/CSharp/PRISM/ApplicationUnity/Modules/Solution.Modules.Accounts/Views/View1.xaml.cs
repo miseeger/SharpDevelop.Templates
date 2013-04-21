@@ -7,7 +7,6 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-
 using ${SolutionName}.Modules.Accounts.ViewModels.Interfaces;
 
 namespace ${SolutionName}.Modules.Accounts.Views
@@ -19,7 +18,7 @@ namespace ${SolutionName}.Modules.Accounts.Views
 		public View1(IViewModel1 viewModel)
 		{
 			InitializeComponent();
-			ViewModel = viewModel;
+			viewModel.View = this;
 		}
 
 	}

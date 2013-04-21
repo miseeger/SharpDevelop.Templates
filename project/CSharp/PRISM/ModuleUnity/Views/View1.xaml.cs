@@ -19,7 +19,7 @@ namespace ${ProjectName}.Views
 		public View1(IViewModel1 viewModel)
 		{
 			InitializeComponent();
-			ViewModel = viewModel;
+			viewModel.View = this;
 		}
 
 	}

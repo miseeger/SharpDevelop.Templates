@@ -19,7 +19,7 @@ namespace ${SolutionName}.Modules.Accounts.Views
 		public TaskView(ITaskViewModel viewModel)
 		{
 			InitializeComponent();
-			ViewModel = viewModel;
+			viewModel.View = this;
 		}
 		
 	}

@@ -25,7 +25,7 @@ namespace ${SolutionName}.Modules.Main.Views
 		public FileMenuView(IFileMenuViewModel viewModel)
 		{
 			InitializeComponent();
-			ViewModel = viewModel;
+			viewModel.View = this;
 		}
 
 	}

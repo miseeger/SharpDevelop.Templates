@@ -16,7 +16,7 @@ namespace ${SolutionName}
 		public Shell(ShellViewModel viewModel)
 		{
 			InitializeComponent();
-			ViewModel = viewModel;
+			viewModel.View = this;
 		}
 		
 	}
