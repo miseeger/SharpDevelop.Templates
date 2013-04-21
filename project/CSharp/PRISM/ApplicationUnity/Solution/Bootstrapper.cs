@@ -15,13 +15,13 @@ using ${SolutionName}.Base;
 namespace ${SolutionName}
 {
 
+	// The following Bootstrapper lists all Initialization steps 
+	// except the registrain the order
+	// they are actually processed by the PRISM bootstrapping process.
 	public class Bootstrapper : UnityBootstrapper
 	{
 
-		/// <summary>
-		/// Provides an NLog-Loggers to config using NLog.config file.
-		/// </summary>
-		/// <returns>The NLogLogger.</returns>
+		// Provides an NLog-Loggers to config using NLog.config file.
 		protected override ILoggerFacade CreateLogger()
 		{
 			ILoggerFacade logger = new NLogLogger();
@@ -31,10 +31,7 @@ namespace ${SolutionName}
 		}
 
 
-		/// <summary>
-		/// Initialization of the Module Catalog from the "Module" directory
-		/// </summary>
-		/// <returns>The Module Catalog.</returns>
+		// Initialization of the Module Catalog from the "Module" directory
 		protected override IModuleCatalog CreateModuleCatalog()
 		{
 			if (!Directory.Exists(@".\Modules"))
@@ -49,9 +46,7 @@ namespace ${SolutionName}
 		}
 
 
-		/// <summary>
-		/// Configuration of the Unity Container using unity.config file.
-		/// </summary>
+		// Configuration of the Unity Container using unity.config file.
 		protected override void ConfigureContainer()
 		{
 			base.ConfigureContainer();
@@ -68,10 +63,7 @@ namespace ${SolutionName}
 		}
 
 
-		/// <summary>
-		/// Initialization of the RegionAdapterMappings.
-		/// </summary>
-		/// <returns>The Region Adapter Mappings.</returns>
+		// Initialization of the RegionAdapterMappings.
 		protected override RegionAdapterMappings ConfigureRegionAdapterMappings()
 		{
 			var mappings = base.ConfigureRegionAdapterMappings();
@@ -85,12 +77,38 @@ namespace ${SolutionName}
 				Category.Info, Priority.None);
 			return mappings;
 		}
+		
+
+		// Configuration of Default Region Behaviors
+		protected override IRegionBehaviorFactory ConfigureDefaultRegionBehaviors()
+		{
+    		var factory = base.ConfigureDefaultRegionBehaviors();
+			if (factory == null) return null;
+
+    		// example1: registering a behavior
+			// factory.AddIfMissing("MyBehavior", typeof(MyCustomBehavior));
+			
+			// example2: adding a Region Behavior for a Single Region
+			//IRegion region = regionManager.Region["Region1"];
+			//region.Behaviors.Add("MyBehavior", new MyRegion());
+			
+			Logger.Log("${SolutionName} DefaultRegionBehaviors were registered.",
+				Category.Info, Priority.None);
+			return factory;
+		}
 
 
-		/// <summary>
-		/// Creation of the Shell.
-		/// </summary>
-		/// <returns>The Shell (Main Window).</returns>
+		// Registration of Exceptions that are available througout the application
+		protected override void RegisterFrameworkExceptionTypes()
+		{
+			// ... registration code here ...
+
+			//Logger.Log("${SolutionName} Framework Exception Types were registered.",
+			//	Category.Info, Priority.None);
+		}
+
+		
+		// Creation of the Shell.
 		protected override System.Windows.DependencyObject CreateShell()
 		{
 			Logger.Log("${SolutionName} Shell was provided.",
@@ -99,9 +117,7 @@ namespace ${SolutionName}
 		}
 
 
-		/// <summary>
 		/// Shell Initialization.
-		/// </summary>
 		protected override void InitializeShell()
 		{
 			// Internationalization-Fix for correct StringFormat localization 
@@ -120,9 +136,7 @@ namespace ${SolutionName}
 		}
 
 
-		/// <summary>
 		/// Module Initialization.
-		/// </summary>
 		protected override void InitializeModules()
 		{
 			try 
@@ -134,7 +148,7 @@ namespace ${SolutionName}
 				MessageBox.Show(e.InnerException.ToString());
 			}
 			
-			Logger.Log("${SolutionName} was successfully initialized.",
+			Logger.Log("All ${SolutionName} Modules were successfully initialized.",
 				Category.Info, Priority.None);
 		}
 
