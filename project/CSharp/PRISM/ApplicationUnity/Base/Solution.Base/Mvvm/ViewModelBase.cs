@@ -22,6 +22,17 @@ namespace ${SolutionName}.Base.Mvvm
 				_view.ViewModel = this;
 			}
 		}
+		
+		
+		private IViewDialog _viewDialog;
+		public IViewDialog ViewDialog { 
+			get { return _viewDialog; }
+			set 
+			{
+				_viewDialog = value;
+				_viewDialog.ViewModel = this;
+			}
+		}
 
 
 		private bool _isDirty;

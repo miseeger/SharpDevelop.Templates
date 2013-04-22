@@ -16,7 +16,7 @@ namespace ${SolutionName}.Base.Resource
 			
 			var imgName = Size > 0 
 				? String.Format("${SolutionName}.Base.Resource.Images._{0}x{1}.{2}.png",Size, Size, ImageName) 
-				: String.Format("${SolutionName}.Base.Resource.Images._Misc.{0}.png", ImageName);
+				: String.Format("${SolutionName}.Base.Resource.Images.Misc.{0}.png", ImageName);
 
 			System.IO.Stream fileStream = this.GetType().Assembly.GetManifestResourceStream(imgName);
 			
