@@ -14,7 +14,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace $<SolutionName>.Base.Authentication
+namespace ${SolutionName}.Base.Authentication
 {
 
 	public partial class DatabaseLogin

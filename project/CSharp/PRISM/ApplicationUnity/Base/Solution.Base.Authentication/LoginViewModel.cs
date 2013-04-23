@@ -5,10 +5,10 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using Microsoft.Practices.ServiceLocation;
-using $<SolutionName>.Base.Interfaces.Services;
-using $<SolutionName>.Base.Mvvm;
+using ${SolutionName}.Base.Interfaces.Services;
+using ${SolutionName}.Base.Mvvm;
 
-namespace $<SolutionName>.Base.Authentication
+namespace ${SolutionName}.Base.Authentication
 {
 
 	public class LoginViewModel : ViewModelBase

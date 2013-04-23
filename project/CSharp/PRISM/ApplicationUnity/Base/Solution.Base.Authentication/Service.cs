@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Windows;
 using Microsoft.Practices.Unity;
-using $<SolutionName>.Base.Interfaces.Services;
-using $<SolutionName>.Base.Mvvm;
-using $<SolutionName>.Base.Mvvm.Interfaces;
+using ${SolutionName}.Base.Interfaces.Services;
+using ${SolutionName}.Base.Mvvm;
+using ${SolutionName}.Base.Mvvm.Interfaces;
 
-namespace $<SolutionName>.Base.Authentication
+namespace ${SolutionName}.Base.Authentication
 {
 
 	public class Service : IAuthenticationService

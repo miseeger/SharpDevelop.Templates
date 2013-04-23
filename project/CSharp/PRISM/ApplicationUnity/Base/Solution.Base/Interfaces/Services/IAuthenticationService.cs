@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace $<SolutionName>.Base.Interfaces.Services
+namespace ${SolutionName}.Base.Interfaces.Services
 {
 
 	public interface IAuthenticationService

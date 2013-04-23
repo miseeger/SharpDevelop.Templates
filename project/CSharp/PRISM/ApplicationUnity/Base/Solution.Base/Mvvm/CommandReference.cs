@@ -6,7 +6,7 @@ using System.Windows.Input;
 using System.Windows;
 
 
-namespace $<SolutionName>.Base.Mvvm
+namespace ${SolutionName}.Base.Mvvm
 {
 
 	public class CommandReference : Freezable, ICommand
