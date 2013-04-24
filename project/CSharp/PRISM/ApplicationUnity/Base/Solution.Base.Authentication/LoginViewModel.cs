@@ -4,7 +4,6 @@ using System.ComponentModel.Design;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using Microsoft.Practices.ServiceLocation;
 using ${SolutionName}.Base.Interfaces.Services;
 using ${SolutionName}.Base.Mvvm;
 
@@ -71,6 +70,7 @@ namespace ${SolutionName}.Base.Authentication
 			_authenticationService = AuthenticationService;
 			Databases = new ObservableCollection<string>();
 			UserName = _authenticationService.UserName;
+			PwdBox = null;
 		}
 		
 		

@@ -14,12 +14,12 @@ using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Prism.UnityExtensions;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
-using PrismApplication.Base;
-using PrismApplication.Base.Enum;
-using PrismApplication.Base.Interfaces;
-using PrismApplication.Base.Interfaces.Services;
+using ${SolutionName}.Base;
+using ${SolutionName}.Base.Enum;
+using ${SolutionName}.Base.Interfaces;
+using ${SolutionName}.Base.Interfaces.Services;
 
-namespace PrismApplication
+namespace ${SolutionName}
 {
 
 	public class Bootstrapper : UnityBootstrapper
@@ -32,7 +32,7 @@ namespace PrismApplication
 		protected override ILoggerFacade CreateLogger()
 		{
 			ILoggerFacade logger = new NLogLogger();
-			logger.Log("PrismApplication Logger was created.",
+			logger.Log("${SolutionName} Logger was created.",
 				Category.Info, Priority.None);
 			return logger;
 		}
@@ -50,7 +50,7 @@ namespace PrismApplication
 			}
 			var moduleCatalog = new DirectoryModuleCatalog();
 			moduleCatalog.ModulePath = @".\Modules";
-			Logger.Log("PrismApplication Module Catalog was created",
+			Logger.Log("${SolutionName} Module Catalog was created",
 				Category.Info, Priority.None);
 			return moduleCatalog;
 		}
@@ -80,7 +80,7 @@ namespace PrismApplication
 			
 			Container.RegisterType<IShell, Shell>(new ContainerControlledLifetimeManager());
 
-			Logger.Log("PrismApplication Unity-Container was created.",
+			Logger.Log("${SolutionName} Unity-Container was created.",
 				Category.Info, Priority.None);
 		}
 
@@ -98,7 +98,7 @@ namespace PrismApplication
 			//var ribbonRegionAdapter = ServiceLocator.Current.GetInstance<RibbonRegionAdapter>();
 			//mappings.RegisterMapping(typeof(Ribbon), ribbonRegionAdapter);
 
-			Logger.Log("PrismApplication RegionAdapterMappings were created.",
+			Logger.Log("${SolutionName} RegionAdapterMappings were created.",
 				Category.Info, Priority.None);
 			return mappings;
 		}
@@ -120,7 +120,7 @@ namespace PrismApplication
 			//IRegion region = regionManager.Region["Region1"];
 			//region.Behaviors.Add("MyBehavior", new MyRegion());
 			
-			Logger.Log("PrismApplication DefaultRegionBehaviors were registered.",
+			Logger.Log("${SolutionName} DefaultRegionBehaviors were registered.",
 				Category.Info, Priority.None);
 			return factory;
 		}
@@ -142,7 +142,7 @@ namespace PrismApplication
 		/// <returns>The Shell (Main Window).</returns>
 		protected override System.Windows.DependencyObject CreateShell()
 		{
-			Logger.Log("PrismApplication Shell was provided.",
+			Logger.Log("${SolutionName} Shell was provided.",
 				Category.Info, Priority.None);
 			return Container.Resolve<IShell>() as DependencyObject;
 		}
@@ -167,12 +167,12 @@ namespace PrismApplication
 
 			if (authenticationService != null)
 			{
-				authenticationService.Type = AuthenticationType.Login;
+				authenticationService.Type = AuthenticationType.SingleSignOn;
 				authenticationService.Authenticate();
 
 				if (!authenticationService.IsAuthenticated)
 				{
-					messageBoxService.Error("PrismApplication", "The authentication failed! PrismApplication will be shut down.");
+					messageBoxService.Error("${SolutionName}", "The authentication failed! ${SolutionName} will be shut down.");
 					App.Current.Shutdown(0);
 				}
 				else
@@ -180,7 +180,7 @@ namespace PrismApplication
 					base.InitializeShell();
 					//App.Current.MainWindow = (Window)Shell;
 					//App.Current.MainWindow.Show();
-					Logger.Log("PrismApplication Shell was successfully initialized - authorization was passed.",
+					Logger.Log("${SolutionName} Shell was successfully initialized - authorization was passed.",
 						Category.Info, Priority.None);
 				}
 
@@ -190,15 +190,6 @@ namespace PrismApplication
 				messageBoxService.Error("Error", "The Authentication Service is not available.");
 				App.Current.Shutdown(0);
 			}
-			
-
-			// Starting without authentication - delete the Auth-Block, above and uncomment this block
-
-			//base.InitializeShell();
-			//App.Current.MainWindow = (Window)Shell;
-			//App.Current.MainWindow.Show();
-			//Logger.Log("PrismApplication Shell was successfully initialized.",
-			//	Category.Info, Priority.None);
 			
 		}
 
@@ -217,7 +208,7 @@ namespace PrismApplication
 				MessageBox.Show(e.InnerException.ToString());
 			}
 			
-			Logger.Log("PrismApplication was successfully initialized.",
+			Logger.Log("${SolutionName} was successfully initialized.",
 				Category.Info, Priority.None);
 		}
 

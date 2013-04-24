@@ -59,6 +59,8 @@ namespace ${ProjectName}
 			
 			// TODO: Replace all occurences of <SolutionName> in this Project with the name of your Solution!
 			// TODO: Insert references to the Projects "Solution".Base and "Solution".Base.Resource
+			// TODO: Insert the following Entry into modules.config and change Description and Order
+			//       <Module Description="" Order="999">${ProjectName}</Module>
 
 		}
 

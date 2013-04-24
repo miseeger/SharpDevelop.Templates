@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Windows;
 using Microsoft.Practices.Unity;
+using ${SolutionName}.Base.Authentication.Infrastructure;
+using ${SolutionName}.Base.Enum;
 using ${SolutionName}.Base.Interfaces.Services;
 using ${SolutionName}.Base.Mvvm;
 using ${SolutionName}.Base.Mvvm.Interfaces;
@@ -16,16 +18,17 @@ namespace ${SolutionName}.Base.Authentication
 		private IMessageBoxService _messageBoxService;
 		private IAppResourceService _resourceService;
 
-		public IEnumerable<string> Servers {get;  set;}
-		public IEnumerable<string> Databases {get;  set;}
-		public string UserId {get;  set;}
-		public string UserName {get;  set;}
-		public string Password {get;  set;}
-		public string MachineName {get;  set;}
-		public string DatabaseName {get;  set;}
-		public string IpAddress {get;  set;}
-		public DateTime Login {get;  set;}
-		public bool IsAuthenticated {get;  set;}
+		public IEnumerable<string> Servers { get; set; }
+		public IEnumerable<string> Databases { get; set; }
+		public string UserId { get; set; }
+		public string UserName { get; set; }
+		public string Password { get; set; }
+		public string MachineName { get; set; }
+		public string DatabaseName { get; set; }
+		public string IpAddress { get; set; }
+		public DateTime Login { get; set; }
+		public bool IsAuthenticated { get; set; }
+		public AuthenticationType Type { get; set; }
 		 
 		
 		public Service(IDataService DataService, IMessageBoxService MessageBoxService, IAppResourceService ResourceService)
@@ -34,6 +37,7 @@ namespace ${SolutionName}.Base.Authentication
 			_messageBoxService = MessageBoxService;
 			_resourceService = ResourceService;
 			
+			Type = AuthenticationType.SingleSignOn;
 			Servers = new List<string>();
 			Databases = new List<string>();
 			UserId = "";
@@ -62,32 +66,49 @@ namespace ${SolutionName}.Base.Authentication
 		{
 			var loginViewModel = new LoginViewModel(this);
 			
+			loginViewModel.Database = "MyDatabase";
 			loginViewModel.CancelImage = _resourceService.GetPng16("cross");
 			loginViewModel.OkImage = _resourceService.GetPng16("tick");
 			loginViewModel.VmImage = _resourceService.GetPngMisc("Login");
 
-			// Fill Database-List and default-Setting
-			loginViewModel.Databases.Add("MyDatabase");
-			loginViewModel.Databases.Add("YourDatabase");
-			loginViewModel.Database = "MyDatabase";
-			
-			bool? loginResult = true;
 			IsAuthenticated = false;
-
-			while (loginResult == true && IsAuthenticated == false)
+			
+			if (Type == AuthenticationType.Login || Type == AuthenticationType.DatabaseLogin) 
 			{
-				var loginView = new DatabaseLogin();
-				loginViewModel.ViewDialog = loginView;
-				loginViewModel.PwdBox = loginView.pwdBox;
-				
-				loginResult = loginView.ShowAsDialog();
-
-				if (loginResult == true)
+			
+				if (Type == AuthenticationType.DatabaseLogin) 
 				{
-					IsAuthenticated = (loginViewModel.PwdBox.Password == "12345!");
+					loginViewModel.Databases.Add("MyDatabase");
+					loginViewModel.Databases.Add("YourDatabase");
 				}
 
-				loginView = null;
+				ILoginViewDialog loginView= null;
+				bool? loginResult = true;
+
+				while (loginResult == true && IsAuthenticated == false)
+				{
+					
+					loginView = (Type == AuthenticationType.DatabaseLogin)
+								? (new DatabaseLogin()) as ILoginViewDialog
+								: (new Login()) as ILoginViewDialog;
+				
+					loginViewModel.PwdBox = loginView.LoginPwdBox;
+					
+					loginViewModel.ViewDialog = loginView as IViewDialog;
+					loginResult = loginView.ShowAsDialog();
+
+					if (loginResult == true)
+					{
+						IsAuthenticated = (loginViewModel.PwdBox.Password == "12345!");
+					}
+
+					loginView = null;
+				}
+
+			}
+			else
+			{
+				IsAuthenticated = true;
 			}
 			
 			if (IsAuthenticated == true) 
@@ -95,6 +116,11 @@ namespace ${SolutionName}.Base.Authentication
 				Login = DateTime.Now;
 				UserName = loginViewModel.UserName;
 				DatabaseName = loginViewModel.Database;
+				
+				if (loginViewModel.PwdBox != null) 
+				{
+					Password = loginViewModel.PwdBox.Password;
+				}
 			}
 			
 		}

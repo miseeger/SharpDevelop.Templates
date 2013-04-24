@@ -1,9 +1,11 @@
 ﻿using System;
+using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
-using ${SolutionName}.Base.Names;
+using ${SolutionName}.Base.Interfaces;
 using ${SolutionName}.Base.Mvvm.Interfaces;
+using ${SolutionName}.Base.Names;
 using ${SolutionName}.Base.Navigation;
 using ${SolutionName}.Modules.Main.ViewModels;
 using ${SolutionName}.Modules.Main.ViewModels.Interfaces;
@@ -25,7 +27,6 @@ namespace ${SolutionName}.Modules.Main
 
 		public ModuleInit(IUnityContainer container, IRegionManager regionManager)
 		{
-			// Get conatiner and region manager
 			_container = container;
 			_regionManager = regionManager;
 		}
@@ -36,13 +37,17 @@ namespace ${SolutionName}.Modules.Main
 
 			// ViewModel Registration:
 			_container.RegisterType<IFileMenuViewModel, FileMenuViewModel>();
+			_container.RegisterType<IStatusBarViewModel, StatusBarViewModel>();
 			
 			// View Registration for ViewInjection:
 			_container.RegisterType(typeof(IView), typeof(FileMenuView), typeof(FileMenuView).FullName);
+			_container.RegisterType(typeof(IView), typeof(StatusBarView), typeof(StatusBarView).FullName);
 
 			// View Injection:
 			var vFileMenu = _container.Resolve(typeof(IView), typeof(FileMenuView).FullName);
+			var vStatusBar = _container.Resolve(typeof(IView), typeof(StatusBarView).FullName);
 			_regionManager.Regions[RegionNames.MenuRegion].Add(vFileMenu);
+			_regionManager.Regions[RegionNames.StatusbarRegion].Add(vStatusBar);
 			
 		}
 

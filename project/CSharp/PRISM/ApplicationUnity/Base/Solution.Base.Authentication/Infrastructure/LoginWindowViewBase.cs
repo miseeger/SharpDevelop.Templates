@@ -1,10 +1,11 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using ${SolutionName}.Base.Mvvm.Interfaces;
 
-namespace ${SolutionName}.Base.Mvvm
+namespace ${SolutionName}.Base.Authentication.Infrastructure
 {
 
-	public class WindowViewBase: Window, IViewDialog
+	public class LoginWindowViewBase: Window, ILoginViewDialog
 	{
 
 		public IViewModel ViewModel
@@ -22,13 +23,13 @@ namespace ${SolutionName}.Base.Mvvm
 		
 		public bool? ShowAsDialog()
 		{
-			return this.ShowDialog();
+			return ShowDialog();
 		}
 		
 
 		public void ShowAsWindow()
 		{
-			this.Show();
+			Show();
 		}
 		
 		
@@ -46,6 +47,21 @@ namespace ${SolutionName}.Base.Mvvm
 				DialogResult = value;
 			}
 		}
+
+		
+		private PasswordBox _loginPwdBox;
+		public PasswordBox LoginPwdBox
+		{
+			get
+			{
+				return _loginPwdBox;
+			}
+			set
+			{
+				_loginPwdBox = value;
+			}
+		}
+
 	}
 
 }

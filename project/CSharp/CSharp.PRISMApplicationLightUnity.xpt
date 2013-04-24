@@ -3,11 +3,11 @@
 
 	<!-- Template Header -->
 	<TemplateConfiguration>
-		<Name>PRISM Application (Unity)</Name>
+		<Name>${res:Templates.Project.PRISMApplicationUnity.Name}</Name>
 		<Category>C#</Category>
 		<Subcategory>PRISM</Subcategory>
 		<Icon>C#.Project.PRISMApplication</Icon>
-		<Description>Creates a PRISM Application with Bootstrapper and Authentication.</Description>
+		<Description>${res:Templates.Project.PRISMApplicationUnity.Description}</Description>
 		<SupportedTargetFrameworks>v4.0;v4.0Client</SupportedTargetFrameworks>
 	</TemplateConfiguration>
 
@@ -54,8 +54,6 @@
 					<Reference Include="Microsoft.Practices.Prism.Interactivity" />
 					<Reference Include="Microsoft.Practices.ServiceLocation" />
 					<Reference Include="Microsoft.Practices.Unity" />
-					<Reference Include="Microsoft.Practices.Unity.Configuration" />
-					<Reference Include="mscorlib" />
 					<Reference Include="NLog" />
 					<Reference Include="PresentationCore" />
 					<Reference Include="PresentationFramework" />
@@ -71,9 +69,7 @@
 				</ProjectItems>
 
 				<Files>
-					<File name="Enum\AuthenticationType.cs" src="PRISM\ApplicationUnity\Base\Solution.Base\Enum\AuthenticationType.cs" />
 					<File name="Interfaces\Services\IAppResourceService.cs" src="PRISM\ApplicationUnity\Base\Solution.Base\Interfaces\Services\IAppResourceService.cs" />
-					<File name="Interfaces\Services\IAuthenticationService.cs" src="PRISM\ApplicationUnity\Base\Solution.Base\Interfaces\Services\IAuthenticationService.cs" />
 					<File name="Interfaces\Services\IBusinessService.cs" src="PRISM\ApplicationUnity\Base\Solution.Base\Interfaces\Services\IBusinessService.cs" />
 					<File name="Interfaces\Services\IDataService.cs" src="PRISM\ApplicationUnity\Base\Solution.Base\Interfaces\Services\IDataService.cs" />
 					<File name="Interfaces\Services\IMessageBoxService.cs" src="PRISM\ApplicationUnity\Base\Solution.Base\Interfaces\Services\IMessageBoxService.cs" />
@@ -86,9 +82,7 @@
 					<File name="Mvvm\Interfaces\INotifyDataErrorInfo.cs" src="PRISM\ApplicationUnity\Base\Solution.Base\Mvvm\Interfaces\INotifyDataErrorInfo.cs" /> 
 					<File name="Mvvm\Interfaces\IValidatableDataObject.cs" src="PRISM\ApplicationUnity\Base\Solution.Base\Mvvm\Interfaces\IValidatableDataObject.cs" /> 
 					<File name="Mvvm\Interfaces\IView.cs" src="PRISM\ApplicationUnity\Base\Solution.Base\Mvvm\Interfaces\IView.cs" /> 
-					<File name="Mvvm\Interfaces\IViewDialog.cs" src="PRISM\ApplicationUnity\Base\Solution.Base\Mvvm\Interfaces\IViewDialog.cs" /> 
 					<File name="Mvvm\Interfaces\IViewModel.cs" src="PRISM\ApplicationUnity\Base\Solution.Base\Mvvm\Interfaces\IViewModel.cs" /> 
-					<File name="Mvvm\CommandReference.cs" src="PRISM\ApplicationUnity\Base\Solution.Base\Mvvm\CommandReference.cs" />
 					<File name="Mvvm\DataObject.cs" src="PRISM\ApplicationUnity\Base\Solution.Base\Mvvm\DataObject.cs" />
 					<File name="Mvvm\EditableDataObject.cs" src="PRISM\ApplicationUnity\Base\Solution.Base\Mvvm\EditableDataObject.cs" />
 					<File name="Mvvm\Names.cs" src="PRISM\ApplicationUnity\Base\Solution.Base\Mvvm\Names.cs" />
@@ -110,60 +104,8 @@
 					<File name="packages.config" src="PRISM\ApplicationUnity\Base\Solution.Base\packages.config" />
 				</Files>
 			</Project>
-			
-			
-			<!-- Base.Authentication-Project -->
-			<Project name="${ProjectName}.Base.Authentication" directory="Src\Base\${ProjectName}.Base.Authentication" language="C#">
 
-				<PropertyGroup escapeValue="False">
-				    <OutputType>library</OutputType>
-    				<ProjectGuid>{DBEA4B38-E043-41FC-BA1B-F4194DD43588}</ProjectGuid>
-    				<ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-					<AppDesignerFolder>Properties</AppDesignerFolder>
-				</PropertyGroup>
-				
-				<PropertyGroup configuration="Debug">
-					<OutputPath>..\..\..\Bin\Debug\</OutputPath>
-				</PropertyGroup>
-
-				<PropertyGroup configuration="Release">
-					<OutputPath>..\..\..\Bin\Debug\</OutputPath>
-				</PropertyGroup>
-
-				<ProjectItems>
-					<Reference Include="Microsoft.Practices.Unity" />
-					<Reference Include="Microsoft.Practices.Unity.Configuration" />
-					<Reference Include="mscorlib" />
-					<Reference Include="PresentationCore" />
-					<Reference Include="PresentationFramework" />
-					<Reference Include="System" />
-					<Reference Include="System.Core" />
-					<Reference Include="System.Xaml" />	
-					<Reference Include="System.Xml" />
-					<Reference Include="System.Xml.Linq" />
-					<Reference Include="WindowsBase" />
-				</ProjectItems>
-
-				<ProjectItems>
-					<ProjectReference Include="..\${SolutionName}.Base\${SolutionName}.Base.csproj" />
-				</ProjectItems>
-
-				<Files>
-					<File name="Infrastructure\ILoginViewDialog.cs" src="PRISM\ApplicationUnity\Base\Solution.Base.Authentication\Infrastructure\ILoginViewDialog.cs"/>
-					<File name="Infrastructure\LoginWindowViewBase.cs" src="PRISM\ApplicationUnity\Base\Solution.Base.Authentication\Infrastructure\LoginWindowViewBase.cs"/>
-					<File name="Properties\AssemblyInfo.cs" src="PRISM\ApplicationUnity\Base\Solution.Base.Authentication\Properties\AssemblyInfo.cs"/>
-					<File name="Properties\WPFAssemblyInfo.cs" src="PRISM\ApplicationUnity\Base\Solution.Base.Authentication\Properties\WPFAssemblyInfo.cs"/>
-					<File name="DatabaseLogin.xaml" src="PRISM\ApplicationUnity\Base\Solution.Base.Authentication\DatabaseLogin.xaml" buildAction="Page" language="XML" />
-   					<File name="DatabaseLogin.xaml.cs" src="PRISM\ApplicationUnity\Base\Solution.Base.Authentication\DatabaseLogin.xaml.cs" SubType="Code" DependentUpon="DatabaseLogin.xaml" />
-					<File name="Login.xaml" src="PRISM\ApplicationUnity\Base\Solution.Base.Authentication\Login.xaml" buildAction="Page" language="XML" />
-   					<File name="Login.xaml.cs" src="PRISM\ApplicationUnity\Base\Solution.Base.Authentication\Login.xaml.cs" SubType="Code" DependentUpon="DatabaseLogin.xaml" />
-					<File name="LoginViewModel.cs" src="PRISM\ApplicationUnity\Base\Solution.Base.Authentication\LoginViewModel.cs" />
-					<File name="Service.cs" src="PRISM\ApplicationUnity\Base\Solution.Base.Authentication\Service.cs"/>
-					<File name="packages.config" src="PRISM\ApplicationUnity\Base\Solution.Base.Authentication\packages.config" />
-				</Files>
-			</Project>
-
- 			<!-- Base.Business-Project -->
+			<!-- Base.Business-Project -->
 			<Project name="${ProjectName}.Base.Business" directory="Src\Base\${ProjectName}.Base.Business" language="C#">
 
 				<PropertyGroup>
@@ -358,10 +300,8 @@
 					<File name="Images\16x16\globe.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\16x16\globe.png" buildAction="EmbeddedResource" binary="true" />
 					<File name="Images\16x16\jar.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\16x16\jar.png" buildAction="EmbeddedResource" binary="true" />
 					<File name="Images\16x16\users.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\16x16\users.png" buildAction="EmbeddedResource" binary="true" />
-					<File name="Images\16x16\cross.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\16x16\cross.png" buildAction="EmbeddedResource" binary="true" />
-					<File name="Images\16x16\tick.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\16x16\tick.png" buildAction="EmbeddedResource" binary="true" />
 					<File name="Images\256x256\Shell.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\256x256\SolutionShell.png" buildAction="EmbeddedResource" binary="true" />
-					<File name="Images\Misc\Login.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\Misc\Login.png"  buildAction="EmbeddedResource" binary="true" />
+					<File name="Images\Misc\${ProjectName}.Base.Resource.MiscImages.txt"><![CDATA[// Project ${ProjectName} created on ${Date} at ${Time}]]></File>
 					<File name="Service.cs" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Service.cs" />
 				</Files>
 			</Project>
@@ -409,18 +349,15 @@
 					<ProjectReference Include="..\..\Base\${SolutionName}.Base\${SolutionName}.Base.csproj" />
 					<ProjectReference Include="..\..\Base\${SolutionName}.Base.Resource\${SolutionName}.Base.Resource.csproj" />
 				</ProjectItems>
+
 		
 				<Files>
 					<File name="Properties\AssemblyInfo.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Main\Properties\AssemblyInfo.cs" />
 					<File name="Properties\WPFAssemblyInfo.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Main\Properties\WPFAssemblyInfo.cs" />
 					<File name="ViewModels\Interfaces\IFileMenuViewModel.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Main\ViewModels\Interfaces\IFileMenuViewModel.cs" />
-					<File name="ViewModels\Interfaces\IStatusBarViewModel.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Main\ViewModels\Interfaces\IStatusBarViewModel.cs" />
 					<File name="ViewModels\FileMenuViewModel.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Main\ViewModels\FileMenuViewModel.cs" />
-					<File name="ViewModels\StatusBarViewModel.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Main\ViewModels\StatusBarViewModel.cs" />
 					<File name="Views\FileMenuView.xaml" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Main\Views\FileMenuView.xaml" buildAction="Page" language="XML" />
    					<File name="Views\FileMenuView.xaml.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Main\Views\FileMenuView.xaml.cs" SubType="Code" DependentUpon="FileMenuView.xaml" />
-					<File name="Views\StatusBarView.xaml" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Main\Views\StatusBarView.xaml" buildAction="Page" language="XML" />
-   					<File name="Views\StatusBarView.xaml.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Main\Views\StatusBarView.xaml.cs" SubType="Code" DependentUpon="StatusBarView.xaml" />
 					<File name="ModuleInit.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Main\ModuleInit.cs" />
 					<File name="Names.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Main\Names.cs" />
 					<File name="packages.config" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Main\packages.config" />										
@@ -607,15 +544,12 @@
 				<File name="App.xaml" src="PRISM\ApplicationUnity\Solution\App.xaml" buildAction="ApplicationDefinition" language="XML" />
 				<File name="App.xaml.cs" src="PRISM\ApplicationUnity\Solution\App.xaml.cs" SubType="Code" DependentUpon="App.xaml" />
 				<File name="Bootstrapper.cs" src="PRISM\ApplicationUnity\Solution\Bootstrapper.cs" />
-				<File name="ModuleConfig.cs" src="PRISM\ApplicationUnity\Solution\ModuleConfig.cs" />
-				<File name="modules.config" src="PRISM\ApplicationUnity\Solution\modules.config" CopyToOutputDirectory="Always" />
 				<File name="nlog.config" src="PRISM\ApplicationUnity\Solution\nlog.config" CopyToOutputDirectory="Always" />
 				<File name="unity.config" src="PRISM\ApplicationUnity\Solution\unity.config" CopyToOutputDirectory="Always" />
 				<File name="Shell.ico" src="PRISM\ApplicationUnity\Solution\Shell.ico" binary="true"/>
 				<File name="Shell.xaml" src="PRISM\ApplicationUnity\Solution\Shell.xaml" buildAction="Page" language="XML" />
 				<File name="Shell.xaml.cs" src="PRISM\ApplicationUnity\Solution\Shell.xaml.cs" SubType="Code" DependentUpon="Shell.xaml" />
 				<File name="ShellViewModel.cs" src="PRISM\ApplicationUnity\Solution\ShellViewModel.cs" />
-				<File name="SortedModuleInitializer.cs" src="PRISM\ApplicationUnity\Solution\SortedModuleInitializer.cs" />
 				<File name="${ProjectName}.s3db" src="PRISM\ApplicationUnity\Solution\SolutionDb.s3db" binary="true" CopyToOutputDirectory="Always" />
 				<File name="packages.config" src="PRISM\ApplicationUnity\Solution\packages.config" />
 			</Files>

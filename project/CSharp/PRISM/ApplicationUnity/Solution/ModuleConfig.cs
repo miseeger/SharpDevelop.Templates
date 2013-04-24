@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Practices.Prism.Modularity;
 
-namespace PrismApplication
+namespace ${SolutionName}
 {
 
 	public class ModuleConfig

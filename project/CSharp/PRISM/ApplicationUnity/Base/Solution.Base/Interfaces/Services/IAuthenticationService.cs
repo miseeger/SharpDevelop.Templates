@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ${SolutionName}.Base.Enum;
 
 namespace ${SolutionName}.Base.Interfaces.Services
 {
@@ -17,6 +18,7 @@ namespace ${SolutionName}.Base.Interfaces.Services
 		string IpAddress { get; set; }
 		DateTime Login { get; set; }
 		bool IsAuthenticated { get; set; }
+		AuthenticationType Type { get; set; }
 		
 		void Authenticate();
 	}

@@ -3,24 +3,22 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using ${SolutionName}.Base.Mvvm.Interfaces;
+using ${SolutionName}.Base.Interfaces;
 
-namespace ${SolutionName}.Base.Authentication
+namespace ${SolutionName}
 {
 
-	public partial class DatabaseLogin
+	public partial class Shell : IShell
 	{
 
-		public DatabaseLogin()
+		public Shell(ShellViewModel viewModel)
 		{
 			InitializeComponent();
-			LoginPwdBox = pwdBox;
+			viewModel.View = this;
 		}
-
+		
 	}
-
 }

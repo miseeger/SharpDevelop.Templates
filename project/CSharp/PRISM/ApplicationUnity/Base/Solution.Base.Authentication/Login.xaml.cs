@@ -7,20 +7,21 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+
 using ${SolutionName}.Base.Mvvm.Interfaces;
 
 namespace ${SolutionName}.Base.Authentication
 {
 
-	public partial class DatabaseLogin
+	public partial class Login
 	{
 
-		public DatabaseLogin()
+		public Login()
 		{
 			InitializeComponent();
 			LoginPwdBox = pwdBox;
 		}
-
+		
 	}
 
 }

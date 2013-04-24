@@ -128,35 +128,11 @@ namespace ${SolutionName}
 					XmlLanguage.GetLanguage(
 				CultureInfo.CurrentCulture.IetfLanguageTag)));
 
-			// Calling the Authentication Service
-			var authenticationService = Container.Resolve<IAuthenticationService>();
-			var messageBoxService = Container.Resolve<IMessageBoxService>();
-
-			if (authenticationService != null)
-			{
-				authenticationService.Authenticate();
-
-				if (!authenticationService.IsAuthenticated)
-				{
-					messageBoxService.Error("PrismApplication", "The authentication failed! PrismApplication will be shut down.");
-					App.Current.Shutdown(0);
-				}
-				else
-				{
-					base.InitializeShell();
-					App.Current.MainWindow = (Window)Shell;
-					App.Current.MainWindow.Show();
-					Logger.Log("PrismApplication Shell was successfully initialized - authorization was passed.",
-						Category.Info, Priority.None);
-				}
-
-			}
-			else
-			{
-				messageBoxService.Error("Error", "The Authentication Service is not available.");
-				App.Current.Shutdown(0);
-			}
-
+			base.InitializeShell();
+			App.Current.MainWindow = (Window)Shell;
+			App.Current.MainWindow.Show();
+			Logger.Log("${SolutionName} Shell was successfully initialized and displayed.",
+				Category.Info, Priority.None);
 		}
 
 
