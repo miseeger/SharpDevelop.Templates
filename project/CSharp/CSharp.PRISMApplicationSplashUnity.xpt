@@ -81,6 +81,9 @@
 					<File name="Interfaces\Services\IMessageBoxService.cs" src="PRISM\ApplicationUnity\Base\Solution.Base\Interfaces\Services\IMessageBoxService.cs" />
 					<File name="Interfaces\IShell.cs" src="PRISM\ApplicationUnity\Base\Solution.Base\Interfaces\IShell.cs" />
 					<File name="Logger\NLogLogger.cs" src="PRISM\ApplicationUnity\Base\Solution.Base\Logger\NLogLogger.cs" />
+					<File name="Model\Interfaces\IModuleConfigs.cs" src="PRISM\ApplicationUnity\Base\Solution.Base\Model\Interfaces\IModuleConfigs.cs" />
+					<File name="Model\ModuleConfig.cs" src="PRISM\ApplicationUnity\Base\Solution.Base\Model\ModuleConfig.cs" />
+					<File name="Model\ModuleConfigs.cs" src="PRISM\ApplicationUnity\Base\Solution.Base\Model\ModuleConfigs.cs" />
 					<File name="Mvvm\Attributes\IgnoreObjectStatusAttribute.cs" src="PRISM\ApplicationUnity\Base\Solution.Base\Mvvm\Attributes\IgnoreObjectStatusAttribute.cs" />
 					<File name="Mvvm\Enum\DataObjectStatus.cs" src="PRISM\ApplicationUnity\Base\Solution.Base\Mvvm\Enum\DataObjectStatus.cs" />
 					<File name="Mvvm\Events\DataErrorChangedEventArgs.cs" src="PRISM\ApplicationUnity\Base\Solution.Base\Mvvm\Events\DataErrorChangedEventArgs.cs" /> 
@@ -159,7 +162,7 @@
 					<File name="DatabaseLogin.xaml" src="PRISM\ApplicationUnity\Base\Solution.Base.Authentication\DatabaseLogin.xaml" buildAction="Page" language="XML" />
    					<File name="DatabaseLogin.xaml.cs" src="PRISM\ApplicationUnity\Base\Solution.Base.Authentication\DatabaseLogin.xaml.cs" SubType="Code" DependentUpon="DatabaseLogin.xaml" />
 					<File name="Login.xaml" src="PRISM\ApplicationUnity\Base\Solution.Base.Authentication\Login.xaml" buildAction="Page" language="XML" />
-   					<File name="Login.xaml.cs" src="PRISM\ApplicationUnity\Base\Solution.Base.Authentication\Login.xaml.cs" SubType="Code" DependentUpon="DatabaseLogin.xaml" />
+   					<File name="Login.xaml.cs" src="PRISM\ApplicationUnity\Base\Solution.Base.Authentication\Login.xaml.cs" SubType="Code" DependentUpon="Login.xaml" />
 					<File name="LoginViewModel.cs" src="PRISM\ApplicationUnity\Base\Solution.Base.Authentication\LoginViewModel.cs" />
 					<File name="Service.cs" src="PRISM\ApplicationUnity\Base\Solution.Base.Authentication\Service.cs"/>
 					<File name="packages.config" src="PRISM\ApplicationUnity\Base\Solution.Base.Authentication\packages.config" />
@@ -363,9 +366,10 @@
 					<File name="Images\16x16\users.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\16x16\users.png" buildAction="EmbeddedResource" binary="true" />
 					<File name="Images\16x16\cross.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\16x16\cross.png" buildAction="EmbeddedResource" binary="true" />
 					<File name="Images\16x16\tick.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\16x16\tick.png" buildAction="EmbeddedResource" binary="true" />
-					<File name="Images\256x256\Shell.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\256x256\SolutionShell.png" buildAction="EmbeddedResource" binary="true" />
+					<File name="Images\256x256\Shell.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\256x256\Shell.png" buildAction="EmbeddedResource" binary="true" />
 					<File name="Images\Misc\Login.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\Misc\Login.png"  buildAction="EmbeddedResource" binary="true" />
-					<File name="Images\Misc\Splash.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\Misc\Splash.png"  buildAction="EmbeddedResource" binary="true" />
+					<File name="Images\Misc\Shell.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\Misc\Shell.png"  buildAction="EmbeddedResource" binary="true" />					
+					<File name="Images\Misc\Splash.png" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Images\Misc\Splash.png"  buildAction="EmbeddedResource" binary="true" />										
 					<File name="Service.cs" src="PRISM\ApplicationUnity\Base\Solution.Base.Resource\Service.cs" />
 				</Files>
 			</Project>
@@ -480,7 +484,7 @@
 					<File name="ViewModels\Interfaces\ISplashViewModel.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Splash\ViewModels\Interfaces\ISplashViewModel.cs" />
 					<File name="ViewModels\SplashViewModel.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Splash\ViewModels\SplashViewModel.cs" />
 					<File name="Views\SplashView.xaml" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Splash\Views\SplashView.xaml" buildAction="Page" language="XML" />
-   					<File name="Views\SplashView.xaml.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Splash\Views\SplashView.xaml.cs" SubType="Code" DependentUpon="FileMenuView.xaml" />
+   					<File name="Views\SplashView.xaml.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Splash\Views\SplashView.xaml.cs" SubType="Code" DependentUpon="SplashView.xaml" />
 					<File name="ModuleInit.cs" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Splash\ModuleInit.cs" />
 					<File name="packages.config" src="PRISM\ApplicationUnity\Modules\Solution.Modules.Splash\packages.config" />										
 				</Files>
@@ -666,7 +670,6 @@
 				<File name="App.xaml" src="PRISM\ApplicationUnity\Solution\App.xaml" buildAction="ApplicationDefinition" language="XML" />
 				<File name="App.xaml.cs" src="PRISM\ApplicationUnity\Solution\App.xaml.cs" SubType="Code" DependentUpon="App.xaml" />
 				<File name="Bootstrapper.cs" src="PRISM\ApplicationUnity\Solution\BootstrapperSplash.cs" />
-				<File name="ModuleConfig.cs" src="PRISM\ApplicationUnity\Solution\ModuleConfig.cs" />
 				<File name="modules.config" src="PRISM\ApplicationUnity\Solution\modules.config" CopyToOutputDirectory="Always" />
 				<File name="nlog.config" src="PRISM\ApplicationUnity\Solution\nlog.config" CopyToOutputDirectory="Always" />
 				<File name="unity.config" src="PRISM\ApplicationUnity\Solution\unity.config" CopyToOutputDirectory="Always" />

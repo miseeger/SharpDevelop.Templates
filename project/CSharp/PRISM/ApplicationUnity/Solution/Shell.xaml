@@ -11,9 +11,11 @@
 	Title="${SolutionName}"
 	Name="${SolutionName}Shell"
 	ResizeMode="CanResizeWithGrip"
-	WindowStartupLocation="CenterScreen">
+	WindowStartupLocation="CenterScreen"
+	Background="#FFABABAB">
 
-	<Grid>
+	<Grid
+		ShowGridLines="false">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition
 				Width="200" />
@@ -22,87 +24,84 @@
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
 			<RowDefinition
-				Height="22" />
+				Height="Auto" />
 			<RowDefinition
 				Height="*" />
 			<RowDefinition
 				Height="Auto" />
 			<RowDefinition
-				Height="22" />
+				Height="Auto" />
 		</Grid.RowDefinitions>
 		<Border
+			Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
 			Grid.ColumnSpan="2">
 			<ItemsControl
 				Name="MenuRegion"
 				prism:RegionManager.RegionName="{x:Static names:RegionNames.MenuRegion}"
+				Background="Transparent"
 				VerticalAlignment="Top"
 				Grid.ColumnSpan="2"
-				Height="25"
-				HorizontalAlignment="Left"
-				Background="Transparent"
-				Margin="0,2,0,0" />
+				Height="21"
+				HorizontalAlignment="Left" />
 		</Border>
-		<Grid
-			Margin="2,2,0,2"
-			Grid.Row="1">
-			<Border
-				Background="#FFE3E3E3">
-				<ScrollViewer
-					VerticalScrollBarVisibility="Auto"
-					Margin="0,0,3,0">
-					<ContentControl
-						Name="ModuleNavigationRegion"
-						prism:RegionManager.RegionName="{x:Static names:RegionNames.ModuleNavigationRegion}"
-						Margin="4" />
-				</ScrollViewer>
-			</Border>
-		</Grid>
-		<StackPanel
-			Margin="2,2,0,2"
-			Grid.Row="2">
-			<Border
-				Background="#FFB3B3B3">
-				<ItemsControl
-					Name="ModuleRegion"
-					prism:RegionManager.RegionName="{x:Static names:RegionNames.ModuleRegion}"
+		<Border
+			Grid.Row="1"
+			Margin="1,1,0,0"
+			Background="#FFE3E3E3">
+			<ScrollViewer
+				VerticalScrollBarVisibility="Auto"
+				Margin="0,0,3,0">
+				<ContentControl
+					Name="ModuleNavigationRegion"
+					prism:RegionManager.RegionName="{x:Static names:RegionNames.ModuleNavigationRegion}"
 					Margin="4" />
-			</Border>
-		</StackPanel>
+			</ScrollViewer>
+		</Border>
+		<Border
+			Margin="1"
+			Grid.Row="2"
+			Background="#FFD3D3D3">
+			<ItemsControl
+				Name="ModuleRegion"
+				prism:RegionManager.RegionName="{x:Static names:RegionNames.ModuleRegion}"
+				Margin="4" />
+		</Border>
 		<GridSplitter
-			Margin="0,2"
 			Grid.Column="0"
 			Grid.Row="1"
-			Width="3" />
+			Grid.RowSpan="2"
+			Width="3"
+			Background="#FFABABAB" />
+
 		<Grid
-			Margin="0,2,2,2"
+			Margin="0,1,1,1"
 			Grid.Row="1"
 			Grid.Column="1"
-			Grid.RowSpan="2">
+			Grid.RowSpan="2" >
 			<Border
-				Background="#FF87CEEB">
+	 			Background="#FFE3E3E3">
 				<ContentControl
 					Name="MainRegion"
 					prism:RegionManager.RegionName="{x:Static names:RegionNames.MainRegion}"
-					Margin="4">
-				</ContentControl>
+					Margin="4"></ContentControl>
 			</Border>
 			<DockPanel>
-				<Image 
-					Width="512" 
-					Height="512" 
-					RenderOptions.BitmapScalingMode="HighQuality" 
-					Source="{Binding MainImage}"/>
+				<Image
+					Width="512"
+					Height="512"
+					RenderOptions.BitmapScalingMode="HighQuality"
+					Source="{Binding MainImage}" />
 			</DockPanel>
-
-		</Grid>
+		</Grid>			
 		<Border
 			Grid.Row="3"
-			Grid.ColumnSpan="2">
+			Grid.ColumnSpan="2"
+			Height="22">
 			<ItemsControl
 				Name="StatusbarRegion"
 				prism:RegionManager.RegionName="{x:Static names:RegionNames.StatusbarRegion}"
-				Background="Transparent"></ItemsControl>
+				Background="Transparent" />
 		</Border>
-	</Grid>
+	</Grid>	
 	
 </mv:WindowViewBase>

@@ -78,8 +78,8 @@
 			<File name="Names.cs" src="PRISM\ModuleUnity\Names.cs"/>
 
 			<!-- Properties -->
-			<File name="Properties\WPFAssemblyInfo.cs" src="WPFAssemblyInfo.cs" />
-			<File name="Properties\AssemblyInfo.cs" src="DefaultAssemblyInfo.cs" />
+			<File name="Properties\WPFAssemblyInfo.cs" src="PRISM\ModuleUnity\Properties\WPFAssemblyInfo.cs" />
+			<File name="Properties\AssemblyInfo.cs" src="PRISM\ModuleUnity\Properties\AssemblyInfo.cs" />
 			
 			<!-- Packages -->
 			<File name="packages.config" src="PRISM\ModuleUnity\packages.config" />										

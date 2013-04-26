@@ -8,6 +8,7 @@ namespace ${ProjectName}
 	public static class Names
 	{
 	
+		public const string Module = "${SolutionName}";
 		public const string TaskKey = "Task";
 		public const string TaskItem = "Module";
 		

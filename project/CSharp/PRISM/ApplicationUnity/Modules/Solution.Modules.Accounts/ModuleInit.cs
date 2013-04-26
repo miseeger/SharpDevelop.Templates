@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
+using ${SolutionName}.Base.Model.Interfaces;
+using ${SolutionName}.Base.Mvvm.Interfaces;
 using ${SolutionName}.Base.Names;
 using ${SolutionName}.Base.Navigation;
-using ${SolutionName}.Base.Mvvm.Interfaces;
 using ${SolutionName}.Modules.Accounts.ViewModels;
 using ${SolutionName}.Modules.Accounts.ViewModels.Interfaces;
 using ${SolutionName}.Modules.Accounts.Views;
@@ -19,26 +21,26 @@ namespace ${SolutionName}.Modules.Accounts
 	
 	// Module will be initialized "as available" (by default)
 	// Use this attribute when the module is rarely used:
-	//[Module(ModuleName="${SolutionName}.Modules.Accounts", OnDemand=true)] 
-	[Module(ModuleName="${SolutionName}.Modules.Accounts")]
+	//[Module(ModuleName=Names.Module, OnDemand=true)] 
+	[Module(ModuleName=Names.Module)]
 	public class ModuleInit : IModule
 	{
 		
 		IUnityContainer _container;
 		IRegionManager _regionManager;
+		IModuleConfigs _moduleConfigs;
 		
 
 		public ModuleInit(IUnityContainer container, IRegionManager regionManager)
 		{
-			// Get conatiner and region manager
 			_container = container;
 			_regionManager = regionManager;
+			_moduleConfigs = container.Resolve<IModuleConfigs>("ModuleConfigs");
 		}
 		
 
 		public void Initialize()
 		{
-
 			// ViewModel Registration:
 			_container.RegisterType<ITaskViewModel, TaskViewModel>();
 			_container.RegisterType<INavigationViewModel, NavigationViewModel>();
@@ -57,6 +59,12 @@ namespace ${SolutionName}.Modules.Accounts
 			var viewTask = _container.Resolve(typeof(IView), typeof(TaskView).FullName);
 			_regionManager.Regions[RegionNames.ModuleRegion].Add(viewTask);
 			
+			if (_moduleConfigs.Modules.Any(m => (m.Name == Names.Module && m.StartModule)))
+			{
+				_regionManager.RequestNavigate(RegionNames.ModuleNavigationRegion,
+			    	new Uri(typeof(NavigationView).FullName, UriKind.Relative));
+				((IView)viewTask).ViewModel.IsActive = true;
+			}
 		}
 
 	}

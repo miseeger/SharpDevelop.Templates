@@ -3,7 +3,7 @@ using Microsoft.Practices.Prism;
 using Microsoft.Practices.Prism.Logging;
 using NLog;
 
-namespace ${SolutionName}.Base
+namespace ${SolutionName}.Base.Logger
 {
 
 	public class NLogLogger : ILoggerFacade

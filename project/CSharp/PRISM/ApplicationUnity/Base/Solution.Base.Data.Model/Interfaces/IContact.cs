@@ -7,6 +7,7 @@ namespace ${SolutionName}.Base.Data.Model.Interfaces
 	{
 		string ContactId {get; set;}
 		string AccountId {get; set;}
+		string Salutation {get; set;}
 		string Lastname {get; set;}
 		string Firstname {get; set;}
 		string AddressId {get; set;}

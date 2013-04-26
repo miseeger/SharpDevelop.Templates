@@ -6,6 +6,7 @@ namespace ${SolutionName}.Modules.Accounts
 	public static class Names
 	{
 	
+		public const string Module = "${SolutionName}.Modules.Accounts";
 		public const string TaskKey = "Task";
 		public const string TaskItem = "Accounts";
 		

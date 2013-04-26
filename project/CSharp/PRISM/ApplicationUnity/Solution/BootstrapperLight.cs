@@ -11,6 +11,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Markup;
 using ${SolutionName}.Base;
+using ${SolutionName}.Base.Logger;
 
 namespace ${SolutionName}
 {

@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<Template originator = "Michael Seeeger" created = "01/04/2012">
+	
+	<!-- Template Header -->
+	<TemplateConfiguration>
+		<Name>PRISM Module - Light (Unity)</Name>
+		<Category>C#</Category>
+		<Subcategory>PRISM</Subcategory>
+		<Icon>C#.Project.PRISMModule</Icon>
+		<Description>Creates a PRISM Module with ony one View that fits into a PRISM "light" Application</Description>
+		<SupportedTargetFrameworks>v4.0;v4.0Client</SupportedTargetFrameworks>
+	</TemplateConfiguration>
+	
+	<!-- Actions -->
+	<Actions>
+		<Open filename = "ModuleInit.cs"/>
+		<RunCommand path="/AddIns/PackageManagement/TemplateCommands/InstallPackages"/>		
+	</Actions>
+	
+	<Project language = "C#">
+		
+		<ProjectItems>
+			<Reference Include="Microsoft.Practices.Prism"/>
+			<Reference Include="Microsoft.Practices.Prism.UnityExtensions"/>
+			<Reference Include="Microsoft.Practices.Unity"/>
+			<Reference Include="PresentationCore" />
+			<Reference Include="PresentationFramework" />
+			<Reference Include="System" />
+			<Reference Include="System.Core" />
+			<Reference Include="System.Xaml" />
+			<Reference Include="System.Xml" />
+			<Reference Include="System.Xml.Linq" />
+			<Reference Include="WindowsBase" />
+		</ProjectItems>
+
+		<PropertyGroup>
+			<OutputType>Library</OutputType>
+			<ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+			<AppDesignerFolder>Properties</AppDesignerFolder>
+		</PropertyGroup>
+		
+		<PropertyGroup configuration="Debug">
+			<OutputPath>..\..\..\Bin\Debug\Modules</OutputPath>
+		</PropertyGroup>
+
+		<PropertyGroup configuration="Release">
+			<OutputPath>..\..\..\Bin\Release\Modules</OutputPath>
+		</PropertyGroup>
+		
+		<Files>
+
+			<!-- TaskView -->
+			<File name="ViewModels\Interfaces\ITaskViewModel.cs" src="PRISM\ModuleLightUnity\ViewModels\Interfaces\ITaskViewModel.cs"/>
+			<File name="ViewModels\TaskViewModel.cs" src="PRISM\ModuleLightUnity\ViewModels\TaskViewModel.cs"/>
+			<File name="Views\TaskView.xaml" buildAction="Page" language="XML" src="PRISM\ModuleLightUnity\Views\TaskView.xaml"/>
+			<File name="Views\TaskView.xaml.cs" SubType="Code" DependentUpon="Views\TaskView.xaml" src="PRISM\ModuleLightUnity\Views\TaskView.xaml.cs"/>
+			
+			<!-- ModuleView -->
+			<File name="ViewModels\Interfaces\IModuleViewModel.cs" src="PRISM\ModuleLightUnity\ViewModels\Interfaces\IModuleViewModel.cs"/>
+			<File name="ViewModels\ModuleViewModel.cs" src="PRISM\ModuleLightUnity\ViewModels\ModuleViewModel.cs"/>
+			<File name="Views\ModuleView.xaml" buildAction="Page" language="XML" src="PRISM\ModuleLightUnity\Views\ModuleView.xaml"/>
+			<File name="Views\ModuleView.xaml.cs" SubType="Code" DependentUpon="Views\ModuleView.xaml" src="PRISM\ModuleLightUnity\Views\ModuleView.xaml.cs"/>
+			
+			<!-- Module -->			
+			<File name="ModuleInit.cs" src="PRISM\ModuleLightUnity\ModuleInit.cs"/>
+			<File name="Names.cs" src="PRISM\ModuleLightUnity\Names.cs"/>
+
+			<!-- Properties -->
+			<File name="Properties\WPFAssemblyInfo.cs" src="PRISM\ModuleLightUnity\Properties\WPFAssemblyInfo.cs" />
+			<File name="Properties\AssemblyInfo.cs" src="PRISM\ModuleLightUnity\Properties\AssemblyInfo.cs" />
+			
+			<!-- Packages -->
+			<File name="packages.config" src="PRISM\ModuleLightUnity\packages.config" />										
+
+		</Files>
+	
+	</Project>
+
+</Template>

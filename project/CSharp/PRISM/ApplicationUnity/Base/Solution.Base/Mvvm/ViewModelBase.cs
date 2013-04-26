@@ -49,6 +49,21 @@ namespace ${SolutionName}.Base.Mvvm
 			}
 		}
 
+		
+		private bool _isActive;
+		public bool IsActive
+		{
+			get { return _isActive; }
+			set
+			{
+				if (_isActive != value)
+				{
+					_isActive = value;
+					RaisePropertyChanged(() => IsActive);
+				}
+			}
+		}
+		
 
 		private bool _isBusy;
 		public bool IsBusy

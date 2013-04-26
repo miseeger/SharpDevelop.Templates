@@ -43,6 +43,7 @@ namespace ${SolutionName}.Modules.Splash
         		(Action) (() =>
 					{
 						_shell.Show();
+						_shell.Activate();
 						_eventAggregator.GetEvent<CloseSplashEvent>().Publish(new CloseSplashEvent());
                     }));
 

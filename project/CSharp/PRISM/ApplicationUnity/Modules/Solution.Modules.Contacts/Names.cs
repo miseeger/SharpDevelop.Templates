@@ -6,6 +6,7 @@ namespace ${SolutionName}.Modules.Contacts
 	public static class Names
 	{
 	
+		public const string Module = "${SolutionName}.Modules.Contacts";
 		public const string TaskKey = "Task";
 		public const string TaskItem = "Contacts";
 		

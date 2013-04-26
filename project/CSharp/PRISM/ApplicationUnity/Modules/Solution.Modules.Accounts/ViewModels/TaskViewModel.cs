@@ -18,20 +18,6 @@ namespace ${SolutionName}.Modules.Accounts.ViewModels
 		private IRegionManager _regionManager;
 		private IAppResourceService _appResourceService;
 		
-		private bool _isActive;
-		public bool IsActive
-		{
-			get { return _isActive; }
-			set
-			{
-				if(_isActive != value)
-				{
-					_isActive = value;
-					RaisePropertyChanged(() => IsActive);
-				}
-			}
-		}
-		
 		
 		public TaskViewModel(IRegionManager regionManager, IAppResourceService appResourceService)
 		{

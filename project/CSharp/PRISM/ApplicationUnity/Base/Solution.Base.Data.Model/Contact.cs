@@ -40,6 +40,20 @@ namespace ${SolutionName}.Base.Data.Model
 			}	
 		}
 		
+		private string _salutation;
+		public string Salutation
+		{
+			get { return _salutation; }
+			set
+			{ 
+				if(_salutation != value)
+				{
+					_salutation = value;
+					RaisePropertyChanged(() => Salutation);
+				}
+			}	
+		}
+		
 		private string _lastname;
 		public string Lastname
 		{

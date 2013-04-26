@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<mv:UserControlViewBase
+	x:Class="${SolutionName}.Modules.Accounts.Views.TaskView" 
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+	xmlns:mv="clr-namespace:${SolutionName}.Base.Mvvm;assembly=${SolutionName}.Base">
+
+	<Grid Margin="0,0,0,5">
+		<StackPanel>
+			<RadioButton
+				GroupName="TaskGroup"
+				Style="{StaticResource {x:Type ToggleButton}}"
+				Command="{Binding NavigateCommand}"
+				IsChecked="{Binding IsActive, UpdateSourceTrigger=PropertyChanged}">
+				<StackPanel
+					Orientation="Horizontal">
+					<Image
+						Margin="0,0,10,0"						
+						Source="{Binding VmImage}" 
+						RenderOptions.BitmapScalingMode="NearestNeighbor" />
+					<TextBlock Text="{Binding VmTitle}"/>
+				</StackPanel>
+			</RadioButton>
+		</StackPanel>
+	</Grid>
+
+</mv:UserControlViewBase>

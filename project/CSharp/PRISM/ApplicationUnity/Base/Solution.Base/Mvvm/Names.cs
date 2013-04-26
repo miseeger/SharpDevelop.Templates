@@ -10,6 +10,7 @@ namespace ${SolutionName}.Base.Mvvm
 		public static string VmTitleName = "VmTitle";
 		public static string VmImageName = "VmImage";
 		public static string ObjectStatusName = "ObjectStatus";
+		public static string IsActiveName = "IsActive";
 		public static string IsBusyName = "IsBusy";
 		public static string HasErrorsName = "HasErrors";
 		public static string IsValidName = "IsValid";
@@ -27,6 +28,7 @@ namespace ${SolutionName}.Base.Mvvm
 			ObjectStatusIgnoringProperties = new List<string>() 
 												 { 
 													 ObjectStatusName
+													 ,IsActiveName
 													 ,IsBusyName
 													 ,IsDirtyName
 													 ,HasErrorsName 

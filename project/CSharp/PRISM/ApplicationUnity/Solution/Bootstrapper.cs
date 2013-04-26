@@ -15,6 +15,7 @@ using Microsoft.Practices.Prism.UnityExtensions;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
 using ${SolutionName}.Base;
+using ${SolutionName}.Base.Logger;
 using ${SolutionName}.Base.Enum;
 using ${SolutionName}.Base.Interfaces;
 using ${SolutionName}.Base.Interfaces.Services;
