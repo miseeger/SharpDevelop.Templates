@@ -30,7 +30,10 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 
-namespace PetaPoco
+using ${SolutionName}.Base.Persistence.PetaPoco.DatabaseTypes;
+using ${SolutionName}.Base.Persistence.PetaPoco.Internal;
+
+namespace ${SolutionName}.Base.Persistence.PetaPoco
 {
 	/// <summary>
 	/// The main PetaPoco Database class.  You can either use this class directly, or derive from it.

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace PetaPoco
+namespace ${SolutionName}.Base.Persistence.PetaPoco;
 {
     public static class RelationExtensions
     {
@@ -183,5 +183,7 @@ namespace PetaPoco
         {
             throw new Exception(string.Format("No Property of type {0} found on object of type: {1}", typeof(TSub1).Name, typeof(T).Name));
         }
-    }
+
+	}
+
 }

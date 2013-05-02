@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using ${SolutionName}.Base.Persistence.PetaPoco.DatabaseTypes;
+using ${SolutionName}.Base.Persistence.PetaPoco.Internal;
+
 namespace ${SolutionName}.Base.Persistence.PetaPoco
 {
 
