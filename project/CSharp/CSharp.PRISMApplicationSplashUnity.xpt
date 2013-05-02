@@ -71,7 +71,7 @@
 				</ProjectItems>
 
 				<Files>
-					<File name="Enum\AuthenticationType.cs" src="PRISM\ApplicationUnity\Base\Solution.Base\Enum\AuthenticationType.cs" />
+					<File name="Enums\AuthenticationType.cs" src="PRISM\ApplicationUnity\Base\Solution.Base\Enums\AuthenticationType.cs" />
 					<File name="Events\CloseSplashEvent.cs" src="PRISM\ApplicationUnity\Base\Solution.Base\Events\CloseSplashEvent.cs" />
 					<File name="Events\SplashInfoUpdateEvent.cs" src="PRISM\ApplicationUnity\Base\Solution.Base\Events\SplashInfoUpdateEvent.cs" />
 					<File name="Interfaces\Services\IAppResourceService.cs" src="PRISM\ApplicationUnity\Base\Solution.Base\Interfaces\Services\IAppResourceService.cs" />

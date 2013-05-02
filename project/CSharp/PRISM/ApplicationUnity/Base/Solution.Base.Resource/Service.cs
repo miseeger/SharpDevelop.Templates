@@ -41,6 +41,18 @@ namespace ${SolutionName}.Base.Resource
 		{
 			return GetPng(ImageName, 16);
 		}
+
+
+		public ImageSource GetPng24(string ImageName)
+		{
+			return GetPng(ImageName, 24);
+		}
+
+		
+		public ImageSource GetPng32(string ImageName)
+		{
+			return GetPng(ImageName, 32);
+		}
 		
 		
 		public ImageSource GetPng256(string ImageName)

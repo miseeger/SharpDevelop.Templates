@@ -70,14 +70,14 @@ namespace ${SolutionName}.Base.Persistence.PetaPoco
   		
   		public IEnumerable<T> Query<T>()
   		{
-  			var pd = Database.PocoData.ForType(typeof(T));
+  			var pd = PocoData.ForType(typeof(T));
   			var sql = "SELECT * FROM " + pd.TableInfo.TableName;
 		  	return _db.Query<T>(sql);
   		}
   		
   		public IEnumerable<T> Query<T>(string where = "", string orderBy = "", int limit = 0, string columns = "*", params object[] args)
   		{
-  			var pd = Database.PocoData.ForType(typeof (T));
+  			var pd = PocoData.ForType(typeof (T));
   			string sql = BuildSql(pd.TableInfo.TableName, where, orderBy, limit, columns);
   			return Query<T>(sql, args);
   		}

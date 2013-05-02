@@ -71,7 +71,7 @@
 				</ProjectItems>
 
 				<Files>
-					<File name="Enum\AuthenticationType.cs" src="PRISM\ApplicationUnity\Base\Solution.Base\Enum\AuthenticationType.cs" />
+					<File name="Enums\AuthenticationType.cs" src="PRISM\ApplicationUnity\Base\Solution.Base\Enums\AuthenticationType.cs" />
 					<File name="Interfaces\Services\IAppResourceService.cs" src="PRISM\ApplicationUnity\Base\Solution.Base\Interfaces\Services\IAppResourceService.cs" />
 					<File name="Interfaces\Services\IAuthenticationService.cs" src="PRISM\ApplicationUnity\Base\Solution.Base\Interfaces\Services\IAuthenticationService.cs" />
 					<File name="Interfaces\Services\IBusinessService.cs" src="PRISM\ApplicationUnity\Base\Solution.Base\Interfaces\Services\IBusinessService.cs" />

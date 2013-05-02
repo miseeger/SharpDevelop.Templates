@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 using Microsoft.Practices.Unity;
 using ${SolutionName}.Base.Authentication.Infrastructure;
-using ${SolutionName}.Base.Enum;
+using ${SolutionName}.Base.Enums;
 using ${SolutionName}.Base.Interfaces.Services;
 using ${SolutionName}.Base.Mvvm;
 using ${SolutionName}.Base.Mvvm.Interfaces;

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ${SolutionName}.Base.Enum
+namespace ${SolutionName}.Base.Enums
 {
 	
 	public enum AuthenticationType

@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Practices.Prism.Events;
 
-namespace MyApp.Base
+namespace ${SolutionName}.Base
 {
 
 	public class GlobalEvents

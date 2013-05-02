@@ -1,0 +1,49 @@
+﻿<ResourceDictionary
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:cmd="clr-namespace:${SolutionName}.Base.Navigation;assembly=${SolutionName}.Base"
+	xmlns:rbn="clr-namespace:Fluent;assembly=Fluent">
+	
+	<cmd:CommandItemTemplateSelector x:Key="CommandItemTemplateSelector"/>
+
+    <DataTemplate DataType="{x:Type cmd:CommandItem}" x:Key="CmdLargeTemplate">
+		<rbn:Button
+			Header="{Binding Caption}"
+			LargeIcon="{Binding Icon}"
+			SizeDefinition="{Binding SizeDefinition}"
+			Command="{Binding Command}"
+			CommandParameter="{Binding CommandParameter}" />
+    </DataTemplate>
+	
+    <DataTemplate DataType="{x:Type cmd:CommandItem}" x:Key="CmdMiddleTemplate">
+		<rbn:Button
+			Header="{Binding Caption}"
+			Icon="{Binding Icon}"
+			SizeDefinition="{Binding SizeDefinition}"
+			Command="{Binding Command}"
+			CommandParameter="{Binding CommandParameter}" />
+    </DataTemplate>	
+	
+    <DataTemplate DataType="{x:Type cmd:CommandItem}" x:Key="NavLargeTemplate">
+		<rbn:ToggleButton
+			GroupName="{Binding RadioGroupName}"
+			Header="{Binding Caption}"
+			LargeIcon="{Binding Icon}"
+			SizeDefinition="{Binding SizeDefinition}"
+			Command="{Binding Command}"
+			CommandParameter="{Binding CommandParameter}"
+			IsChecked="{Binding IsActive, UpdateSourceTrigger=PropertyChanged}" />
+	</DataTemplate>
+	
+    <DataTemplate DataType="{x:Type cmd:CommandItem}" x:Key="NavMiddleTemplate">
+		<rbn:ToggleButton
+			GroupName="{Binding RadioGroupName}"
+			Header="{Binding Caption}"
+			Icon="{Binding Icon}"
+			SizeDefinition="{Binding SizeDefinition}"
+			Command="{Binding Command}"
+			CommandParameter="{Binding CommandParameter}"
+			IsChecked="{Binding IsActive, UpdateSourceTrigger=PropertyChanged}" />
+	</DataTemplate>	
+
+</ResourceDictionary>

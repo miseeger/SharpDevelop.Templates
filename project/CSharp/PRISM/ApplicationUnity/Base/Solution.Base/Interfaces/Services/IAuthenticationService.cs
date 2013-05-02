@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using ${SolutionName}.Base.Enum;
+using ${SolutionName}.Base.Enums;
 
 namespace ${SolutionName}.Base.Interfaces.Services
 {
