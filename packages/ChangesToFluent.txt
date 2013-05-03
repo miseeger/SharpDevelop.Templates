@@ -1,0 +1,41 @@
+Fluent source code was changed in order to suppress Minimization and Maximization
+of the RibbonTab since it looses any binding on Minimization.
+
+-- Source code as of Mar 12th 2013 (e709a1f6bb2e) --
+
+Ribbon.cs
+---------
+
+	Line 1073 (OnToggleMinimizeTheRibbonCommandCanExecute):
+		e.CanExecute = false;
+
+	Line 1084 (OnToggleMinimizeTheRibbonCommandExecuted):
+		ribbon.TabControl.IsMinimized = false;
+		
+
+RibbonTabItem.cs
+----------------
+
+	Line 567 (OnMouseLeftButtonDown)
+		this.TabControlParent.IsMinimized = false;
+		
+
+Themes\Metro\Controls\RibbonTabControl.xaml
+-------------------------------------------
+
+	Line 536 (Image x:Name="image")
+		Visibility="Collapsed"
+		
+	Line 554 (Fluent:ToggleButton x:Name="PART_MinimizeButton")
+		Visibility="Collapsed"
+		
+
+Themes\Metro\Controls\RibbonTabControl.xaml
+-------------------------------------------
+		
+	Line 536 (Image x:Name="image")
+		Visibility="Collapsed"
+		
+	Line 554 (Fluent:ToggleButton x:Name="PART_MinimizeButton")
+		Visibility="Collapsed"
+		
