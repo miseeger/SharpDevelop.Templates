@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<Template originator = "Michael Seeeger" created = "26/04/2013">
+	
+	<!-- Template Header -->
+	<TemplateConfiguration>
+		<Name>PRISM Ribbon Module (Unity)</Name>
+		<Category>C#</Category>
+		<Subcategory>PRISM</Subcategory>
+		<Icon>C#.Project.PRISMModule</Icon>
+		<Description>Creates a PRISM Ribbon Module with a View and an According Viewmodel</Description>
+		<SupportedTargetFrameworks>v4.0;v4.0Client</SupportedTargetFrameworks>
+	</TemplateConfiguration>
+	
+	<!-- Actions -->
+	<Actions>
+		<Open filename = "ModuleInit.cs"/>
+		<RunCommand path="/AddIns/PackageManagement/TemplateCommands/InstallPackages"/>		
+	</Actions>
+	
+	<Project language = "C#">
+		
+		<ProjectItems>
+			<Reference Include="Fluent" />
+			<Reference Include="Microsoft.Practices.Prism" />
+			<Reference Include="Microsoft.Practices.Prism.UnityExtensions" />
+			<Reference Include="Microsoft.Practices.Unity" />
+			<Reference Include="PresentationCore" />
+			<Reference Include="PresentationFramework" />
+			<Reference Include="System" />
+			<Reference Include="System.Core" />
+			<Reference Include="System.Data" />
+			<Reference Include="System.Xaml" />
+			<Reference Include="System.Xml" />
+			<Reference Include="System.Xml.Linq" />
+			<Reference Include="WindowsBase" />
+		</ProjectItems>
+
+		<PropertyGroup>
+			<OutputType>Library</OutputType>
+			<ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+			<AppDesignerFolder>Properties</AppDesignerFolder>
+		</PropertyGroup>
+		
+		<PropertyGroup configuration="Debug">
+			<OutputPath>..\..\..\Bin\Debug\Modules</OutputPath>
+		</PropertyGroup>
+
+		<PropertyGroup configuration="Release">
+			<OutputPath>..\..\..\Bin\Release\Modules</OutputPath>
+		</PropertyGroup>
+		
+		<Files>
+
+			<!-- RibbonTabView -->
+			<File name="ViewModels\Interfaces\IRibbonTabViewModel.cs" src="PRISM\RibbonModuleUnity\ViewModels\Interfaces\IRibbonTabViewModel.cs"/>
+			<File name="ViewModels\RibbonTabViewModel.cs" src="PRISM\RibbonModuleUnity\ViewModels\RibbonTabViewModel.cs"/>
+			<File name="Views\RibbonTabView.xaml" buildAction="Page" language="XML" src="PRISM\RibbonModuleUnity\Views\RibbonTabView.xaml"/>
+			<File name="Views\RibbonTabView.xaml.cs" SubType="Code" DependentUpon="Views\RibbonTabView.xaml" src="PRISM\RibbonModuleUnity\Views\RibbonTabView.xaml.cs"/>
+
+			<!-- View1 -->
+			<File name="ViewModels\Interfaces\IViewModel1.cs" src="PRISM\ModuleUnity\ViewModels\Interfaces\IViewModel1.cs"/>
+			<File name="ViewModels\ViewModel1.cs" src="PRISM\ModuleUnity\ViewModels\ViewModel1.cs"/>
+			<File name="Views\View1.xaml" buildAction="Page" language="XML" src="PRISM\ModuleUnity\Views\View1.xaml"/>
+			<File name="Views\View1.xaml.cs" SubType="Code" DependentUpon="Views\View1.xaml" src="PRISM\ModuleUnity\Views\View1.xaml.cs"/>
+			
+			<!-- View2 -->
+			<File name="ViewModels\Interfaces\IViewModel2.cs" src="PRISM\ModuleUnity\ViewModels\Interfaces\IViewModel2.cs"/>
+			<File name="ViewModels\ViewModel2.cs" src="PRISM\ModuleUnity\ViewModels\ViewModel2.cs"/>
+			<File name="Views\View2.xaml" buildAction="Page" language="XML" src="PRISM\ModuleUnity\Views\View2.xaml"/>
+			<File name="Views\View2.xaml.cs" SubType="Code" DependentUpon="Views\View2.xaml" src="PRISM\ModuleUnity\Views\View2.xaml.cs"/>
+		
+			<!-- Module -->			
+			<File name="ModuleInit.cs" src="PRISM\RibbonModuleUnity\ModuleInit.cs"/>
+			<File name="ModuleCommands.cs" src="PRISM\RibbonModuleUnity\ModuleCommands.cs"/>
+			<File name="Names.cs" src="PRISM\RibbonModuleUnity\Names.cs"/>
+
+			<!-- Properties -->
+			<File name="Properties\WPFAssemblyInfo.cs" src="PRISM\ModuleUnity\Properties\WPFAssemblyInfo.cs" />
+			<File name="Properties\AssemblyInfo.cs" src="PRISM\ModuleUnity\Properties\AssemblyInfo.cs" />
+			
+			<!-- Packages -->
+			<File name="packages.config" src="PRISM\RibbonModuleUnity\packages.config" />										
+
+		</Files>
+	
+	</Project>
+
+</Template>
