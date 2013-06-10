@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<mv:RibbonTabViewBase
+	x:Class="${SolutionName}.Modules.Accounts.Views.RibbonTabView" 
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+	xmlns:mv="clr-namespace:${SolutionName}.Base.Mvvm.RibbonUi;assembly=${SolutionName}.Base.Mvvm"
+	xmlns:rbn="clr-namespace:Fluent;assembly=Fluent"
+	Header="{Binding VmTitle}">
+	
+	<mv:RibbonTabViewBase.Resources>
+		<ResourceDictionary Source="pack://application:,,,/${SolutionName}.Base.Resource.Themes;component/RibbonDataTemplates.xaml"/>
+	</mv:RibbonTabViewBase.Resources>
+
+	<rbn:RibbonGroupBox
+		Header="Start"
+		ItemsSource="{Binding CommandList}"
+		ItemTemplateSelector="{StaticResource CommandItemTemplateSelector}"/>
+	
+	<rbn:RibbonGroupBox
+		Header="My Views"
+		ItemsSource="{Binding NavList}" 
+		ItemTemplateSelector="{StaticResource CommandItemTemplateSelector}" />
+
+</mv:RibbonTabViewBase>

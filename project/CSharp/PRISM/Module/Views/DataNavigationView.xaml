@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mv:UserControlViewBase
+	x:Class="${ProjectName}.Views.DataNavigationView" 
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+	xmlns:mv="clr-namespace:<SolutionName>.Base.Mvvm;assembly=<SolutionName>.Base.Mvvm"
+	xmlns:conv="clr-namespace:<SolutionName>.Base.Converters;assembly=<SolutionName>.Base">
+
+	<mv:UserControlViewBase.Resources>
+		<!-- conv:Gender2ImageConverter x:Key="GenderConverter"/ -->
+	</mv:UserControlViewBase.Resources>
+	
+	<DockPanel>
+		
+		<!-- TODO: Adjust DataBinding of ListBox -->
+		
+		<ListBox
+			BorderThickness="0"
+			ScrollViewer.VerticalScrollBarVisibility="Auto"
+			ItemsSource="{Binding ItemList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+			SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+			<ListBox.ItemTemplate>
+      			<DataTemplate>
+       				<StackPanel Margin="5"
+       			            	Orientation="Horizontal">
+
+					<!-- TODO: Define Template Layout
+
+       					<Image
+        					Source="{Binding ContactData.Gender, Converter={StaticResource GenderConverter}}"
+       						Margin="0,0,5,0" />
+       					<StackPanel 
+							Orientation="Vertical">
+       						<TextBlock 
+        						FontWeight="Bold" 
+       							Text="{Binding ContactData.LastFirst}" />
+       						<TextBlock
+       							Foreground="Green"
+       							TextDecorations="Underline"
+       							Cursor="Hand"
+								Text="{Binding ContactData.Phone}" />
+       					</StackPanel> 
+
+					-->
+
+      				</StackPanel>
+     			</DataTemplate>
+   			</ListBox.ItemTemplate>			
+		</ListBox>
+	</DockPanel>
+
+</mv:UserControlViewBase>

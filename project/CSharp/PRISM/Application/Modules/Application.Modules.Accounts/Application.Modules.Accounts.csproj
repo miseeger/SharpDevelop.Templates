@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectGuid>{077D8AA9-11C0-4ECD-86C7-1C20B35D2ACA}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>library</OutputType>
+    <RootNamespace>${SolutionName}.Modules.Accounts</RootNamespace>
+    <AssemblyName>${SolutionName}.Modules.Accounts</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>..\..\..\Bin\Debug\Modules</OutputPath>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>..\..\..\Bin\Release\Modules</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Fluent">
+      <HintPath>..\..\..\packages\Fluent.Ribbon.2.0.3\lib\net40\Fluent.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism">
+      <HintPath>..\..\..\packages\Prism.4.1.0.0\lib\NET40\Microsoft.Practices.Prism.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\..\..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>..\..\..\packages\Unity.2.1.505.2\lib\NET35\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="mscorlib" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Base\Business\${SolutionName}.Base.Business.Model.Interfaces\${SolutionName}.Base.Business.Model.Interfaces.csproj">
+      <Project>{02E2705A-0464-41FA-BF4F-B73CB3F13319}</Project>
+      <Name>${SolutionName}.Base.Business.Model.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Base\Business\${SolutionName}.Base.Business.Model\${SolutionName}.Base.Business.Model.csproj">
+      <Project>{CF485E56-7281-4088-B857-14BE38BB2FA4}</Project>
+      <Name>${SolutionName}.Base.Business.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Base\Data\${SolutionName}.Base.Data.Enums\${SolutionName}.Base.Data.Enums.csproj">
+      <Project>{208F448F-E736-4DA6-B18F-C3921FE581A8}</Project>
+      <Name>${SolutionName}.Base.Data.Enums</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Base\Data\${SolutionName}.Base.Data.Model.Interfaces\${SolutionName}.Base.Data.Model.Interfaces.csproj">
+      <Project>{F13466E0-5CD0-4AA3-8D34-778D225C4D4C}</Project>
+      <Name>${SolutionName}.Base.Data.Model.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Base\Data\${SolutionName}.Base.Data.Model\${SolutionName}.Base.Data.Model.csproj">
+      <Project>{1556F44E-CE27-4042-B0E4-A4F58D02274E}</Project>
+      <Name>${SolutionName}.Base.Data.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Base\${SolutionName}.Base.Interfaces\${SolutionName}.Base.Interfaces.csproj">
+      <Project>{88DBC7B0-F1BC-486C-B470-568C83BDE739}</Project>
+      <Name>${SolutionName}.Base.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Base\${SolutionName}.Base.Mvvm\${SolutionName}.Base.Mvvm.csproj">
+      <Project>{8BEC2E05-F461-4EC8-B460-903F3FADD5C8}</Project>
+      <Name>${SolutionName}.Base.Mvvm</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Base\Resource\${SolutionName}.Base.Resource.Themes\${SolutionName}.Base.Resource.Themes.csproj">
+      <Project>{3D8F9E98-B93D-4D41-BFAF-8E90DDDB3E22}</Project>
+      <Name>${SolutionName}.Base.Resource.Themes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Base\${SolutionName}.Base\${SolutionName}.Base.csproj">
+      <Project>{BAB1D82A-D6BF-4B6E-92FC-CDF511EB5794}</Project>
+      <Name>${SolutionName}.Base</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ModuleCommands.cs" />
+    <Compile Include="ModuleEvents.cs" />
+    <Compile Include="ModuleInit.cs" />
+    <Compile Include="Names.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\WPFAssemblyInfo.cs" />
+    <Compile Include="ViewModels\DataNavigationViewModel.cs" />
+    <Compile Include="ViewModels\Interfaces\IDataNavigationViewModel.cs" />
+    <Compile Include="ViewModels\Interfaces\IRibbonTabViewModel.cs" />
+    <Compile Include="ViewModels\Interfaces\IViewModel1.cs" />
+    <Compile Include="ViewModels\Interfaces\IViewModel2.cs" />
+    <Compile Include="ViewModels\RibbonTabViewModel.cs" />
+    <Compile Include="ViewModels\ViewModel1.cs" />
+    <Compile Include="ViewModels\ViewModel2.cs" />
+    <Compile Include="Views\DataNavigationView.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>Views\DataNavigationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RibbonTabView.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>RibbonTabView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\View1.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>View1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\View2.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>View2.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\DataNavigationView.xaml" />
+    <Page Include="Views\RibbonTabView.xaml" />
+    <Page Include="Views\View1.xaml" />
+    <Page Include="Views\View2.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Themes\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

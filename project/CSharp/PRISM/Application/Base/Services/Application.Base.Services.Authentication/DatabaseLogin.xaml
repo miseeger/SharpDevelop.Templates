@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<mv:LoginWindowViewBase
+	x:Class="${SolutionName}.Base.Services.Authentication.DatabaseLogin" 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:bmv="clr-namespace:${SolutionName}.Base.Mvvm;assembly=${SolutionName}.Base.Mvvm"
+	xmlns:mv="clr-namespace:${SolutionName}.Base.Services.Authentication.Infrastructure"
+	Width="336"
+	Height="230"
+	Title="Please log in..."
+	ResizeMode="NoResize"
+	Topmost="False"
+	WindowStartupLocation="CenterScreen"
+	Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
+	FocusManager.FocusedElement="{Binding ElementName=txtUserName}"
+	ShowInTaskbar="True">
+	<mv:LoginWindowViewBase.Resources>
+        <bmv:CommandReference
+			x:Key="close"
+			Command="{Binding OkCommand}" />
+		<bmv:CommandReference
+			x:Key="cancel"
+			Command="{Binding CancelCommand}" />
+		<Style
+			x:Key="ButtonImageStyle"
+			TargetType="{x:Type Image}">
+			<Style.Triggers>
+				<DataTrigger
+					Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}, Path=IsEnabled}"
+					Value="False">
+					<Setter
+						Property="Opacity"
+						Value="0.50"></Setter>
+				</DataTrigger>
+			</Style.Triggers>
+		</Style>
+	</mv:LoginWindowViewBase.Resources>
+	<mv:LoginWindowViewBase.InputBindings>
+		<KeyBinding
+			Key="Enter"
+			Command="{StaticResource close}" />
+		<KeyBinding
+			Key="Escape"
+			Command="{StaticResource cancel}" />
+	</mv:LoginWindowViewBase.InputBindings>
+	<Grid
+		ShowGridLines="false">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition
+				Width="80" />
+			<ColumnDefinition
+				Width="50" />
+			<ColumnDefinition
+				Width="100" />
+			<ColumnDefinition
+				Width="100" />
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition
+				Height="65" />
+			<RowDefinition
+				Height="30" />
+			<RowDefinition
+				Height="30" />
+			<RowDefinition
+				Height="30" />
+			<RowDefinition
+				Height="45" />
+		</Grid.RowDefinitions>
+		<Image
+			Grid.Column="0"
+			Grid.ColumnSpan="4"
+			Width="330"
+			Height="60"
+			Source="{Binding VmImage}"
+			RenderOptions.BitmapScalingMode="NearestNeighbor"
+			VerticalAlignment="Top"
+			Focusable="False" />
+		<TextBlock
+			Grid.Column="0"
+			Grid.Row="1"
+			Text="Username:"
+			TextAlignment="Right"
+			VerticalAlignment="Center"
+			Margin="0,0,10,0" />
+		<TextBox
+			x:Name="txtUserName"
+			Height="23"
+			Width="240"
+			VerticalAlignment="Center"
+			Grid.Column="1"
+			Grid.Row="1"
+			Grid.ColumnSpan="3"
+			HorizontalAlignment="Left"
+			Text="{Binding UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+			FocusManager.FocusedElement="{Binding RelativeSource={RelativeSource Self}}" />
+		<TextBlock
+			Grid.Column="0"
+			Grid.Row="2"
+			Text="Password:"
+			TextAlignment="Right"
+			VerticalAlignment="Center"
+			Margin="0,0,10,0" />
+		<PasswordBox
+			x:Name="pwdBox"
+			Height="23"
+			Width="240"
+			VerticalAlignment="Center"
+			Grid.Column="1"
+			Grid.Row="2"
+			Grid.ColumnSpan="3"
+			HorizontalAlignment="Left" />
+		<TextBlock
+			Grid.Column="0"
+			Grid.Row="3"
+			Text="Login to:"
+			TextAlignment="Right"
+			VerticalAlignment="Center"
+			Margin="0,0,10,0" />
+		<ComboBox
+			Height="23"
+			Width="240"
+			VerticalAlignment="Center"
+			Grid.Column="1"
+			Grid.Row="3"
+			Grid.ColumnSpan="3"
+			HorizontalAlignment="Left"
+			ItemsSource="{Binding Databases, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+			SelectedValue="{Binding Database, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+		<Button
+			Height="24"
+			Width="85"
+			Grid.Column="2"
+			Grid.Row="4"
+			HorizontalAlignment="Right"
+			Margin="0,0,5,0"
+			Command="{Binding OkCommand}">
+			<StackPanel
+				Orientation="Horizontal">
+				<Image
+					Style="{StaticResource ButtonImageStyle}"
+					Margin="0,0,10,0"
+					Height="16"
+					Width="16"
+					Source="{Binding OkImage}"
+					RenderOptions.BitmapScalingMode="NearestNeighbor" />
+				<TextBlock
+					FontWeight="Bold"
+					Text="OK" />
+			</StackPanel>
+		</Button>
+		<Button
+			Height="24"
+			Width="85"
+			Grid.Column="3"
+			Grid.Row="4"
+			HorizontalAlignment="Left"
+			Margin="5,0,0,0"
+			Command="{Binding CancelCommand}">
+			<StackPanel
+				Orientation="Horizontal">
+				<Image
+					Style="{StaticResource ButtonImageStyle}"
+					Margin="0,0,10,0"
+					Height="16"
+					Width="16"
+					Source="{Binding CancelImage}"
+					RenderOptions.BitmapScalingMode="NearestNeighbor" />
+				<TextBlock
+					Text="Cancel" />
+			</StackPanel>
+		</Button>
+	</Grid>
+</mv:LoginWindowViewBase>

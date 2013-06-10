@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mv:RibbonWindowViewBase
+	x:Class="${SolutionName}.Shell" 
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+	xmlns:prism="http://www.codeplex.com/CompositeWPF"
+	xmlns:conv="clr-namespace:${SolutionName}.Base.Converters;assembly=${SolutionName}.Base"	
+	xmlns:names="clr-namespace:${SolutionName}.Base.Names;assembly=${SolutionName}.Base" 
+	xmlns:mv="clr-namespace:${SolutionName}.Base.Mvvm.RibbonUi;assembly=${SolutionName}.Base.Mvvm"
+	xmlns:rbn="clr-namespace:Fluent;assembly=Fluent"
+	Width="1024"
+	Height="768"
+	Title="${SolutionName}"
+	Name="${SolutionName}Shell"
+	ResizeMode="CanResizeWithGrip"
+	WindowStartupLocation="CenterScreen"
+	Background="#FFABABAB"
+	Icon="Shell.ico">
+	
+	<mv:RibbonWindowViewBase.Resources>
+		<conv:Bool2GridWidthConverter x:Key="GridWidthConverter"/>
+	</mv:RibbonWindowViewBase.Resources>
+
+	<DockPanel x:Name="RootLayout">
+
+        <rbn:Ribbon 
+        	x:Name="Ribbon" 
+        	DockPanel.Dock="Top"
+			prism:RegionManager.RegionName="{x:Static names:RegionNames.RibbonTabRegion}" 
+			SelectedTabChanged="Ribbon_SelectedTabChanged">
+            
+        	<rbn:Ribbon.Menu>
+        		<rbn:Backstage
+        			Header="File"
+               		Background="SteelBlue" >
+                	<rbn:BackstageTabControl 
+						x:Name="RibbonBackstage"
+        				prism:RegionManager.RegionName="{x:Static names:RegionNames.RibbonBackstageRegion}" />
+				</rbn:Backstage>
+            </rbn:Ribbon.Menu>
+
+        </rbn:Ribbon>
+	
+		<Grid x:Name="InnerLayout" Background="#FFF8F9FA" >
+
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
+			
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*" />
+				<RowDefinition Height="Auto" />
+			</Grid.RowDefinitions>
+
+			<Grid
+				Margin="0,1,1,1"
+				Grid.Row="0"
+				Grid.Column="1">
+				
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="{Binding DataNavVisibility, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource GridWidthConverter}}" />
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
+				
+				<Border 
+					Margin="5"
+					BorderThickness="1"
+					BorderBrush="#FFB6BABF"
+					Grid.Column="0"
+					Background="#FFFFFFFF">
+
+<!--					<Border.Effect>
+			            <DropShadowEffect
+							Color="Silver"			            	
+							BlurRadius="8"
+                            ShadowDepth="1"
+                            Direction="-45" />
+        			</Border.Effect>-->
+
+					<ContentControl
+						x:Name="DataNavRegion"
+						prism:RegionManager.RegionName="{x:Static names:RegionNames.DataNavRegion}">
+					</ContentControl>
+				</Border>
+				
+				<GridSplitter 
+					Grid.Column="0" 
+                  	Width="5" 
+					Background="Transparent"
+					IsEnabled="{Binding DataNavVisibility, UpdateSourceTrigger=PropertyChanged}"/>
+
+				<Border 
+					Margin="0,5,5,5"
+					Grid.Column="1">
+					
+					<Border.Background>
+						<ImageBrush ImageSource="{Binding MainImage}" Stretch="None"/>
+					</Border.Background>
+					
+<!--					<Border.Effect>
+			            <DropShadowEffect
+							Color="Silver"			            	
+							BlurRadius="8"
+                            ShadowDepth="2"
+                            Direction="-45" />
+        				</Border.Effect> -->
+
+					<ContentControl
+						x:Name="MainRegion"
+						prism:RegionManager.RegionName="{x:Static names:RegionNames.MainRegion}">
+					</ContentControl>
+				</Border>
+
+			</Grid>
+			
+			<Border
+				Background="#FFE5E9EE"
+				Grid.Row="1"
+				Height="22">
+				
+<!--			<Border.Effect>
+		            <DropShadowEffect
+						Color="Silver"			            	
+						BlurRadius="8"
+    					ShadowDepth="2"
+                        Direction="-45" />
+        		</Border.Effect> -->
+				
+				<ItemsControl
+					x:Name="StatusbarRegion"
+					prism:RegionManager.RegionName="{x:Static names:RegionNames.StatusbarRegion}"
+					Background="Transparent" />
+			</Border>
+		
+		</Grid>
+
+	</DockPanel>	
+	
+</mv:RibbonWindowViewBase>
