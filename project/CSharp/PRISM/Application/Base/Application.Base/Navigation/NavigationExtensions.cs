@@ -72,7 +72,7 @@ namespace ${SolutionName}.Base.Navigation
         	{
 		       	foreach (var parameter in ParameterList) 
         		{	
-        			queryParams.Add(parameter.Key, parameter.Value);
+        			queryParams.Add(parameter.Key, parameter.Value ?? "");
         		}
         		return ViewType.FullName + queryParams;
         	}
