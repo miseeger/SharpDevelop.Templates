@@ -1,0 +1,812 @@
+﻿<?xml version="1.0"?>
+<Template originator="Michael Seeger" created="12/08/2013">
+
+	<!-- Template Header -->
+	<TemplateConfiguration>
+		<Name>Autofac Modularity Project</Name>
+		<Category>C#</Category>
+		<Subcategory>Windows Applications</Subcategory>
+		<Icon>C#.Project.DOSProject</Icon>
+		<Description>Creates a multi layered architecture for mudulized applications.</Description>
+		<SupportedTargetFrameworks>v4.0;v4.0Client</SupportedTargetFrameworks>
+	</TemplateConfiguration>
+
+	<!-- Actions -->
+	<Actions>
+		<Open filename="Hosts\${ProjectName}.Hosts.Console\Program.cs" />
+		<RunCommand path="/AddIns/PackageManagement/TemplateCommands/InstallPackages" />
+	</Actions>
+
+	<!-- The Solution -->
+	<Solution name="${ProjectName}" directory=".">
+
+		<!-- The Startup-Project is the Shell-Project -->
+		<Options>
+			<StartupProject>${ProjectName}.Hosts.Console</StartupProject>
+		</Options>
+
+		<!-- Common Solution Folder -->
+		<SolutionFolder name="Common" directory="Common">
+
+			<!-- Common-Business-Project -->
+			<Project name="${ProjectName}.Common.Business" directory="Common\${ProjectName}.Common.Business" language="C#">
+
+				<PropertyGroup>
+					<OutputType>Library</OutputType>
+					<ProjectGuid>68965282-719f-4ebc-8338-9da9ecd6f50e</ProjectGuid>
+					<AppDesignerFolder>Properties</AppDesignerFolder>
+				</PropertyGroup>
+
+				<PropertyGroup configuration="Debug">
+					<OutputPath>..\..\Bin\Debug\</OutputPath>
+				</PropertyGroup>
+
+				<PropertyGroup configuration="Release">
+					<OutputPath>..\..\Bin\Release\</OutputPath>
+				</PropertyGroup>
+
+				<ProjectItems>
+					<Reference Include="AutofacModularity" />
+					<Reference Include="System" />
+					<Reference Include="System.Core" />
+					<Reference Include="System.Xml" />
+					<Reference Include="System.Xml.Linq" />
+				</ProjectItems>
+
+				<ProjectItems>
+					<ProjectReference Include="..\${SolutionName}.Common.Interfaces\${SolutionName}.Common.Interfaces.csproj" />
+					<ProjectReference Include="..\${SolutionName}.Common.Business.Model\${SolutionName}.Common.Business.Model.csproj" />
+				</ProjectItems>
+
+				<Files>
+					<File name="BusinessService.cs">
+<![CDATA[using ${SolutionName}.Common.Interfaces.Services;
+using AutofacModularity;
+
+namespace ${StandardNamespace}
+{
+
+    [RegisterService]
+    public class BusinessService : IBusinessService
+    {
+
+        public IDataService DataService { get; private set; }
+
+        
+        public BusinessService(IDataService dataService)
+        {
+            DataService = dataService;
+        }
+
+    }
+
+}]]>
+					</File>
+					<File name="packages.config"> 
+<![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<packages>
+  <package id="AutofacModularity" version="1.0.0" />
+</packages>]]>
+					</File>
+					<File name="Properties\AssemblyInfo.cs" src="DefaultAssemblyInfo.cs"/>
+				</Files>
+
+			</Project>
+
+			<!-- Common-BusinessModel-Project -->
+			<Project name="${ProjectName}.Common.Business.Model" directory="Common\${ProjectName}.Common.Business.Model" language="C#">
+
+				<PropertyGroup>
+					<OutputType>Library</OutputType>
+					<ProjectGuid>68965282-719f-4ebc-8338-9da9ecd6f50e</ProjectGuid>
+					<AppDesignerFolder>Properties</AppDesignerFolder>
+				</PropertyGroup>
+
+				<PropertyGroup configuration="Debug">
+					<OutputPath>..\..\Bin\Debug\</OutputPath>
+				</PropertyGroup>
+
+				<PropertyGroup configuration="Release">
+					<OutputPath>..\..\Bin\Release\</OutputPath>
+				</PropertyGroup>
+
+				<ProjectItems>
+					<Reference Include="System" />
+					<Reference Include="System.Core" />
+					<Reference Include="System.Xml" />
+					<Reference Include="System.Xml.Linq" />
+				</ProjectItems>
+
+				<Files>
+					<File name="Interfaces\empty.txt"><![CDATA[.]]></File>
+					<File name="Properties\AssemblyInfo.cs" src="DefaultAssemblyInfo.cs"/>
+				</Files>
+
+			</Project>
+				
+			<!-- Common-Data-Project -->
+			<Project name="${ProjectName}.Common.Data" directory="Common\${ProjectName}.Common.Data" language="C#">
+
+				<PropertyGroup>
+					<OutputType>Library</OutputType>
+					<ProjectGuid>68965282-719f-4ebc-8338-9da9ecd6f50e</ProjectGuid>
+					<AppDesignerFolder>Properties</AppDesignerFolder>
+				</PropertyGroup>
+
+				<PropertyGroup configuration="Debug">
+					<OutputPath>..\..\Bin\Debug\</OutputPath>
+				</PropertyGroup>
+
+				<PropertyGroup configuration="Release">
+					<OutputPath>..\..\Bin\Release\</OutputPath>
+				</PropertyGroup>
+
+				<ProjectItems>
+					<Reference Include="AutofacModularity" />
+					<Reference Include="System" />
+					<Reference Include="System.Core" />
+					<Reference Include="System.Xml" />
+					<Reference Include="System.Xml.Linq" />
+				</ProjectItems>
+
+				<ProjectItems>
+					<ProjectReference Include="..\${SolutionName}.Common.Interfaces\${SolutionName}.Common.Interfaces.csproj" />
+					<ProjectReference Include="..\${SolutionName}.Common.Data.Model\${SolutionName}.Common.Data.Model.csproj" />
+				</ProjectItems>
+
+				<Files>
+					<File name="DataService.cs"> 
+<![CDATA[using ${SolutionName}.Common.Interfaces.Services;
+using AutofacModularity;
+using AutofacModularity.Interfaces;
+
+namespace ${StandardNamespace}
+{
+
+    [RegisterService]
+    public class DataService : IDataService
+    {
+
+        public string ConnectionString { get; set; }
+        public ILoggingService LoggingService { get; private set; }
+
+        public DataService(ILoggingService loggingService, string connectionString)
+        {
+            ConnectionString = connectionString;
+            LoggingService = loggingService;
+        }
+
+        public void Hello()
+        {
+            System.Console.WriteLine("DataService.ConnectionString: {0}", ConnectionString);
+        }
+    }
+
+}]]>
+					</File>
+					<File name="packages.config"> 
+<![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<packages>
+  <package id="AutofacModularity" version="1.0.0" />
+</packages>]]>
+					</File>
+					<File name="Properties\AssemblyInfo.cs" src="DefaultAssemblyInfo.cs"/>
+				</Files>
+
+			</Project>
+
+			<!-- Common-DataModel-Project -->
+			<Project name="${ProjectName}.Common.Data.Model" directory="Common\${ProjectName}.Common.Data.Model" language="C#">
+
+				<PropertyGroup>
+					<OutputType>Library</OutputType>
+					<ProjectGuid>68965282-719f-4ebc-8338-9da9ecd6f50e</ProjectGuid>
+					<AppDesignerFolder>Properties</AppDesignerFolder>
+				</PropertyGroup>
+
+				<PropertyGroup configuration="Debug">
+					<OutputPath>..\..\Bin\Debug\</OutputPath>
+				</PropertyGroup>
+
+				<PropertyGroup configuration="Release">
+					<OutputPath>..\..\Bin\Release\</OutputPath>
+				</PropertyGroup>
+
+				<ProjectItems>
+					<Reference Include="System" />
+					<Reference Include="System.Core" />
+					<Reference Include="System.Xml" />
+					<Reference Include="System.Xml.Linq" />
+				</ProjectItems>
+
+				<Files>
+					<File name="Interfaces\empty.txt"><![CDATA[.]]></File>
+					<File name="Properties\AssemblyInfo.cs" src="DefaultAssemblyInfo.cs"/>
+				</Files>
+
+			</Project>
+			
+			<!-- Common-Interfaces-Project -->
+			<Project name="${ProjectName}.Common.Interfaces" directory="Common\${ProjectName}.Common.Interfaces" language="C#">
+
+				<PropertyGroup>
+					<OutputType>Library</OutputType>
+					<ProjectGuid>68965282-719f-4ebc-8338-9da9ecd6f50e</ProjectGuid>
+					<AppDesignerFolder>Properties</AppDesignerFolder>
+				</PropertyGroup>
+
+				<PropertyGroup configuration="Debug">
+					<OutputPath>..\..\Bin\Debug\</OutputPath>
+				</PropertyGroup>
+
+				<PropertyGroup configuration="Release">
+					<OutputPath>..\..\Bin\Release\</OutputPath>
+				</PropertyGroup>
+
+				<ProjectItems>
+					<Reference Include="System" />
+					<Reference Include="System.Core" />
+					<Reference Include="System.Xml" />
+					<Reference Include="System.Xml.Linq" />
+				</ProjectItems>
+
+				<Files>
+					<File name="Services\IBusinessService.cs"> 
+<![CDATA[namespace ${StandardNamespace}.Services
+{
+    public interface IBusinessService
+    {
+
+        IDataService DataService { get; }
+         
+    }
+}
+]]>
+					</File>
+					<File name="Services\IDataService.cs">  
+<![CDATA[using System;
+
+namespace ${StandardNamespace}.Services
+{
+
+    public interface IDataService
+    {
+
+        String ConnectionString { get; set; }
+        ILoggingService LoggingService { get; }
+
+        void Hello();
+
+    }
+
+}
+]]>
+					</File>
+					<File name="Services\ILoggingService.cs">  
+<![CDATA[namespace ${StandardNamespace}.Services
+{
+    public interface ILoggingService
+    {
+    }
+}
+]]>
+					</File>
+					<File name="Services\IMailService.cs">  
+<![CDATA[using System;
+
+namespace ${StandardNamespace}.Services
+{
+
+	public interface IMailService
+	{
+	}
+
+}
+
+]]>
+					</File>
+					<File name="Properties\AssemblyInfo.cs" src="DefaultAssemblyInfo.cs"/>
+				</Files>
+
+			</Project>
+			
+			<!-- Common-Services-Project -->
+			<Project name="${ProjectName}.Common.Services" directory="Common\${ProjectName}.Common.Services" language="C#">
+
+				<PropertyGroup>
+					<OutputType>Library</OutputType>
+					<ProjectGuid>68965282-719f-4ebc-8338-9da9ecd6f50e</ProjectGuid>
+					<AppDesignerFolder>Properties</AppDesignerFolder>
+				</PropertyGroup>
+
+				<PropertyGroup configuration="Debug">
+					<OutputPath>..\..\Bin\Debug\</OutputPath>
+				</PropertyGroup>
+
+				<PropertyGroup configuration="Release">
+					<OutputPath>..\..\Bin\Release\</OutputPath>
+				</PropertyGroup>
+
+				<ProjectItems>
+					<Reference Include="AutofacModularity" />
+					<Reference Include="System" />
+					<Reference Include="System.Core" />
+					<Reference Include="System.Xml" />
+					<Reference Include="System.Xml.Linq" />
+				</ProjectItems>
+
+				<ProjectItems>
+					<ProjectReference Include="..\${SolutionName}.Common.Interfaces\${SolutionName}.Common.Interfaces.csproj" />
+				</ProjectItems>
+
+				<Files>
+					<File name="LoggingService.cs"> 
+<![CDATA[using ${SolutionName}.Common.Interfaces.Services;
+using AutofacModularity;
+
+namespace ${StandardNamespace}
+{
+
+    [RegisterService]    
+    public class LoggingService : ILoggingService
+    {
+    }
+
+}]]>
+					</File>
+					<File name="MailService.cs"> 
+<![CDATA[using ${SolutionName}.Common.Interfaces.Services;
+using AutofacModularity;
+
+namespace ${StandardNamespace}
+{
+
+    [RegisterService]    
+    public class MailService : IMailService
+    {
+    }
+
+}]]>
+					</File>
+					<File name="packages.config"> 
+<![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<packages>
+  <package id="AutofacModularity" version="1.0.0" />
+</packages>]]>
+					</File>
+					<File name="Properties\AssemblyInfo.cs" src="DefaultAssemblyInfo.cs"/>
+				</Files>
+
+			</Project>
+				
+		</SolutionFolder>
+
+		<!-- Hosts Solution Folder -->
+		<SolutionFolder name="Hosts" directory="Hosts">
+		
+			<Project name="${ProjectName}.Hosts.Console" directory="Hosts\${ProjectName}.Hosts.Console" language="C#">
+
+				<PropertyGroup>
+					<OutputType>Exe</OutputType>
+					<ProjectGuid>B72B0B2C-EA8A-4022-82C3-2564B38148B9</ProjectGuid>
+					<AppDesignerFolder>Properties</AppDesignerFolder>
+				</PropertyGroup>
+	
+				<PropertyGroup configuration="Debug">
+					<OutputPath>..\..\Bin\Debug\</OutputPath>
+				</PropertyGroup>
+	
+				<PropertyGroup configuration="Release">
+					<OutputPath>..\..\Bin\Release\</OutputPath>
+				</PropertyGroup>
+	
+				<ProjectItems>
+					<Reference Include="AutofacModularity" />
+					<Reference Include="Autofac" />
+					<Reference Include="System" />
+					<Reference Include="System.Core" />
+					<Reference Include="System.Data" />
+					<Reference Include="System.Data.DataSetExtensions" />
+					<Reference Include="System.Xml" />
+					<Reference Include="System.Xml.Linq" />
+				</ProjectItems>
+	
+				<ProjectItems>
+					<ProjectReference Include="..\..\Common\${SolutionName}.Common.Interfaces\${SolutionName}.Common.Interfaces.csproj" />
+				</ProjectItems>
+	
+				<Files>
+					<File name="app.config"> 
+<![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+	
+	<startup>
+		<supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.0" />
+	</startup>
+
+	<appSettings>
+    
+	    <add key="CommonServices.ConnectionString" value="Dev ConnectionString"/>
+	    <add key="CheckData.Test" value="CheckData-Parameter from app.config"/>
+  
+	</appSettings>
+
+</configuration>
+]]>
+					</File>
+					<File name="ConsoleBootstrapper.cs"> 
+<![CDATA[using Autofac;
+using AutofacModularity;
+
+namespace ${StandardNamespace}
+{
+
+    public class ConsoleBootstrapper : AbstractBootstrapper
+    {
+        
+        protected override void ConfigureContainer(ContainerBuilder builder)
+        {
+            System.Console.WriteLine("Configuring DI Container ...");
+
+            builder.RegisterAssemblyModulesFromFile(@"Modules\${SolutionName}.Modules.Common.Services.dll",
+                (f) => System.Console.WriteLine("   {0}",f));
+
+            builder.RegisterAssemblyModulesFromDirectory(@"Modules","${SolutionName}.Modules",
+                "${SolutionName}.Modules.Common",
+                (f) => System.Console.WriteLine("   {0}", f));
+        }
+    
+    }
+
+}
+]]>
+					</File>
+					<File name="Program.cs"> 
+<![CDATA[using System;
+using ${SolutionName}.Hosts.Console;
+
+namespace ${StandardNamespace}
+{
+	class Program
+	{
+		public static void Main(string[] args)
+		{
+            var bootstrapper = new ConsoleBootstrapper();
+            bootstrapper.Run();
+
+            var shell = new Shell();
+            shell.Run();
+
+			System.Console.Write("\nPress any key to continue . . . ");
+			System.Console.ReadKey(true);
+		}
+	}
+}
+]]>
+					</File>
+					<File name="Shell.cs"> 
+<![CDATA[
+using System.Linq;
+using ${SolutionName}.Common.Interfaces;
+using ${SolutionName}.Common.Interfaces.Services;
+using Autofac;
+using AutofacModularity;
+using AutofacModularity.Interfaces;
+
+namespace ${StandardNamespace}
+{
+    public class Shell
+    {
+
+        public void Run()
+        {
+
+            var container = DiRepository.Instance.Container;
+            
+            System.Console.WriteLine("\nRegistered Components ({0}):",
+            container.ComponentRegistry.Registrations.Count());
+
+            foreach (var entry in container.ComponentRegistry.Registrations)
+            {
+                System.Console.WriteLine("   {0}", entry.ToString().Split(',')[0]);
+             }
+
+            System.Console.WriteLine("\nFrom DataService:");
+            var ds = container.Resolve<IDataService>();
+            ds.Hello();
+
+            System.Console.WriteLine("\nFrom DataService via BusinessService:");
+            var bs = container.Resolve<IBusinessService>();
+            bs.DataService.Hello();
+
+            System.Console.WriteLine("\nRunning CheckDataPlugin:");
+            var cr = container.ResolveNamed<IPlugin>("CheckDataPlugin");
+            cr.Run();
+
+        }
+
+    }
+
+}
+]]>
+					</File>
+					<File name="packages.config"> 
+<![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<packages>
+  <package id="AutofacModularity" version="1.0.0" />
+</packages>]]>
+					</File>
+					<File name="Properties\AssemblyInfo.cs" src="DefaultAssemblyInfo.cs"/>
+				</Files>
+
+			</Project>
+
+		</SolutionFolder>
+		
+		
+		<!-- Modules Solutionfolder -->
+		<SolutionFolder name="Modules" directory="Modules">
+		
+			<!-- Common Modules Solutionfolder -->
+
+			<SolutionFolder name="Common" directory = "Common">
+			
+				<!-- Common-Services-Module-Project -->
+				<Project name="${ProjectName}.Modules.Common.Services" directory="Modules\${ProjectName}.Modules.Common.Services" language="C#">
+	
+					<PropertyGroup>
+						<OutputType>Library</OutputType>
+						<ProjectGuid>68965282-719f-4ebc-8338-9da9ecd6f50e</ProjectGuid>
+						<AppDesignerFolder>Properties</AppDesignerFolder>
+					</PropertyGroup>
+	
+					<PropertyGroup configuration="Debug">
+						<OutputPath>..\..\Bin\Debug\Modules\</OutputPath>
+					</PropertyGroup>
+	
+					<PropertyGroup configuration="Release">
+						<OutputPath>..\..\..\Bin\Release\Modules\</OutputPath>
+					</PropertyGroup>
+	
+					<ProjectItems>
+						<Reference Include="Autofac" />
+						<Reference Include="AutofacModularity" />
+						<Reference Include="System" />
+						<Reference Include="System.Core" />
+						<Reference Include="System.Xml" />
+						<Reference Include="System.Xml.Linq" />
+					</ProjectItems>
+	
+					<Files>
+						<File name="CommonServicesModule.cs"> 
+<![CDATA[
+using System.Linq;
+using System.Reflection;
+using Autofac;
+using AutofacModularity;
+
+namespace ${StandardNamespace}
+{
+    
+	public class CommonServicesModule : ConfigurableModule
+    {
+
+        public string ConnectionString { get; set; }
+
+
+        protected override void Load(ContainerBuilder builder)
+        {
+            base.Load(builder);
+            
+            builder.RegisterAssemblyTypes(Assembly.LoadFrom("${SolutionName}.Common.Services.dll"))
+                .Where(t => t.GetCustomAttributes(typeof (RegisterServiceAttribute), false).Any())
+                .AsSelf()
+                .AsImplementedInterfaces();
+            
+            builder.RegisterAssemblyTypes(Assembly.LoadFrom("${SolutionName}.Common.Data.dll"))
+                .Where(t => t.GetCustomAttributes(typeof(RegisterServiceAttribute), false).Any())
+                .AsSelf()
+                .AsImplementedInterfaces().WithParameter("connectionString", ConnectionString);
+
+            builder.RegisterAssemblyTypes(Assembly.LoadFrom("${SolutionName}.Common.Business.dll"))
+                .Where(t => t.GetCustomAttributes(typeof(RegisterServiceAttribute), false).Any())
+                .AsSelf()
+                .AsImplementedInterfaces();
+
+        }
+    
+    }
+}
+]]>
+					</File>
+					<File name="packages.config"> 
+<![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<packages>
+  <package id="AutofacModularity" version="1.0.0" />
+</packages>]]>
+					</File>
+					<File name="Properties\AssemblyInfo.cs" src="DefaultAssemblyInfo.cs"/>
+					</Files>
+	
+				</Project>
+			
+			</SolutionFolder>
+			
+			<!-- CheckData-Module-Project -->
+			<Project name="${ProjectName}.Modules.CheckData" directory="Modules\${ProjectName}.Modules.CheckData" language="C#">
+	
+ 				<PropertyGroup>
+ 					<OutputType>Library</OutputType>
+ 					<ProjectGuid>68965282-719f-4ebc-8338-9da9ecd6f50e</ProjectGuid>
+ 					<AppDesignerFolder>Properties</AppDesignerFolder>
+ 				</PropertyGroup>
+ 
+ 				<PropertyGroup configuration="Debug">
+ 					<OutputPath>..\..\Bin\Debug\Modules\</OutputPath>
+ 				</PropertyGroup>
+ 
+ 				<PropertyGroup configuration="Release">
+ 					<OutputPath>..\..\Bin\Release\Modules\</OutputPath>
+ 				</PropertyGroup>
+ 
+ 				<ProjectItems>
+ 					<Reference Include="Autofac" />
+ 					<Reference Include="AutofacModularity" />
+ 					<Reference Include="System" />
+ 					<Reference Include="System.Core" />
+ 					<Reference Include="System.Xml" />
+ 					<Reference Include="System.Xml.Linq" />
+ 				</ProjectItems>
+ 
+ 				<Files>
+				<File name="CheckDataModule.cs"> 
+<![CDATA[
+using Autofac;
+using AutofacModularity;
+using AutofacModularity.Interfaces;
+
+namespace ${StandardNamespace}
+{
+
+    public class CheckDataModule : ConfigurableModule
+    {
+
+        public string Test { get; set; }
+        
+        
+    	protected override void Load(ContainerBuilder builder)
+        {
+            base.Load(builder);
+            builder.RegisterType<CheckDataPlugin>().Named<IPlugin>("CheckDataPlugin").WithParameter("test", Test);
+        }
+
+    }
+
+}
+]]>
+				</File>
+				<File name="CheckDataPlugin.cs"> 
+<![CDATA[using System;
+using AutofacModularity.Interfaces;
+
+namespace ${StandardNamespace}
+{
+
+    public class CheckDataPlugin : IPlugin
+    {
+    	
+    	public String Test { get; set; }
+    	
+    	public CheckDataPlugin(String test)
+    	{
+    		Test = test;	
+    	}
+
+        public void Run()
+        {
+            Console.WriteLine("CheckData-Plugin: ready ({0})", Test);
+        }
+
+    }
+
+}
+]]>
+				</File>
+				<File name="packages.config"> 
+<![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<packages>
+  <package id="AutofacModularity" version="1.0.0" />
+</packages>]]>
+				</File>
+				<File name="Properties\AssemblyInfo.cs" src="DefaultAssemblyInfo.cs"/>
+				</Files>
+	
+			</Project>
+
+
+			<!-- ImportData-Module-Project -->
+			<Project name="${ProjectName}.Modules.ImportData" directory="Modules\${ProjectName}.Modules.ImportData" language="C#">
+	
+ 				<PropertyGroup>
+ 					<OutputType>Library</OutputType>
+ 					<ProjectGuid>68965282-719f-4ebc-8338-9da9ecd6f50e</ProjectGuid>
+ 					<AppDesignerFolder>Properties</AppDesignerFolder>
+ 				</PropertyGroup>
+ 
+ 				<PropertyGroup configuration="Debug">
+ 					<OutputPath>..\..\Bin\Debug\Modules\</OutputPath>
+ 				</PropertyGroup>
+ 
+ 				<PropertyGroup configuration="Release">
+ 					<OutputPath>..\..\Bin\Release\Modules\</OutputPath>
+ 				</PropertyGroup>
+ 
+ 				<ProjectItems>
+ 					<Reference Include="Autofac" />
+ 					<Reference Include="AutofacModularity" />
+ 					<Reference Include="System" />
+ 					<Reference Include="System.Core" />
+ 					<Reference Include="System.Xml" />
+ 					<Reference Include="System.Xml.Linq" />
+ 				</ProjectItems>
+ 
+ 				<Files>
+				<File name="ImportDataModule.cs"> 
+<![CDATA[
+using Autofac;
+using AutofacModularity;
+using AutofacModularity.Interfaces;
+
+namespace ${StandardNamespace}
+{
+
+	public class ImportDataModule : ConfigurableModule
+    {
+
+        protected override void Load(ContainerBuilder builder)
+        {
+            base.Load(builder);
+            builder.RegisterType<ImportDataPlugin>().Named<IPlugin>("ImportDataPlugin");
+        }
+
+    }
+
+}
+]]>
+				</File>
+				<File name="ImportDataPlugin.cs"> 
+<![CDATA[using System;
+using AutofacModularity.Interfaces;
+
+namespace ${StandardNamespace}
+{
+
+public class ImportDataPlugin : IPlugin
+    {
+
+        public void Run()
+        {
+            Console.WriteLine("ImportData-Plugin: ready");
+        }
+
+    }
+
+}
+]]>
+				</File>
+				<File name="packages.config"> 
+<![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<packages>
+  <package id="AutofacModularity" version="1.0.0" />
+</packages>]]>
+				</File>
+				<File name="Properties\AssemblyInfo.cs" src="DefaultAssemblyInfo.cs"/>
+				</Files>
+	
+			</Project>
+			
+		</SolutionFolder>
+
+	</Solution>
+
+</Template>
