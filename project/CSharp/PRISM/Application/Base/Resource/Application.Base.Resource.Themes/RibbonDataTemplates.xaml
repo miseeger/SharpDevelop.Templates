@@ -11,7 +11,7 @@
 		<rbn:Button
 			Header="{Binding Caption}"
 			LargeIcon="{Binding Icon}"
-			SizeDefinition="{Binding SizeDefinition}"
+			rbn:RibbonAttachedProperties.RibbonSizeDefinition="{Binding SizeDefinition}"
 			Command="{Binding Command}"
 			CommandParameter="{Binding CommandParameter}" />
     </DataTemplate>
@@ -20,7 +20,7 @@
 		<rbn:Button
 			Header="{Binding Caption}"
 			Icon="{Binding Icon}"
-			SizeDefinition="{Binding SizeDefinition}"
+			rbn:RibbonAttachedProperties.RibbonSizeDefinition="{Binding SizeDefinition}"
 			Command="{Binding Command}"
 			CommandParameter="{Binding CommandParameter}" />
     </DataTemplate>	
@@ -30,7 +30,7 @@
 			GroupName="{Binding RadioGroupName}"
 			Header="{Binding Caption}"
 			LargeIcon="{Binding Icon}"
-			SizeDefinition="{Binding SizeDefinition}"
+			rbn:RibbonAttachedProperties.RibbonSizeDefinition="{Binding SizeDefinition}"
 			Command="{Binding Command}"
 			CommandParameter="{Binding CommandParameter}"
 			IsChecked="{Binding IsActive, UpdateSourceTrigger=PropertyChanged}" />
@@ -41,7 +41,7 @@
 			GroupName="{Binding RadioGroupName}"
 			Header="{Binding Caption}"
 			Icon="{Binding Icon}"
-			SizeDefinition="{Binding SizeDefinition}"
+			rbn:RibbonAttachedProperties.RibbonSizeDefinition="{Binding SizeDefinition}"
 			Command="{Binding Command}"
 			CommandParameter="{Binding CommandParameter}"
 			IsChecked="{Binding IsActive, UpdateSourceTrigger=PropertyChanged}" />
