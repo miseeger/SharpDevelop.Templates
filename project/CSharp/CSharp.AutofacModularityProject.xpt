@@ -565,7 +565,7 @@ namespace ${StandardNamespace}
 					</PropertyGroup>
 	
 					<PropertyGroup configuration="Release">
-						<OutputPath>..\..\..\Bin\Release\Modules\</OutputPath>
+						<OutputPath>..\..\Bin\Release\Modules\</OutputPath>
 					</PropertyGroup>
 	
 					<ProjectItems>
