@@ -437,6 +437,7 @@ namespace ${StandardNamespace}
 					<File name="ConsoleBootstrapper.cs"> 
 <![CDATA[using Autofac;
 using AutofacModularity;
+using AutofacModularity.Interfaces;
 
 namespace ${StandardNamespace}
 {
@@ -454,6 +455,12 @@ namespace ${StandardNamespace}
             builder.RegisterAssemblyModulesFromDirectory(@"Modules","${SolutionName}.Modules",
                 "${SolutionName}.Modules.Common",
                 (f) => System.Console.WriteLine("   {0}", f));
+        }
+        
+        
+        protected override void RegisterShell(ContainerBuilder builder)
+        {
+        	builder.RegisterType<Shell>().As<IShell>();
         }
     
     }
@@ -473,19 +480,13 @@ namespace ${StandardNamespace}
 		{
             var bootstrapper = new ConsoleBootstrapper();
             bootstrapper.Run();
-
-            var shell = new Shell();
-            shell.Run();
-
-			System.Console.Write("\nPress any key to continue . . . ");
-			System.Console.ReadKey(true);
 		}
 	}
 }
 ]]>
 					</File>
 					<File name="Shell.cs"> 
-<![CDATA[
+<![CDATA[using System;
 using System.Linq;
 using ${SolutionName}.Common.Interfaces;
 using ${SolutionName}.Common.Interfaces.Services;
@@ -495,33 +496,48 @@ using AutofacModularity.Interfaces;
 
 namespace ${StandardNamespace}
 {
-    public class Shell
+	public class Shell : IShell
     {
+		
+		private IComponentContext _container;
+		private IDataService _dataService;
+		private IBusinessService _businessService;
+		private ILoggingService _logger;
 
-        public void Run()
+        
+		public Shell(IComponentContext container, IDataService dataservice, 
+		             IBusinessService businessservice, ILoggingService logger)
+        {
+        	_container = container;
+			_dataService = dataservice;
+			_businessService = businessservice;			
+			_logger = logger;
+        }
+		
+
+		public void Run()
         {
 
-            var container = DiRepository.Instance.Container;
-            
             System.Console.WriteLine("\nRegistered Components ({0}):",
-            container.ComponentRegistry.Registrations.Count());
+            _container.ComponentRegistry.Registrations.Count());
 
-            foreach (var entry in container.ComponentRegistry.Registrations)
+            foreach (var entry in _container.ComponentRegistry.Registrations)
             {
                 System.Console.WriteLine("   {0}", entry.ToString().Split(',')[0]);
-             }
+            }
 
             System.Console.WriteLine("\nFrom DataService:");
-            var ds = container.Resolve<IDataService>();
-            ds.Hello();
+            _dataService.Hello();
 
             System.Console.WriteLine("\nFrom DataService via BusinessService:");
-            var bs = container.Resolve<IBusinessService>();
-            bs.DataService.Hello();
+            _businessService.DataService.Hello();
 
             System.Console.WriteLine("\nRunning CheckDataPlugin:");
-            var cr = container.ResolveNamed<IPlugin>("CheckDataPlugin");
+            var cr = _container.ResolveNamed<IPlugin>("CheckDataPlugin");
             cr.Run();
+            
+   			System.Console.Write("\nPress any key to continue . . . ");
+			System.Console.ReadKey(true);
 
         }
 
@@ -565,7 +581,7 @@ namespace ${StandardNamespace}
 					</PropertyGroup>
 	
 					<PropertyGroup configuration="Release">
-						<OutputPath>..\..\Bin\Release\Modules\</OutputPath>
+						<OutputPath>..\..\..\Bin\Release\Modules\</OutputPath>
 					</PropertyGroup>
 	
 					<ProjectItems>
