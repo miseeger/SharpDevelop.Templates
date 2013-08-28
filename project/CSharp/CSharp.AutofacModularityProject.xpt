@@ -6,7 +6,7 @@
 		<Name>Autofac Modularity Project</Name>
 		<Category>C#</Category>
 		<Subcategory>Windows Applications</Subcategory>
-		<Icon>C#.Project.DOSProject</Icon>
+		<Icon>file:${SharpDevelopBinPath}\..\data\templates\project\CSharp\ProjectIcons\CSharp.AutofacModularityProject.png</Icon>
 		<Description>Creates a multi layered architecture for mudulized applications.</Description>
 		<SupportedTargetFrameworks>v4.0;v4.0Client</SupportedTargetFrameworks>
 	</TemplateConfiguration>
