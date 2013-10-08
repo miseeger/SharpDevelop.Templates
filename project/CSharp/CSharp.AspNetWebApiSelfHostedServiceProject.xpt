@@ -1,0 +1,645 @@
+<?xml version="1.0"?>
+<Template originator   = "Michael Seeger"
+          created      = "05/10/2013"
+          lastModified = "08/10/2013">
+	
+	<!-- Template Header -->
+	<TemplateConfiguration>
+		<Name>ASP.NET Web API - Self-Hosted Service</Name>
+		<Category>C#</Category>
+		<Subcategory>ASP.NET Web API</Subcategory>
+		<Icon>C#.Project.WebService</Icon>
+		<Description>Web API - Self-Hosted as Windows Service</Description>
+		<SupportedTargetFrameworks>v4.0;v4.5</SupportedTargetFrameworks>
+	</TemplateConfiguration>
+	
+	<!-- Actions -->
+	<Actions>
+		<Open filename = "${ProjectName}.cs"/>
+		<RunCommand path="/AddIns/PackageManagement/TemplateCommands/InstallPackages" />
+	</Actions>
+
+	<!-- Template Content -->
+	<Project language = "C#">
+		<ProjectItems>
+			<Reference Include="Newtonsoft.Json" />
+			<Reference Include="System" />
+			<Reference Include="System.Configuration.Install" />
+			<Reference Include="System.Core" />
+			<Reference Include="System.Data" />
+			<Reference Include="System.Data.DataSetExtensions" />
+			<Reference Include="System.Net.Http" />
+			<Reference Include="System.Net.Http.Formatting" />
+			<Reference Include="System.Net.Http.WebRequest" />
+			<Reference Include="System.ServiceModel" />
+			<Reference Include="System.ServiceModel.Channels" />
+			<Reference Include="System.ServiceProcess" />
+			<Reference Include="System.Web.Http" />
+			<Reference Include="System.Web.Http.SelfHost" />
+			<Reference Include="System.Xml" />
+			<Reference Include="System.Xml.Linq" />
+		</ProjectItems>
+		
+		<PropertyGroup>
+			<OutputType>Exe</OutputType>
+			<AppDesignerFolder>Properties</AppDesignerFolder>
+		</PropertyGroup>
+		
+		<PropertyGroup configuration="Debug">
+			<OutputPath>bin\Debug</OutputPath>
+		</PropertyGroup>
+		
+		<PropertyGroup configuration="Release">
+			<OutputPath>bin\Release</OutputPath>
+		</PropertyGroup>
+
+		<Files>
+			
+			<File name="_InsallerBat_\Install${ProjectName}_Debug.bat">
+<![CDATA[REM Installing Windows Service
+@echo off
+C:\Windows\Microsoft.NET\Framework64\v4.0.30319\InstallUtil.exe ..\bin\Debug\${ProjectName}.exe
+pause]]>
+			</File>
+			
+			<File name="_InsallerBat_\Install${ProjectName}_Release.bat">
+<![CDATA[REM Installing Windows Service
+@echo off
+C:\Windows\Microsoft.NET\Framework64\v4.0.30319\InstallUtil.exe ..\bin\Release\${ProjectName}.exe
+pause]]>
+			</File>	
+			
+			<File name="_InsallerBat_\Install${ProjectName}_DebugX86.bat">
+<![CDATA[REM Installing Windows Service
+@echo off
+C:\Windows\Microsoft.NET\Framework\v4.0.30319\InstallUtil.exe ..\bin\Debug\${ProjectName}.exe
+pause]]>
+			</File>
+			
+			<File name="_InsallerBat_\Install${ProjectName}_ReleaseX86.bat">
+<![CDATA[REM Installing Windows Service
+@echo off
+C:\Windows\Microsoft.NET\Framework\v4.0.30319\InstallUtil.exe ..\bin\Release\${ProjectName}.exe
+pause]]>
+			</File>
+
+			<File name="_InsallerBat_\Uninstall${ProjectName}_Debug.bat">
+<![CDATA[REM Uninstalling Windows Service
+@echo off
+C:\Windows\Microsoft.NET\Framework64\v4.0.30319\InstallUtil.exe /u ..\bin\Debug\${ProjectName}.exe
+pause]]>
+			</File>
+			
+			<File name="_InsallerBat_\Uninstall${ProjectName}_Release.bat">
+<![CDATA[REM Uninstalling Windows Service
+@echo off
+C:\Windows\Microsoft.NET\Framework64\v4.0.30319\InstallUtil.exe /u ..\bin\Release\${ProjectName}.exe
+pause]]>
+			</File>	
+			
+			<File name="_InsallerBat_\Uninstall${ProjectName}_DebugX86.bat">
+<![CDATA[REM Uninstalling Windows Service
+@echo off
+C:\Windows\Microsoft.NET\Framework\v4.0.30319\InstallUtil.exe /u ..\bin\Debug\${ProjectName}.exe
+pause]]>
+			</File>
+			
+			<File name="_InsallerBat_\Uninstall${ProjectName}_ReleaseX86.bat">
+<![CDATA[REM Uninstalling Windows Service
+@echo off
+C:\Windows\Microsoft.NET\Framework\v4.0.30319\InstallUtil.exe /u ..\bin\Release\${ProjectName}.exe
+pause]]>
+			</File>			
+
+			<File name="App_Start\FilterConfig.cs">
+<![CDATA[${StandardHeader.C#}
+using System.Web;
+using System.Web.Http;
+using System.Web.Http.SelfHost;
+
+namespace ${StandardNamespace}
+{
+
+	public class FilterConfig
+    {
+
+		public static void Register(HttpSelfHostConfiguration config)
+        {
+            // config.Filters.Add(null);
+        }
+
+	}
+
+}]]>
+			</File>
+
+			<File name="App_Start\WebApiConfig.cs">
+<![CDATA[${StandardHeader.C#}
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Http;
+using System.Web.Http.SelfHost;
+
+using ${ProjectName}.App_Start;
+using ${ProjectName}.Formatters;
+using ${ProjectName}.Handlers;
+
+namespace ${StandardNamespace}
+{
+
+	public static class WebApiConfig
+    {
+		
+		public static HttpSelfHostConfiguration Configuration { get; set; }
+    	
+		public static void Register(string BaseAddress)
+        {
+			// No Authentication here. Comment this for Windows Authentication.
+			Configuration = new HttpSelfHostConfiguration(BaseAddress);
+			
+			// TODO: For Windows Authentication (Single-Sign-On) uncomment this line 
+			//Configuration = new WinAuthConfigBase(BaseAddress);
+			
+			// TODO: Remember to register your site address (e.g.: "http://localhost"
+			//       in Firefox "about:config" -> "network.automatic-ntlm-auth.trusted-uris" 
+			//       in order to get Single-Sign-On working also in Firefox.
+			
+
+			// ================================================================
+			//  Configuration starts here
+			// ================================================================
+			
+			// TODO: Uncomment if you need do override HTTP methods and register other
+		    //       MessageHandlers here:
+			//Configuration.MessageHandlers.Add(new MethodOverrideHandler());
+
+			Configuration.Routes.MapHttpRoute(
+                name: "DefaultApi",
+                routeTemplate: "api/{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional }
+            );
+			
+			// TODO: Uncomment if you need a CSV-Formatter and register other 
+			//       Formatters here:			
+			//Configuration.Formatters.Add(new CsvFormatter());
+
+        }
+
+	}
+
+}]]>
+			</File>
+
+			<File name="App_Start\WinAuthConfigBase.cs">
+<![CDATA[${StandardHeader.C#}
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.ServiceModel;
+using System.ServiceModel.Channels;
+using System.Text;
+using System.Web.Http.SelfHost;
+using System.Web.Http.SelfHost.Channels;
+
+namespace ${StandardNamespace}.App_Start
+{
+	
+	class WinAuthConfigBase : HttpSelfHostConfiguration
+    {
+
+        public WinAuthConfigBase(string baseAddress) : base(baseAddress)
+        {
+        }
+
+        
+        protected override BindingParameterCollection OnConfigureBinding(HttpBinding httpBinding)
+        {
+            httpBinding.Security.Mode = HttpBindingSecurityMode.TransportCredentialOnly;
+            httpBinding.Security.Transport.ClientCredentialType = HttpClientCredentialType.Windows;
+            return base.OnConfigureBinding(httpBinding);
+        }
+
+    }
+
+}]]>
+			</File>
+
+			<File name="Controllers\CsvController.cs">
+<![CDATA[${StandardHeader.C#}
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using ${ProjectName}.Models;
+
+namespace ${StandardNamespace}.Controllers
+{
+
+	public class CsvController : ApiController
+	{
+
+		private static List<StringValue> stringValues = InitValues();
+
+        private static List<StringValue> InitValues()
+        {
+            return new List<StringValue>()
+            {
+                new StringValue() {Id = 0, Value = "Value1"},
+                new StringValue() {Id = 1, Value = "Value2"}
+            };
+            
+        }
+        
+        
+		public HttpResponseMessage Get()
+		{
+			return Request.CreateResponse(HttpStatusCode.OK, stringValues, "application/csv");
+		}
+
+	}
+
+}]]>
+			</File>
+
+			<File name="Controllers\ValuesController.cs">
+<![CDATA[${StandardHeader.C#}
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using ${ProjectName}.Models;
+
+namespace ${StandardNamespace}.Controllers
+{
+
+	public class ValuesController : ApiController
+	{
+		
+		private static List<StringValue> stringValues = InitValues();
+
+        private static List<StringValue> InitValues()
+        {
+            return new List<StringValue>()
+            {
+                new StringValue() {Id = 0, Value = "Value1"},
+                new StringValue() {Id = 1, Value = "Value2"}
+            };
+            
+        }
+        
+
+        [HttpGet]
+        public HttpResponseMessage AllValues()
+        {
+        	Console.WriteLine("Querying all values");
+        	return stringValues.Any()
+                ? Request.CreateResponse(HttpStatusCode.OK, stringValues)
+                : Request.CreateErrorResponse(HttpStatusCode.NotFound,
+                    String.Format("No values found."));
+        }
+
+
+        public HttpResponseMessage Get(int Id)
+        {
+        	Console.WriteLine(String.Format("Querying value for Id {0}", Id));
+        	var sValue = stringValues.FirstOrDefault(c => c.Id == Id);
+
+            return sValue == null
+                ? Request.CreateErrorResponse(HttpStatusCode.NotFound,
+                    String.Format("Value for Id {0} was not found.", Id))
+                : Request.CreateResponse(HttpStatusCode.OK, sValue);
+        }
+
+
+        public HttpResponseMessage Post([FromBody]StringValue v)
+        {
+        	v.Id = stringValues.Count;
+            stringValues.Add(v);
+        	Console.WriteLine(String.Format("Creating new value {0}: {1}", 
+          		v.Id, v.Value));
+
+            var msg = Request.CreateResponse(HttpStatusCode.Created);
+            msg.Headers.Location = new Uri(String.Format("{0}/{1}", 
+            	Request.RequestUri, v.Id.ToString()));
+            return msg;
+        }
+
+
+        public HttpResponseMessage Put(int Id, [FromBody]StringValue v)
+        {
+            HttpResponseMessage msg = null;
+
+            var stringValue = stringValues.FirstOrDefault(x => x.Id == Id);
+        	Console.WriteLine(String.Format("Updating value {0}: {1}", v.Id, v.Value));
+        	
+            if (stringValue != null)
+            {
+                stringValue.Value = v.Value;
+                msg = Request.CreateResponse(HttpStatusCode.OK);
+            }
+        	else
+        	{
+        		msg = Request.CreateErrorResponse(HttpStatusCode.NoContent,
+               		String.Format("Value for Id {0} was not found.", Id));
+        	}
+        	
+        	return msg;
+        }
+
+
+        public HttpResponseMessage Delete(int Id)
+        {
+        	HttpResponseMessage msg = null;
+
+        	var stringValue = stringValues.FirstOrDefault(x => x.Id == Id);
+        	Console.WriteLine(String.Format("Deleting value for Id {0}", Id));
+
+        	if (stringValue != null)
+            {
+                stringValues.Remove(stringValue);
+                msg = Request.CreateResponse(HttpStatusCode.OK);
+            }
+        	else
+        	{
+        		msg = Request.CreateErrorResponse(HttpStatusCode.NoContent,
+               		String.Format("Value for Id {0} was not found.", Id));
+        	}
+
+        	return msg;
+        }
+
+    }
+
+}]]>
+			</File>	
+
+			<File name="Formatters\CsvFormatter.cs">
+<![CDATA[${StandardHeader.C#}
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net.Http.Formatting;
+using System.Net.Http.Headers;
+using System.Text;
+using System.Threading.Tasks;
+using ${ProjectName}.Models;
+
+namespace ${StandardNamespace}.Formatters
+{
+
+	public class CsvFormatter : MediaTypeFormatter
+	{
+
+		public CsvFormatter()
+		{
+			this.SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/csv"));
+		}
+		
+		
+		public override bool CanReadType(Type type)
+		{
+			return false;
+		}
+		
+		
+		public override bool CanWriteType(Type type)
+		{
+			return (type == (typeof(List<StringValue>)));
+		}
+		
+		
+		public override Task WriteToStreamAsync(Type type, 
+			object value, System.IO.Stream writeStream, 
+			System.Net.Http.HttpContent content,
+			System.Net.TransportContext transportContext)
+		{
+			return Task.Factory.StartNew(
+				() =>
+			    {
+			    	var csv = (List<StringValue>)value;
+			    	var writer = new StreamWriter(writeStream, UTF8Encoding.Default);
+			    	foreach (var val in csv) 
+			    	{
+			    		writer.WriteLine("{0},{1}", val.Id, val.Value);
+			    	}
+			    	writer.Flush();
+				});
+		}
+	}
+
+}]]>
+			</File>
+			
+			<File name="Handlers\MethodOverrideHandler.cs">
+<![CDATA[${StandardHeader.C#}
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Web.Http;
+using System.Web.Http.SelfHost;
+
+namespace ${StandardNamespace}.Handlers
+{
+
+	/// <summary>
+	/// Handler to override HTTP methods for HTTP Clients that 
+	/// do not allow certain HTTP methods.
+	/// Usage: "X-HTTP-Method-Override: PUT" e. g. in order to
+	/// override a POST to force a PUT.
+	/// </summary>
+	public class MethodOverrideHandler : DelegatingHandler
+	{
+		
+		const string ovrHeader = "X-HTTP-Method-Override";
+		
+		protected override Task<HttpResponseMessage> SendAsync(
+			HttpRequestMessage request,
+			CancellationToken cancellationToken)
+		{
+			if (request.Method == HttpMethod.Post && request.Headers.Contains(ovrHeader))
+			{
+				var realverb = request.Headers.GetValues(ovrHeader).FirstOrDefault();
+				
+				if (realverb != null)
+				{
+					request.Method = new HttpMethod(realverb);
+				}
+			}
+			
+			return base.SendAsync(request, cancellationToken);
+		}
+	
+	}
+
+}]]>
+			</File>	
+
+			<File name="Models\StringValue.cs">
+<![CDATA[${StandardHeader.C#}
+using System;
+
+namespace ${StandardNamespace}.Models
+{
+	
+	public class StringValue
+	{
+		public int Id;
+	    public string Value;
+	}
+	
+}]]>
+			</File>
+			
+			<File name="Properties\AssemblyInfo.cs" src="DefaultAssemblyInfo.cs" />
+			
+			<File name="app.config">
+<![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+	<startup>
+		<supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.5" />
+	</startup>
+</configuration>]]>
+			</File>
+
+
+			<File name="packages.config">
+<![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<packages>
+  <package id="Microsoft.AspNet.WebApi.Client" version="4.0.30506.0"/>
+  <package id="Microsoft.AspNet.WebApi.Core" version="4.0.30506.0"/>
+  <package id="Microsoft.AspNet.WebApi.SelfHost" version="4.0.30506.0"/>
+  <package id="Microsoft.Net.Http" version="2.0.20710.0"/>
+  <package id="Newtonsoft.Json" version="4.5.11"/>
+</packages>]]>
+			</File>
+			
+			
+			
+			<File name="${ProjectName}.cs">
+<![CDATA[${StandardHeader.C#}
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Diagnostics;
+using System.ServiceProcess;
+using System.Text;
+using System.Web.Http.SelfHost;
+
+namespace ${StandardNamespace}
+{
+
+	public class ${ProjectName} : ServiceBase
+	{
+
+		public const string MyServiceName = "${ProjectName}";
+		public const string MyServiceUrl  = "http://localhost:9999";
+		
+
+		public ${ProjectName}()
+		{
+			InitializeComponent();
+		}
+		
+
+		private void InitializeComponent()
+		{
+			this.ServiceName = MyServiceName;
+		}
+		
+
+		protected override void Dispose(bool disposing)
+		{
+			// TODO: Add cleanup code here (if required)
+			base.Dispose(disposing);
+		}
+		
+
+		protected override void OnStart(string[] args)
+		{
+			WebApiConfig.Register(MyServiceUrl);
+            FilterConfig.Register(WebApiConfig.Configuration);
+            
+            var server = new HttpSelfHostServer(WebApiConfig.Configuration);
+            var task = server.OpenAsync();
+            task.Wait();
+		}
+		
+
+		protected override void OnStop()
+		{
+			// TODO: Add tear-down code here (if required) to stop your service.
+		}
+
+	}
+
+}]]>
+				</File>
+				<File name="ProjectInstaller.cs">
+<![CDATA[${StandardHeader.C#}
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Configuration.Install;
+using System.ServiceProcess;
+
+namespace ${StandardNamespace}
+{
+	
+	[RunInstaller(true)]
+	public class ProjectInstaller : Installer
+	{
+		
+		private ServiceProcessInstaller serviceProcessInstaller;
+		private ServiceInstaller serviceInstaller;
+		
+		
+		public ProjectInstaller()
+		{
+			serviceProcessInstaller = new ServiceProcessInstaller();
+			serviceInstaller = new ServiceInstaller();
+			
+			// Here you can set properties on serviceProcessInstaller or register event handlers
+			serviceProcessInstaller.Account = ServiceAccount.LocalService;
+			
+			serviceInstaller.ServiceName = ${ProjectName}.MyServiceName;
+			this.Installers.AddRange(new Installer[] { serviceProcessInstaller, serviceInstaller });
+		}
+
+	}
+
+}]]>
+				</File>
+				<File name="Program.cs">
+<![CDATA[${StandardHeader.C#}
+using System;
+using System.Collections.Generic;
+using System.ServiceProcess;
+using System.Text;
+
+namespace ${ProjectName}
+{
+	
+	static class Program
+	{
+
+		static void Main()
+		{
+			ServiceBase.Run(new ServiceBase[] { new ${ProjectName}() });
+		}
+
+	}
+
+}]]>
+			</File>
+			
+		</Files>
+	</Project>
+</Template>
