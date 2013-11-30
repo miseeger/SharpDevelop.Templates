@@ -407,7 +407,7 @@ namespace ${StandardNamespace}
 				</PropertyGroup>
 
 				<ProjectItems>
-					<Reference Include="System" />
+					<Reference Include="NLog" />
 					<Reference Include="System.Core" />
 					<Reference Include="System.Xml" />
 					<Reference Include="System.Xml.Linq" />
@@ -469,27 +469,28 @@ namespace ${StandardNamespace}.Services
 }]]>
 					</File>
 					<File name="Services\ILoggingService.cs">  
-<![CDATA[namespace ${StandardNamespace}.Services
-{
-
-	public interface ILoggingService
-	{
-		void Log(string Message);
-	}
-
-}]]>
-					</File>
-					<File name="Services\IMailService.cs">  
 <![CDATA[using System;
+using NLog;
 
 namespace ${StandardNamespace}.Services
 {
 
-	public interface IMailService
+	public interface ILoggingService
 	{
+		void SetName(string LoggerName);
+		void Log(LogLevel lvl, string Message);
+		void LogEx(string Message, Exception Ex);
 	}
 
-}]]>
+}
+]]>
+					</File>
+					<File name="packages.config">
+<![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<packages>
+  <package id="NLog" version="2.1.0" />
+</packages>
+]]>
 					</File>
 					<File name="Properties\AssemblyInfo.cs" src="DefaultAssemblyInfo.cs"/>
 				</Files>
@@ -530,6 +531,7 @@ namespace ${StandardNamespace}.Services
 <![CDATA[using System;
 using ${SolutionName}.Common.Interfaces.Services;
 using AutofacModularity;
+using NLog;
 
 namespace ${StandardNamespace}
 {
@@ -538,25 +540,25 @@ namespace ${StandardNamespace}
 	public class LoggingService : ILoggingService
 	{
 
-		public void Log(string Message)
+		public static NLog.Logger _logger = LogManager.GetLogger("${SolutionName}");
+
+		public void SetName(string LoggerName)
 		{
-			System.Console.WriteLine("Log @{0}: {1}", DateTime.Now, Message);
+			_logger = LogManager.GetLogger(LoggerName);
 		}
 
-	}
 
-}]]>
-					</File>
-					<File name="MailService.cs"> 
-<![CDATA[using ${SolutionName}.Common.Interfaces.Services;
-using AutofacModularity;
+public void Log(LogLevel lvl, string Message)
+		{
+			_logger.Log(lvl, Message);
+		}
 
-namespace ${StandardNamespace}
-{
 
-	[RegisterService]
-	public class MailService : IMailService
-	{
+		public void LogEx(string Message, Exception Ex)
+		{
+			_logger.ErrorException(Message, Ex);
+		}
+
 	}
 
 }]]>
@@ -565,6 +567,7 @@ namespace ${StandardNamespace}
 <![CDATA[<?xml version="1.0" encoding="utf-8"?>
 <packages>
   <package id="AutofacModularity" version="1.0.1" />
+  <package id="NLog" version="2.1.0" />
 </packages>]]>
 					</File>
 					<File name="Properties\AssemblyInfo.cs" src="DefaultAssemblyInfo.cs"/>
@@ -595,6 +598,8 @@ namespace ${StandardNamespace}
 				<ProjectItems>
 					<Reference Include="AutofacModularity" />
 					<Reference Include="Autofac" />
+					<Reference Include="EmailModule" />
+					<Reference Include="NLog" />
 					<Reference Include="System" />
 					<Reference Include="System.Core" />
 					<Reference Include="System.Data" />
@@ -619,6 +624,13 @@ namespace ${StandardNamespace}
 	<appSettings>
 
 		<add key="CommonServices.ConnectionString" value="Dev ConnectionString"/>
+
+		<!-- You have to install smtp4dev (http://smtp4dev.codeplex.com/) for testing purposes using "localhost". -->
+		<add key="CommonServices.MailSmtpServerIp" value="localhost" />
+		<add key="CommonServices.MailSmtpServerPort" value="25" />
+		<add key="CommonServices.MailTemplatesDirectory" value="Modules\Plugins\MailTemplates" />
+		<add key="CommonServices.MailDefaultFromAddress" value="noreply@mymail.net" />
+
 		<add key="CheckData.Test" value="CheckData-Parameter from app.config"/>
 
 	</appSettings>
@@ -658,6 +670,32 @@ namespace ${StandardNamespace}
 
 }]]>
 					</File>
+					<File name="nlog.config" CopyToOutputDirectory="Always">
+<![CDATA[<nlog xmlns="http://www.nlog-project.org/schemas/NLog.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<targets>
+		<target name="FileLogger" xsi:type="File" fileName="${SolutionName}.log" 
+			layout="${longdate}|${level:uppercase=true}|${logger}|${machinename}|${processid}|${windows-identity}|${message}"/>
+		<target name="FileLoggerApi" xsi:type="File" fileName="${SolutionName}.WebApi.log" 
+			layout="${longdate}|${level:uppercase=true}|${logger}|${machinename}|${processid}|${windows-identity}|${message}"/>		
+		<target name="FileLoggerErr" xsi:type="File" fileName="${SolutionName}.Errors.log" 
+			layout="${longdate}|${level:uppercase=true}|${logger}|${machinename}|${processid}|${windows-identity}|${message}${onexception:inner=|${stacktrace}|${newline}${exception:format=ToString,method:maxInnerExceptionLevel=5}}" />
+		<target name="MailLoggerErr" xsi:type="Mail" html="true" subject="Exception in ${SolutionName}" 
+			to="a.b@c.de" from="noreply@mymail.de" smtpServer="127.0.0.1" smtpPort="25" 
+			body="${longdate}|${level:uppercase=true}|${logger}|${machinename}|${processid}|${windows-identity}|${message}${onexception:inner=|${stacktrace}|${newline}${exception:format=ToString,method:maxInnerExceptionLevel=5}}" />
+	</targets>
+
+	<rules>
+		<logger name="${SolutionName}.*" minlevel="Debug" maxlevel="Warn" writeTo="FileLogger" />
+		<logger name="*" minlevel="Error" maxlevel="Fatal" writeTo="FileLoggerErr" />
+		<logger name="${SolutionName}.Modules.WebApi.*" minlevel="Debug" maxlevel="Info" writeTo="FileLoggerApi" />
+		<!--logger name="*" minlevel="Error" maxlevel="Fatal" writeTo="MailLoggerErr" /-->
+	</rules>
+
+</nlog>
+
+]]>
+					</File>
 					<File name="Program.cs"> 
 <![CDATA[using System;
 using ${SolutionName}.Hosts.Console;
@@ -682,6 +720,7 @@ using ${SolutionName}.Common.Interfaces.Services;
 using Autofac;
 using AutofacModularity;
 using AutofacModularity.Interfaces;
+using NLog;
 
 namespace ${StandardNamespace}
 {
@@ -701,18 +740,40 @@ namespace ${StandardNamespace}
 			_dataService = dataservice;
 			_businessService = businessservice;			
 			_logger = logger;
+			_logger.SetName("${SolutionName}.Hosts.Console");
 		}
-		
+
+
+		private void CurrentDomain_UnhandledException(Object sender, UnhandledExceptionEventArgs e)
+		{
+			try
+			{
+				Exception ex = (Exception)e.ExceptionObject;
+				_logger.LogEx("Unhadled domain exception!", ex);
+			}
+			catch (Exception exc)
+			{
+				_logger.LogEx("Exception inside UnhadledExceptionHandler!", exc);
+			}
+			finally
+			{
+				Environment.Exit(0);
+			}
+		}
+
 
 		public void Run()
 		{
 
+			AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
+
 			System.Console.WriteLine("\nRegistered Components ({0}):",
-			_container.ComponentRegistry.Registrations.Count());
+				_container.ComponentRegistry.Registrations.Count());
 
 			foreach (var entry in _container.ComponentRegistry.Registrations)
 			{
 				System.Console.WriteLine("   {0}", entry.ToString().Split(',')[0]);
+				_logger.Log(LogLevel.Info, String.Format("Registered: {0}", entry.ToString().Split(',')[0]));
 			}
 
 			System.Console.WriteLine("\nFrom DataService:");
@@ -724,6 +785,10 @@ namespace ${StandardNamespace}
 			System.Console.WriteLine("\nRunning CheckDataPlugin:");
 			var cr = _container.ResolveNamed<IPlugin>("CheckDataPlugin");
 			cr.Run();
+
+			System.Console.WriteLine("\nRunning ImportDataPlugin:");
+			var ir = _container.ResolveNamed<IPlugin>("ImportDataPlugin");
+			ir.Run();
 
 			System.Console.Write("\nPress any key to continue . . . ");
 			System.Console.ReadKey(true);
@@ -738,6 +803,8 @@ namespace ${StandardNamespace}
 <![CDATA[<?xml version="1.0" encoding="utf-8"?>
 <packages>
 ..<package id="AutofacModularity" version="1.0.1" />
+  <package id="mailzor" version="1.0.0.11" />
+  <package id="NLog" version="2.1.0" />
 </packages>]]>
 					</File>
 					<File name="Properties\AssemblyInfo.cs" src="DefaultAssemblyInfo.cs"/>
@@ -765,6 +832,7 @@ namespace ${StandardNamespace}
 					<Reference Include="Autofac.Integration.WebApi" />
 					<Reference Include="AutofacModularity" />
 					<Reference Include="Newtonsoft.Json" />
+					<Reference Include="NLog" />
 					<Reference Include="System" />
 					<Reference Include="System.Core" />
 					<Reference Include="System.Data" />
@@ -794,7 +862,15 @@ namespace ${StandardNamespace}
 	</startup>
 
 	<appSettings>
+
+		<!-- You have to install smtp4dev (http://smtp4dev.codeplex.com/) for testing purposes using "localhost". -->
+		<add key="CommonServices.MailSmtpServerIp" value="localhost" />
+		<add key="CommonServices.MailSmtpServerPort" value="25" />
+		<add key="CommonServices.MailTemplatesDirectory" value="Modules\Plugins\MailTemplates" />
+		<add key="CommonServices.MailDefaultFromAddress" value="noreply@mymail.net" />
+
 		<add key="WebApiDomain.TestProp" value="Prop for testing." />
+
 	</appSettings>
 
 </configuration>
@@ -807,7 +883,10 @@ using Autofac;
 using Autofac.Integration.WebApi;
 using AutofacModularity;
 using AutofacModularity.Interfaces;
+using ${SolutionName}.Common.Interfaces.Services;
 using ${SolutionName}.Hosts.WebApiConsole.App_Start;
+using NLog;
+
 
 namespace ${StandardNamespace}
 {
@@ -816,6 +895,25 @@ namespace ${StandardNamespace}
 	{
 		
 		private const string MyServiceUrl = "http://localhost:9999";
+		private ILoggingService _logger;
+
+
+		private void CurrentDomain_UnhandledException(Object sender, UnhandledExceptionEventArgs e)
+		{
+			try
+			{
+				Exception ex = (Exception)e.ExceptionObject;
+				_logger.LogEx("Unhadled domain exception!", ex);
+			}
+			catch (Exception exc)
+			{
+				_logger.LogEx("Exception inside UnhadledExceptionHandler!", exc);
+			}
+			finally
+			{
+				Environment.Exit(0);
+			}
+		}
 
 
 		protected override void ConfigureContainer(ContainerBuilder builder)
@@ -842,10 +940,17 @@ namespace ${StandardNamespace}
 
 		protected override void RunAsShell(IContainer container)
 		{
+			_logger = container.Resolve<ILoggingService>();
+			_logger.SetName("${SolutionName}.Hosts.WebApiConsole");
+
+			AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
+
 			foreach (var entry in container.ComponentRegistry.Registrations)
 			{
 				System.Console.WriteLine("   {0}", entry.ToString().Split(',')[0]);
+				_logger.Log(LogLevel.Info, entry.ToString().Split(',')[0]);
 			}
+
 			var server = new HttpSelfHostServer(WebApiConfig.Configuration);
 			var task = server.OpenAsync();
 			task.Wait();
@@ -1015,6 +1120,7 @@ namespace ${StandardNamespace}.Handlers
   <package id="Microsoft.AspNet.WebApi.SelfHost" version="4.0.30506.0" />
   <package id="Microsoft.Net.Http" version="2.0.20710.0" />
   <package id="Newtonsoft.Json" version="4.5.11" />
+  <package id="NLog" version="2.1.0" />
 </packages>]]>
 					</File>
 					<File name="Properties\AssemblyInfo.cs" src="DefaultAssemblyInfo.cs"/>
@@ -1051,6 +1157,7 @@ namespace ${StandardNamespace}.Handlers
 					<ProjectItems>
 						<Reference Include="Autofac" />
 						<Reference Include="AutofacModularity" />
+						<Reference Include="EmailModule" />
 						<Reference Include="System" />
 						<Reference Include="System.Core" />
 						<Reference Include="System.Xml" />
@@ -1059,11 +1166,14 @@ namespace ${StandardNamespace}.Handlers
 	
 					<Files>
 						<File name="CommonServicesModule.cs"> 
-<![CDATA[
+<![CDATA[using System;
 using System.Linq;
+using System.Net.Mail;
 using System.Reflection;
 using Autofac;
 using AutofacModularity;
+using EmailModule;
+
 
 namespace ${StandardNamespace}
 {
@@ -1072,6 +1182,10 @@ namespace ${StandardNamespace}
 	{
 
 		public string ConnectionString { get; set; }
+		public string MailSmtpServerIp { get; set; }
+		public string MailSmtpServerPort { get; set; }
+		public string MailTemplatesDirectory { get; set; }
+		public string MailDefaultFromAddress { get; set; }
 
 
 		protected override void Load(ContainerBuilder builder)
@@ -1081,30 +1195,50 @@ namespace ${StandardNamespace}
 			builder.RegisterAssemblyTypes(Assembly.LoadFrom("${SolutionName}.Common.Services.dll"))
 				.Where(t => t.GetCustomAttributes(typeof (RegisterServiceAttribute), false).Any())
 				.AsSelf()
-				.AsImplementedInterfaces()
-				.SingleInstance();
+				.AsImplementedInterfaces();
 
 			builder.RegisterAssemblyTypes(Assembly.LoadFrom("${SolutionName}.Common.Data.dll"))
 				.Where(t => t.GetCustomAttributes(typeof(RegisterServiceAttribute), false).Any())
 				.AsSelf()
-				.AsImplementedInterfaces()
-				.SingleInstance()
-				.WithParameter("connectionString", ConnectionString);
+				.AsImplementedInterfaces().WithParameter("connectionString", ConnectionString);
 
 			builder.RegisterAssemblyTypes(Assembly.LoadFrom("${SolutionName}.Common.Business.dll"))
 				.Where(t => t.GetCustomAttributes(typeof(RegisterServiceAttribute), false).Any())
 				.AsSelf()
-				.AsImplementedInterfaces()
-				.SingleInstance();
+				.AsImplementedInterfaces();
+
+			builder.Register(c => new FileSystemEmailTemplateContentReader(MailTemplatesDirectory))
+				.As<IEmailTemplateContentReader>();
+
+			builder.RegisterType<EmailTemplateEngine>()
+				.As<IEmailTemplateEngine>();
+
+			builder.Register(
+				c => new EmailSender
+				{
+					CreateClientFactory = () 
+						=> new SmtpClientWrapper(new SmtpClient(MailSmtpServerIp, Convert.ToInt16(MailSmtpServerPort)))
+					, DefaultFromAddress = MailDefaultFromAddress
+				})
+				.As<IEmailSender>();
+
+			builder.Register(
+				c => new EmailSubsystem(
+					c.Resolve<IEmailTemplateEngine>(), 
+					c.Resolve<IEmailSender>()))
+				.As<IEmailSystem>();
 		}
 
 	}
-}]]>
+}
+]]>
 					</File>
 					<File name="packages.config"> 
 <![CDATA[<?xml version="1.0" encoding="utf-8"?>
 <packages>
   <package id="AutofacModularity" version="1.0.1" />
+  <package id="mailzor" version ="1.0.0.11" />
+  <package id="NLog" version="2.1.0" />
 </packages>]]>
 					</File>
 					<File name="Properties\AssemblyInfo.cs" src="DefaultAssemblyInfo.cs"/>
@@ -1226,6 +1360,7 @@ namespace ${StandardNamespace}
 					<ProjectItems>
 						<Reference Include="Autofac" />
 						<Reference Include="AutofacModularity" />
+						<Reference Include="EmailModule" />
 						<Reference Include="System" />
 						<Reference Include="System.Core" />
 						<Reference Include="System.Xml" />
@@ -1233,6 +1368,49 @@ namespace ${StandardNamespace}
 					</ProjectItems>
 
 					<Files>
+						<File name="MailTemplates\ImportDataMail.cshtml" CopyToOutputDirectory="Always">
+<![CDATA[@{
+	From = Model.From;
+	To.Add(Model.To);
+	Subject = "Welcome to ${ProjectName}";
+}
+]]>
+						</File>
+						<File name="MailTemplates\ImportDataMail.html.cshtml" CopyToOutputDirectory="Always">
+<![CDATA[<html>
+	<head>
+		<title>Welcome to ${ProjectName}</title>
+	</head>
+	<body>
+		<p>Dear @Model.Name,</p>
+		<p>Your trial account has been created.</p>
+		<p>To start using the system go to <a href="http://applciation.com" alt="app url">http://applciation.com</a></p>
+		<p></p>
+		<p>To verify your email address please go to:</p>
+		<p><a href="@Model.VerificationUri" alt="app verification url">@Model.VerificationUri</a></p>
+		<p>If you have trouble clicking on that link, please copy and paste it into your browsers address bar.</p>
+		[html]
+	</body>
+</html>
+]]>
+						</File>
+						<File name="MailTemplates\ImportDataMail.text.cshtml" CopyToOutputDirectory="Always">
+<![CDATA[Dear @Model.Name,
+
+Your trial account has been created.
+
+To start using the system go to http://applciation.com
+
+
+To verify your email address please go to:
+
+@Model.VerificationUri
+
+If you have trouble clicking on that link, please copy and paste it into your browsers address bar.
+
+[Text]
+]]>
+						</File>
 						<File name="ImportDataModule.cs"> 
 <![CDATA[
 using Autofac;
@@ -1258,6 +1436,7 @@ namespace ${StandardNamespace}
 						<File name="ImportDataPlugin.cs"> 
 <![CDATA[using System;
 using AutofacModularity.Interfaces;
+using EmailModule;
 
 namespace ${StandardNamespace}
 {
@@ -1265,19 +1444,43 @@ namespace ${StandardNamespace}
 public class ImportDataPlugin : IPlugin
 	{
 
+		private IEmailSystem _mailer;
+		
+		
+		public ImportDataPlugin(IEmailSystem Mailer)
+		{
+			_mailer = Mailer;
+		}
+
+
 		public void Run()
 		{
 			Console.WriteLine("ImportData-Plugin: ready");
+			
+			var model = new 
+			{
+				To = "a.b@c.de"
+				,From = ""
+				,Name = "Mr. Doe"
+				,VerificationUri = "http://www.icsharpcode.net/OpenSource/SD/Default.aspx"
+			};
+
+			_mailer.SendMail("ImportDataMail", model);
+
+			Console.WriteLine("Mail sent.");
+
 		}
 
 	}
 
-}]]>
+}
+]]>
 						</File>
 						<File name="packages.config"> 
 <![CDATA[<?xml version="1.0" encoding="utf-8"?>
 <packages>
   <package id="AutofacModularity" version="1.0.1" />
+  <package id="mailzor" version ="1.0.0.11" />
 </packages>]]>
 						</File>
 						<File name="Properties\AssemblyInfo.cs" src="DefaultAssemblyInfo.cs"/>
@@ -1312,6 +1515,7 @@ public class ImportDataPlugin : IPlugin
 						<Reference Include="Autofac.Integration.WebApi" />
 						<Reference Include="AutofacModularity" />
 						<Reference Include="Newtonsoft.Json" />
+						<Referende Include="NLog" />
 						<Reference Include="System" />
 						<Reference Include="System.Core" />
 						<Reference Include="System.Net.Http" />
@@ -1436,6 +1640,7 @@ using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 using ${SolutionName}.Common.Interfaces.Services;
 using Autofac.Integration.WebApi;
+using NLog;
 
 namespace ${StandardNamespace}.Filters
 {
@@ -1448,18 +1653,19 @@ namespace ${StandardNamespace}.Filters
 		public LoggingActionFilter(ILoggingService logger)
 		{
 			_logger = logger;
+			_logger.SetName("${SolutionName}.Modules.WebApi.Domain");
 		}
 
 
 		public void OnActionExecuting(HttpActionContext actionContext)
 		{
-			_logger.Log(actionContext.ActionDescriptor.ActionName);
+			_logger.Log(LogLevel.Info, actionContext.ActionDescriptor.ActionName);
 		}
 
 
 		public void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
 		{
-			_logger.Log(actionExecutedContext.ActionContext.ActionDescriptor.ActionName);
+			_logger.Log(LogLevel.Info, actionExecutedContext.ActionContext.ActionDescriptor.ActionName);
 		}
 
 	}
@@ -1531,6 +1737,7 @@ namespace ${StandardNamespace}.Formatters
   <package id="Microsoft.AspNet.WebApi.Core" version="4.0.30506.0" />
   <package id="Microsoft.Net.Http" version="2.0.20710.0" />
   <package id="Newtonsoft.Json" version="4.5.11" />
+  <package id="NLog" version="2.1.0" />
 </packages>]]>
 						</File>
 						<File name="WebApiDomainModule.cs"> 

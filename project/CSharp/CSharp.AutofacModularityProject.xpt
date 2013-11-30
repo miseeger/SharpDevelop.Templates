@@ -66,26 +66,26 @@ using AutofacModularity;
 namespace ${StandardNamespace}
 {
 
-    [RegisterService]
-    public class BusinessService : IBusinessService
-    {
+	[RegisterService]
+	public class BusinessService : IBusinessService
+	{
 
-        public IDataService DataService { get; private set; }
+		public IDataService DataService { get; private set; }
 
-        
-        public BusinessService(IDataService dataService)
-        {
-            DataService = dataService;
-        }
 
-    }
+		public BusinessService(IDataService dataService)
+		{
+			DataService = dataService;
+		}
+
+	}
 
 }]]>
 					</File>
 					<File name="packages.config"> 
 <![CDATA[<?xml version="1.0" encoding="utf-8"?>
 <packages>
-  <package id="AutofacModularity" version="1.0.0" />
+  <package id="AutofacModularity" version="1.0.1" />
 </packages>]]>
 					</File>
 					<File name="Properties\AssemblyInfo.cs" src="DefaultAssemblyInfo.cs"/>
@@ -163,31 +163,31 @@ using AutofacModularity.Interfaces;
 namespace ${StandardNamespace}
 {
 
-    [RegisterService]
-    public class DataService : IDataService
-    {
+	[RegisterService]
+	public class DataService : IDataService
+	{
 
-        public string ConnectionString { get; set; }
-        public ILoggingService LoggingService { get; private set; }
+		public string ConnectionString { get; set; }
+		public ILoggingService LoggingService { get; private set; }
 
-        public DataService(ILoggingService loggingService, string connectionString)
-        {
-            ConnectionString = connectionString;
-            LoggingService = loggingService;
-        }
+		public DataService(ILoggingService loggingService, string connectionString)
+		{
+			ConnectionString = connectionString;
+			LoggingService = loggingService;
+		}
 
-        public void Hello()
-        {
-            System.Console.WriteLine("DataService.ConnectionString: {0}", ConnectionString);
-        }
-    }
+		public void Hello()
+		{
+			System.Console.WriteLine("DataService.ConnectionString: {0}", ConnectionString);
+		}
+	}
 
 }]]>
 					</File>
 					<File name="packages.config"> 
 <![CDATA[<?xml version="1.0" encoding="utf-8"?>
 <packages>
-  <package id="AutofacModularity" version="1.0.0" />
+  <package id="AutofacModularity" version="1.0.1" />
 </packages>]]>
 					</File>
 					<File name="Properties\AssemblyInfo.cs" src="DefaultAssemblyInfo.cs"/>
@@ -244,6 +244,7 @@ namespace ${StandardNamespace}
 				</PropertyGroup>
 
 				<ProjectItems>
+					<Reference Include="NLog" />
 					<Reference Include="System" />
 					<Reference Include="System.Core" />
 					<Reference Include="System.Xml" />
@@ -254,12 +255,12 @@ namespace ${StandardNamespace}
 					<File name="Services\IBusinessService.cs"> 
 <![CDATA[namespace ${StandardNamespace}.Services
 {
-    public interface IBusinessService
-    {
+	public interface IBusinessService
+	{
 
-        IDataService DataService { get; }
-         
-    }
+		IDataService DataService { get; }
+
+	}
 }
 ]]>
 					</File>
@@ -269,40 +270,40 @@ namespace ${StandardNamespace}
 namespace ${StandardNamespace}.Services
 {
 
-    public interface IDataService
-    {
+	public interface IDataService
+	{
 
-        String ConnectionString { get; set; }
-        ILoggingService LoggingService { get; }
+		String ConnectionString { get; set; }
+		ILoggingService LoggingService { get; }
 
-        void Hello();
+		void Hello();
 
-    }
+	}
 
 }
 ]]>
 					</File>
 					<File name="Services\ILoggingService.cs">  
-<![CDATA[namespace ${StandardNamespace}.Services
-{
-    public interface ILoggingService
-    {
-    }
-}
-]]>
-					</File>
-					<File name="Services\IMailService.cs">  
 <![CDATA[using System;
+using NLog;
 
 namespace ${StandardNamespace}.Services
 {
 
-	public interface IMailService
+	public interface ILoggingService
 	{
+		void Log(LogLevel lvl, string Message);
+		void LogEx(string Message, Exception Ex);
 	}
 
 }
-
+]]>
+					</File>
+					<File name="packages.config">
+<![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<packages>
+  <package id="NLog" version="2.1.0" />
+</packages>
 ]]>
 					</File>
 					<File name="Properties\AssemblyInfo.cs" src="DefaultAssemblyInfo.cs"/>
@@ -329,6 +330,7 @@ namespace ${StandardNamespace}.Services
 
 				<ProjectItems>
 					<Reference Include="AutofacModularity" />
+					<Reference Include="NLog" />
 					<Reference Include="System" />
 					<Reference Include="System.Core" />
 					<Reference Include="System.Xml" />
@@ -341,37 +343,40 @@ namespace ${StandardNamespace}.Services
 
 				<Files>
 					<File name="LoggingService.cs"> 
-<![CDATA[using ${SolutionName}.Common.Interfaces.Services;
+<![CDATA[using System;
+using ${SolutionName}.Common.Interfaces.Services;
 using AutofacModularity;
+using NLog;
 
 namespace ${StandardNamespace}
 {
 
-    [RegisterService]    
-    public class LoggingService : ILoggingService
-    {
-    }
+	[RegisterService]
+	public class LoggingService : ILoggingService
+	{
 
-}]]>
-					</File>
-					<File name="MailService.cs"> 
-<![CDATA[using ${SolutionName}.Common.Interfaces.Services;
-using AutofacModularity;
+		public static NLog.Logger _logger = LogManager.GetLogger("${SolutionName}");
 
-namespace ${StandardNamespace}
-{
+		public void Log(LogLevel lvl, string Message)
+		{
+			_logger.Log(lvl, Message);
+		}
 
-    [RegisterService]    
-    public class MailService : IMailService
-    {
-    }
+
+		public void LogEx(string Message, Exception Ex)
+		{
+			_logger.ErrorException(Message, Ex);
+		}
+
+	}
 
 }]]>
 					</File>
 					<File name="packages.config"> 
 <![CDATA[<?xml version="1.0" encoding="utf-8"?>
 <packages>
-  <package id="AutofacModularity" version="1.0.0" />
+  <package id="AutofacModularity" version="1.0.1" />
+  <package id="NLog" version="2.1.0" />
 </packages>]]>
 					</File>
 					<File name="Properties\AssemblyInfo.cs" src="DefaultAssemblyInfo.cs"/>
@@ -403,6 +408,8 @@ namespace ${StandardNamespace}
 				<ProjectItems>
 					<Reference Include="AutofacModularity" />
 					<Reference Include="Autofac" />
+					<Reference Include="EmailModule" />
+					<Reference Include="NLog" />
 					<Reference Include="System" />
 					<Reference Include="System.Core" />
 					<Reference Include="System.Data" />
@@ -425,10 +432,17 @@ namespace ${StandardNamespace}
 	</startup>
 
 	<appSettings>
-    
-	    <add key="CommonServices.ConnectionString" value="Dev ConnectionString"/>
-	    <add key="CheckData.Test" value="CheckData-Parameter from app.config"/>
-  
+
+		<add key="CommonServices.ConnectionString" value="Dev ConnectionString"/>
+
+		<!-- You have to install smtp4dev (http://smtp4dev.codeplex.com/) for testing purposes using "localhost". -->
+		<add key="CommonServices.MailSmtpServerIp" value="localhost" />
+		<add key="CommonServices.MailSmtpServerPort" value="25" />
+		<add key="CommonServices.MailTemplatesDirectory" value="Modules\MailTemplates" />
+		<add key="CommonServices.MailDefaultFromAddress" value="noreply@mymail.net" />
+
+		<add key="CheckData.Test" value="CheckData-Parameter from app.config"/>
+
 	</appSettings>
 
 </configuration>
@@ -442,30 +456,54 @@ using AutofacModularity.Interfaces;
 namespace ${StandardNamespace}
 {
 
-    public class ConsoleBootstrapper : AbstractBootstrapper
-    {
-        
-        protected override void ConfigureContainer(ContainerBuilder builder)
-        {
-            System.Console.WriteLine("Configuring DI Container ...");
+	public class ConsoleBootstrapper : AbstractBootstrapper
+	{
 
-            builder.RegisterAssemblyModulesFromFile(@"Modules\${SolutionName}.Modules.Common.Services.dll",
-                (f) => System.Console.WriteLine("   {0}",f));
+		protected override void ConfigureContainer(ContainerBuilder builder)
+		{
+			System.Console.WriteLine("Configuring DI Container ...");
 
-            builder.RegisterAssemblyModulesFromDirectory(@"Modules","${SolutionName}.Modules",
-                "${SolutionName}.Modules.Common",
-                (f) => System.Console.WriteLine("   {0}", f));
-        }
-        
-        
-        protected override void RegisterShell(ContainerBuilder builder)
-        {
-        	builder.RegisterType<Shell>().As<IShell>();
-        }
-    
-    }
+			builder.RegisterAssemblyModulesFromFile(@"Modules\${SolutionName}.Modules.Common.Services.dll",
+				(f) => System.Console.WriteLine("   {0}",f));
+
+			builder.RegisterAssemblyModulesFromDirectory(@"Modules","${SolutionName}.Modules",
+				"${SolutionName}.Modules.Common",
+				(f) => System.Console.WriteLine("   {0}", f));
+		}
+
+
+		protected override void RegisterShell(ContainerBuilder builder)
+		{
+			builder.RegisterType<Shell>().As<IShell>();
+		}
+
+	}
 
 }
+]]>
+					</File>
+					<File name="nlog.config" CopyToOutputDirectory="Always">
+<![CDATA[<nlog xmlns="http://www.nlog-project.org/schemas/NLog.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<targets>
+		<target name="FileLogger" xsi:type="File" fileName="${ProjectName}.log" 
+			layout="${longdate}|${level:uppercase=true}|${logger}|${machinename}|${processid}|${windows-identity}|${message}"/>
+		<target name="FileLoggerErr" xsi:type="File" fileName="${ProjectName}_Error.log" 
+			layout="${longdate}|${level:uppercase=true}|${logger}|${machinename}|${processid}|${windows-identity}|${message}${onexception:inner=|${stacktrace}|${newline}${exception:format=ToString,method:maxInnerExceptionLevel=5}}" />
+		<target name="MailLoggerErr" xsi:type="Mail" html="true" subject="Exception in ${ProjectName}" 
+			to="a.b@c.de" from="noreply@mymail.de" smtpServer="127.0.0.1" smtpPort="25" 
+			body="${longdate}|${level:uppercase=true}|${logger}|${machinename}|${processid}|${windows-identity}|${message}${onexception:inner=|${stacktrace}|${newline}${exception:format=ToString,method:maxInnerExceptionLevel=5}}" />
+	</targets>
+
+	<rules>
+		<logger name="*" minlevel="Debug" maxlevel="Warn" writeTo="FileLogger" />
+		<logger name="*" minlevel="Error" maxlevel="Fatal" writeTo="FileLoggerErr" />
+		<!--logger name="*" minlevel="Error" maxlevel="Fatal" writeTo="MailLoggerErr" /-->
+		
+	</rules>
+
+</nlog>
+
 ]]>
 					</File>
 					<File name="Program.cs"> 
@@ -478,8 +516,8 @@ namespace ${StandardNamespace}
 	{
 		public static void Main(string[] args)
 		{
-            var bootstrapper = new ConsoleBootstrapper();
-            bootstrapper.Run();
+			var bootstrapper = new ConsoleBootstrapper();
+			bootstrapper.Run();
 		}
 	}
 }
@@ -493,55 +531,81 @@ using ${SolutionName}.Common.Interfaces.Services;
 using Autofac;
 using AutofacModularity;
 using AutofacModularity.Interfaces;
+using NLog;
 
 namespace ${StandardNamespace}
 {
 	public class Shell : IShell
-    {
+	{
 		
 		private IComponentContext _container;
 		private IDataService _dataService;
 		private IBusinessService _businessService;
 		private ILoggingService _logger;
 
-        
+
 		public Shell(IComponentContext container, IDataService dataservice, 
-		             IBusinessService businessservice, ILoggingService logger)
-        {
-        	_container = container;
+			IBusinessService businessservice, ILoggingService logger)
+		{
+			_container = container;
 			_dataService = dataservice;
-			_businessService = businessservice;			
+			_businessService = businessservice;
 			_logger = logger;
-        }
-		
+		}
+
+
+		private void CurrentDomain_UnhandledException(Object sender, UnhandledExceptionEventArgs e)
+		{
+			try
+			{
+				Exception ex = (Exception)e.ExceptionObject;
+				_logger.LogEx("Unhadled domain exception!", ex);
+			}
+			catch (Exception exc)
+			{
+				_logger.LogEx("Exception inside UnhadledExceptionHandler!", exc);
+			}
+			finally
+			{
+				Environment.Exit(0);
+			}
+		}
+
 
 		public void Run()
-        {
+		{
 
-            System.Console.WriteLine("\nRegistered Components ({0}):",
-            _container.ComponentRegistry.Registrations.Count());
+			AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
 
-            foreach (var entry in _container.ComponentRegistry.Registrations)
-            {
-                System.Console.WriteLine("   {0}", entry.ToString().Split(',')[0]);
-            }
+			System.Console.WriteLine("\nRegistered Components ({0}):",
+				_container.ComponentRegistry.Registrations.Count());
 
-            System.Console.WriteLine("\nFrom DataService:");
-            _dataService.Hello();
+			foreach (var entry in _container.ComponentRegistry.Registrations)
+			{
+				System.Console.WriteLine("   {0}", entry.ToString().Split(',')[0]);
+				_logger.Log(LogLevel.Info, String.Format("Registered: {0}", entry.ToString().Split(',')[0]));
+			}
 
-            System.Console.WriteLine("\nFrom DataService via BusinessService:");
-            _businessService.DataService.Hello();
+			System.Console.WriteLine("\nFrom DataService:");
+			_dataService.Hello();
 
-            System.Console.WriteLine("\nRunning CheckDataPlugin:");
-            var cr = _container.ResolveNamed<IPlugin>("CheckDataPlugin");
-            cr.Run();
-            
-   			System.Console.Write("\nPress any key to continue . . . ");
+			System.Console.WriteLine("\nFrom DataService via BusinessService:");
+			_businessService.DataService.Hello();
+
+			System.Console.WriteLine("\nRunning CheckDataPlugin:");
+			var cr = _container.ResolveNamed<IPlugin>("CheckDataPlugin");
+			cr.Run();
+
+			System.Console.WriteLine("\nRunning ImportDataPlugin:");
+			var ir = _container.ResolveNamed<IPlugin>("ImportDataPlugin");
+			ir.Run();
+
+			System.Console.Write("\nPress any key to continue . . . ");
 			System.Console.ReadKey(true);
 
-        }
+		}
 
-    }
+	}
 
 }
 ]]>
@@ -549,7 +613,9 @@ namespace ${StandardNamespace}
 					<File name="packages.config"> 
 <![CDATA[<?xml version="1.0" encoding="utf-8"?>
 <packages>
-  <package id="AutofacModularity" version="1.0.0" />
+  <package id="AutofacModularity" version="1.0.1" />
+  <package id="mailzor" version="1.0.0.11" />
+  <package id="NLog" version="2.1.0" />
 </packages>]]>
 					</File>
 					<File name="Properties\AssemblyInfo.cs" src="DefaultAssemblyInfo.cs"/>
@@ -587,6 +653,7 @@ namespace ${StandardNamespace}
 					<ProjectItems>
 						<Reference Include="Autofac" />
 						<Reference Include="AutofacModularity" />
+						<Reference Include="EmailModule" />
 						<Reference Include="System" />
 						<Reference Include="System.Core" />
 						<Reference Include="System.Xml" />
@@ -595,50 +662,78 @@ namespace ${StandardNamespace}
 	
 					<Files>
 						<File name="CommonServicesModule.cs"> 
-<![CDATA[
+<![CDATA[using System;
 using System.Linq;
+using System.Net.Mail;
 using System.Reflection;
 using Autofac;
 using AutofacModularity;
+using EmailModule;
+
 
 namespace ${StandardNamespace}
 {
-    
+
 	public class CommonServicesModule : ConfigurableModule
-    {
+	{
 
-        public string ConnectionString { get; set; }
+		public string ConnectionString { get; set; }
+		public string MailSmtpServerIp { get; set; }
+		public string MailSmtpServerPort { get; set; }
+		public string MailTemplatesDirectory { get; set; }
+		public string MailDefaultFromAddress { get; set; }
 
 
-        protected override void Load(ContainerBuilder builder)
-        {
-            base.Load(builder);
-            
-            builder.RegisterAssemblyTypes(Assembly.LoadFrom("${SolutionName}.Common.Services.dll"))
-                .Where(t => t.GetCustomAttributes(typeof (RegisterServiceAttribute), false).Any())
-                .AsSelf()
-                .AsImplementedInterfaces();
-            
-            builder.RegisterAssemblyTypes(Assembly.LoadFrom("${SolutionName}.Common.Data.dll"))
-                .Where(t => t.GetCustomAttributes(typeof(RegisterServiceAttribute), false).Any())
-                .AsSelf()
-                .AsImplementedInterfaces().WithParameter("connectionString", ConnectionString);
+		protected override void Load(ContainerBuilder builder)
+		{
+			base.Load(builder);
 
-            builder.RegisterAssemblyTypes(Assembly.LoadFrom("${SolutionName}.Common.Business.dll"))
-                .Where(t => t.GetCustomAttributes(typeof(RegisterServiceAttribute), false).Any())
-                .AsSelf()
-                .AsImplementedInterfaces();
+			builder.RegisterAssemblyTypes(Assembly.LoadFrom("${SolutionName}.Common.Services.dll"))
+				.Where(t => t.GetCustomAttributes(typeof (RegisterServiceAttribute), false).Any())
+				.AsSelf()
+				.AsImplementedInterfaces();
 
-        }
-    
-    }
+			builder.RegisterAssemblyTypes(Assembly.LoadFrom("${SolutionName}.Common.Data.dll"))
+				.Where(t => t.GetCustomAttributes(typeof(RegisterServiceAttribute), false).Any())
+				.AsSelf()
+				.AsImplementedInterfaces().WithParameter("connectionString", ConnectionString);
+
+			builder.RegisterAssemblyTypes(Assembly.LoadFrom("${SolutionName}.Common.Business.dll"))
+				.Where(t => t.GetCustomAttributes(typeof(RegisterServiceAttribute), false).Any())
+				.AsSelf()
+				.AsImplementedInterfaces();
+
+			builder.Register(c => new FileSystemEmailTemplateContentReader(MailTemplatesDirectory))
+				.As<IEmailTemplateContentReader>();
+
+			builder.RegisterType<EmailTemplateEngine>()
+				.As<IEmailTemplateEngine>();
+
+			builder.Register(
+				c => new EmailSender
+				{
+					CreateClientFactory = () 
+						=> new SmtpClientWrapper(new SmtpClient(MailSmtpServerIp, Convert.ToInt16(MailSmtpServerPort)))
+					, DefaultFromAddress = MailDefaultFromAddress
+				})
+				.As<IEmailSender>();
+
+			builder.Register(
+				c => new EmailSubsystem(
+					c.Resolve<IEmailTemplateEngine>(), 
+					c.Resolve<IEmailSender>()))
+				.As<IEmailSystem>();
+		}
+
+	}
 }
 ]]>
 					</File>
 					<File name="packages.config"> 
 <![CDATA[<?xml version="1.0" encoding="utf-8"?>
 <packages>
-  <package id="AutofacModularity" version="1.0.0" />
+  <package id="AutofacModularity" version="1.0.1" />
+  <package id="mailzor" version ="1.0.0.11" />
 </packages>]]>
 					</File>
 					<File name="Properties\AssemblyInfo.cs" src="DefaultAssemblyInfo.cs"/>
@@ -651,52 +746,51 @@ namespace ${StandardNamespace}
 			<!-- CheckData-Module-Project -->
 			<Project name="${ProjectName}.Modules.CheckData" directory="Modules\${ProjectName}.Modules.CheckData" language="C#">
 	
- 				<PropertyGroup>
- 					<OutputType>Library</OutputType>
- 					<ProjectGuid>68965282-719f-4ebc-8338-9da9ecd6f50e</ProjectGuid>
- 					<AppDesignerFolder>Properties</AppDesignerFolder>
- 				</PropertyGroup>
- 
- 				<PropertyGroup configuration="Debug">
- 					<OutputPath>..\..\Bin\Debug\Modules\</OutputPath>
- 				</PropertyGroup>
- 
- 				<PropertyGroup configuration="Release">
- 					<OutputPath>..\..\Bin\Release\Modules\</OutputPath>
- 				</PropertyGroup>
- 
- 				<ProjectItems>
- 					<Reference Include="Autofac" />
- 					<Reference Include="AutofacModularity" />
- 					<Reference Include="System" />
- 					<Reference Include="System.Core" />
- 					<Reference Include="System.Xml" />
- 					<Reference Include="System.Xml.Linq" />
- 				</ProjectItems>
- 
- 				<Files>
+				<PropertyGroup>
+					<OutputType>Library</OutputType>
+					<ProjectGuid>68965282-719f-4ebc-8338-9da9ecd6f50e</ProjectGuid>
+					<AppDesignerFolder>Properties</AppDesignerFolder>
+				</PropertyGroup>
+
+				<PropertyGroup configuration="Debug">
+					<OutputPath>..\..\Bin\Debug\Modules\</OutputPath>
+				</PropertyGroup>
+
+				<PropertyGroup configuration="Release">
+					<OutputPath>..\..\Bin\Release\Modules\</OutputPath>
+				</PropertyGroup>
+
+				<ProjectItems>
+					<Reference Include="Autofac" />
+					<Reference Include="AutofacModularity" />
+					<Reference Include="System" />
+					<Reference Include="System.Core" />
+					<Reference Include="System.Xml" />
+					<Reference Include="System.Xml.Linq" />
+				</ProjectItems>
+
+				<Files>
 				<File name="CheckDataModule.cs"> 
-<![CDATA[
-using Autofac;
+<![CDATA[using Autofac;
 using AutofacModularity;
 using AutofacModularity.Interfaces;
 
 namespace ${StandardNamespace}
 {
 
-    public class CheckDataModule : ConfigurableModule
-    {
+	public class CheckDataModule : ConfigurableModule
+	{
 
-        public string Test { get; set; }
-        
-        
-    	protected override void Load(ContainerBuilder builder)
-        {
-            base.Load(builder);
-            builder.RegisterType<CheckDataPlugin>().Named<IPlugin>("CheckDataPlugin").WithParameter("test", Test);
-        }
+		public string Test { get; set; }
 
-    }
+
+		protected override void Load(ContainerBuilder builder)
+		{
+			base.Load(builder);
+			builder.RegisterType<CheckDataPlugin>().Named<IPlugin>("CheckDataPlugin").WithParameter("test", Test);
+		}
+
+	}
 
 }
 ]]>
@@ -708,22 +802,24 @@ using AutofacModularity.Interfaces;
 namespace ${StandardNamespace}
 {
 
-    public class CheckDataPlugin : IPlugin
-    {
-    	
-    	public String Test { get; set; }
-    	
-    	public CheckDataPlugin(String test)
-    	{
-    		Test = test;	
-    	}
+	public class CheckDataPlugin : IPlugin
+	{
 
-        public void Run()
-        {
-            Console.WriteLine("CheckData-Plugin: ready ({0})", Test);
-        }
+		public String Test { get; set; }
 
-    }
+
+		public CheckDataPlugin(String test)
+		{
+			Test = test;	
+		}
+
+
+		public void Run()
+		{
+			Console.WriteLine("CheckData-Plugin: ready ({0})", Test);
+		}
+
+	}
 
 }
 ]]>
@@ -731,7 +827,7 @@ namespace ${StandardNamespace}
 				<File name="packages.config"> 
 <![CDATA[<?xml version="1.0" encoding="utf-8"?>
 <packages>
-  <package id="AutofacModularity" version="1.0.0" />
+  <package id="AutofacModularity" version="1.0.1" />
 </packages>]]>
 				</File>
 				<File name="Properties\AssemblyInfo.cs" src="DefaultAssemblyInfo.cs"/>
@@ -743,33 +839,76 @@ namespace ${StandardNamespace}
 			<!-- ImportData-Module-Project -->
 			<Project name="${ProjectName}.Modules.ImportData" directory="Modules\${ProjectName}.Modules.ImportData" language="C#">
 	
- 				<PropertyGroup>
- 					<OutputType>Library</OutputType>
- 					<ProjectGuid>68965282-719f-4ebc-8338-9da9ecd6f50e</ProjectGuid>
- 					<AppDesignerFolder>Properties</AppDesignerFolder>
- 				</PropertyGroup>
- 
- 				<PropertyGroup configuration="Debug">
- 					<OutputPath>..\..\Bin\Debug\Modules\</OutputPath>
- 				</PropertyGroup>
- 
- 				<PropertyGroup configuration="Release">
- 					<OutputPath>..\..\Bin\Release\Modules\</OutputPath>
- 				</PropertyGroup>
- 
- 				<ProjectItems>
- 					<Reference Include="Autofac" />
- 					<Reference Include="AutofacModularity" />
- 					<Reference Include="System" />
- 					<Reference Include="System.Core" />
- 					<Reference Include="System.Xml" />
- 					<Reference Include="System.Xml.Linq" />
- 				</ProjectItems>
- 
- 				<Files>
+				<PropertyGroup>
+					<OutputType>Library</OutputType>
+					<ProjectGuid>68965282-719f-4ebc-8338-9da9ecd6f50e</ProjectGuid>
+					<AppDesignerFolder>Properties</AppDesignerFolder>
+				</PropertyGroup>
+
+				<PropertyGroup configuration="Debug">
+					<OutputPath>..\..\Bin\Debug\Modules\</OutputPath>
+				</PropertyGroup>
+
+				<PropertyGroup configuration="Release">
+					<OutputPath>..\..\Bin\Release\Modules\</OutputPath>
+				</PropertyGroup>
+
+				<ProjectItems>
+					<Reference Include="Autofac" />
+					<Reference Include="AutofacModularity" />
+					<Reference Include="EmailModule" />
+					<Reference Include="System" />
+					<Reference Include="System.Core" />
+					<Reference Include="System.Xml" />
+					<Reference Include="System.Xml.Linq" />
+				</ProjectItems>
+
+				<Files>
+				<File name="MailTemplates\ImportDataMail.cshtml" CopyToOutputDirectory="Always">
+<![CDATA[@{
+	From = Model.From;
+	To.Add(Model.To);
+	Subject = "Welcome to ${ProjectName}";
+}
+]]>
+				</File>
+				<File name="MailTemplates\ImportDataMail.html.cshtml" CopyToOutputDirectory="Always">
+<![CDATA[<html>
+	<head>
+		<title>Welcome to ${ProjectName}</title>
+	</head>
+	<body>
+		<p>Dear @Model.Name,</p>
+		<p>Your trial account has been created.</p>
+		<p>To start using the system go to <a href="http://applciation.com" alt="app url">http://applciation.com</a></p>
+		<p></p>
+		<p>To verify your email address please go to:</p>
+		<p><a href="@Model.VerificationUri" alt="app verification url">@Model.VerificationUri</a></p>
+		<p>If you have trouble clicking on that link, please copy and paste it into your browsers address bar.</p>
+		[html]
+	</body>
+</html>
+]]>
+				</File>
+				<File name="MailTemplates\ImportDataMail.text.cshtml" CopyToOutputDirectory="Always">
+<![CDATA[Dear @Model.Name,
+
+Your trial account has been created.
+
+To start using the system go to http://applciation.com
+
+
+To verify your email address please go to:
+
+@Model.VerificationUri
+
+If you have trouble clicking on that link, please copy and paste it into your browsers address bar.
+
+[Text]
+]]>
+				</File>
 				<File name="ImportDataModule.cs"> 
-<![CDATA[
-using Autofac;
+<![CDATA[using Autofac;
 using AutofacModularity;
 using AutofacModularity.Interfaces;
 
@@ -777,15 +916,15 @@ namespace ${StandardNamespace}
 {
 
 	public class ImportDataModule : ConfigurableModule
-    {
+	{
 
-        protected override void Load(ContainerBuilder builder)
-        {
-            base.Load(builder);
-            builder.RegisterType<ImportDataPlugin>().Named<IPlugin>("ImportDataPlugin");
-        }
+		protected override void Load(ContainerBuilder builder)
+		{
+			base.Load(builder);
+			builder.RegisterType<ImportDataPlugin>().Named<IPlugin>("ImportDataPlugin");
+		}
 
-    }
+	}
 
 }
 ]]>
@@ -793,19 +932,42 @@ namespace ${StandardNamespace}
 				<File name="ImportDataPlugin.cs"> 
 <![CDATA[using System;
 using AutofacModularity.Interfaces;
+using EmailModule;
 
 namespace ${StandardNamespace}
 {
 
 public class ImportDataPlugin : IPlugin
-    {
+	{
 
-        public void Run()
-        {
-            Console.WriteLine("ImportData-Plugin: ready");
-        }
+		private IEmailSystem _mailer;
+		
+		
+		public ImportDataPlugin(IEmailSystem Mailer)
+		{
+			_mailer = Mailer;
+		}
 
-    }
+
+		public void Run()
+		{
+			Console.WriteLine("ImportData-Plugin: ready");
+			
+			var model = new 
+			{
+				To = "a.b@c.de"
+				,From = ""
+				,Name = "Mr. Doe"
+				,VerificationUri = "http://www.icsharpcode.net/OpenSource/SD/Default.aspx"
+			};
+
+			_mailer.SendMail("ImportDataMail", model);
+
+			Console.WriteLine("Mail sent.");
+
+		}
+
+}
 
 }
 ]]>
@@ -813,7 +975,8 @@ public class ImportDataPlugin : IPlugin
 				<File name="packages.config"> 
 <![CDATA[<?xml version="1.0" encoding="utf-8"?>
 <packages>
-  <package id="AutofacModularity" version="1.0.0" />
+  <package id="AutofacModularity" version="1.0.1" />
+  <package id="mailzor" version ="1.0.0.11" />
 </packages>]]>
 				</File>
 				<File name="Properties\AssemblyInfo.cs" src="DefaultAssemblyInfo.cs"/>
