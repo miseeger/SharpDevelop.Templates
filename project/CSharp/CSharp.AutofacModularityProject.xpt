@@ -85,7 +85,7 @@ namespace ${StandardNamespace}
 					<File name="packages.config"> 
 <![CDATA[<?xml version="1.0" encoding="utf-8"?>
 <packages>
-  <package id="AutofacModularity" version="1.0.1" />
+  <package id="AutofacModularity" version="1.0.2" />
 </packages>]]>
 					</File>
 					<File name="Properties\AssemblyInfo.cs" src="DefaultAssemblyInfo.cs"/>
@@ -187,7 +187,7 @@ namespace ${StandardNamespace}
 					<File name="packages.config"> 
 <![CDATA[<?xml version="1.0" encoding="utf-8"?>
 <packages>
-  <package id="AutofacModularity" version="1.0.1" />
+  <package id="AutofacModularity" version="1.0.2" />
 </packages>]]>
 					</File>
 					<File name="Properties\AssemblyInfo.cs" src="DefaultAssemblyInfo.cs"/>
@@ -375,7 +375,7 @@ namespace ${StandardNamespace}
 					<File name="packages.config"> 
 <![CDATA[<?xml version="1.0" encoding="utf-8"?>
 <packages>
-  <package id="AutofacModularity" version="1.0.1" />
+  <package id="AutofacModularity" version="1.0.2" />
   <package id="NLog" version="2.1.0" />
 </packages>]]>
 					</File>
@@ -613,8 +613,8 @@ namespace ${StandardNamespace}
 					<File name="packages.config"> 
 <![CDATA[<?xml version="1.0" encoding="utf-8"?>
 <packages>
-  <package id="AutofacModularity" version="1.0.1" />
-  <package id="mailzor" version="1.0.0.11" />
+  <package id="AutofacModularity" version="1.0.2" />
+  <package id="mailzor" version="1.0.0.12" />
   <package id="NLog" version="2.1.0" />
 </packages>]]>
 					</File>
@@ -732,8 +732,8 @@ namespace ${StandardNamespace}
 					<File name="packages.config"> 
 <![CDATA[<?xml version="1.0" encoding="utf-8"?>
 <packages>
-  <package id="AutofacModularity" version="1.0.1" />
-  <package id="mailzor" version ="1.0.0.11" />
+  <package id="AutofacModularity" version="1.0.2" />
+  <package id="mailzor" version ="1.0.0.12" />
 </packages>]]>
 					</File>
 					<File name="Properties\AssemblyInfo.cs" src="DefaultAssemblyInfo.cs"/>
@@ -827,7 +827,7 @@ namespace ${StandardNamespace}
 				<File name="packages.config"> 
 <![CDATA[<?xml version="1.0" encoding="utf-8"?>
 <packages>
-  <package id="AutofacModularity" version="1.0.1" />
+  <package id="AutofacModularity" version="1.0.2" />
 </packages>]]>
 				</File>
 				<File name="Properties\AssemblyInfo.cs" src="DefaultAssemblyInfo.cs"/>
@@ -975,8 +975,8 @@ public class ImportDataPlugin : IPlugin
 				<File name="packages.config"> 
 <![CDATA[<?xml version="1.0" encoding="utf-8"?>
 <packages>
-  <package id="AutofacModularity" version="1.0.1" />
-  <package id="mailzor" version ="1.0.0.11" />
+  <package id="AutofacModularity" version="1.0.2" />
+  <package id="mailzor" version ="1.0.0.12" />
 </packages>]]>
 				</File>
 				<File name="Properties\AssemblyInfo.cs" src="DefaultAssemblyInfo.cs"/>
