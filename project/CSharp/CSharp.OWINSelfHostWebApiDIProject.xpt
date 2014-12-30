@@ -1,0 +1,689 @@
+<?xml version="1.0"?>
+<Template originator = "Michael Seeger"
+          created      = "03/09/2014"
+          lastModified = "08/09/2014">
+	
+	<!-- Template Header -->
+	<TemplateConfiguration>
+		<Name>ASP.NET Web API - OWIN Self-Hosted Console</Name>
+		<Category>C#</Category>
+		<Subcategory>ASP.NET Web API</Subcategory>
+		<Icon>file:${SharpDevelopBinPath}\..\data\templates\project\CSharp\ProjectIcons\CSharp.AspNetWebApiSelfHostedConsoleProject.png</Icon>
+		<Description>Web API - Self-Hosted as Console</Description>
+		<SupportedTargetFrameworks>v4.5</SupportedTargetFrameworks>
+	</TemplateConfiguration>
+	
+	<!-- Actions -->
+	<Actions>
+		<Open filename = "Program.cs"/>
+		<RunCommand path="/AddIns/PackageManagement/TemplateCommands/InstallPackages" />
+	</Actions>
+	
+	<!-- Template Content -->
+	<Project language = "C#">
+		<ProjectItems>
+			<Reference Include="Autofac" />
+			<Reference Include="Autofac.Integration.Owin" />
+			<Reference Include="Autofac.Integration.WebApi" />
+			<Reference Include="Autofac.Integration.WebApi.Owin" />
+			<Reference Include="Microsoft.CSharp" />
+			<Reference Include="Microsoft.Owin" />
+			<Reference Include="Microsoft.Owin.Cors" />
+			<Reference Include="Microsoft.Owin.Diagnostics" />
+			<Reference Include="Microsoft.Owin.Host.HttpListener" />
+			<Reference Include="Microsoft.Owin.Hosting" />
+			<Reference Include="Newtonsoft.Json" />
+			<Reference Include="Owin" />
+			<Reference Include="System" />
+			<Reference Include="System.Data" />
+			<Reference Include="System.Data.DataSetExtensions" />
+			<Reference Include="System.Net.Http" />
+			<Reference Include="System.Net.Http.Formatting" />
+			<Reference Include="System.Web.Cors" />
+			<Reference Include="System.Web.Http" />
+			<Reference Include="System.Web.Http.Cors" />
+			<Reference Include="System.Web.Http.Owin" />
+			<Reference Include="System.Xml" />
+			<Reference Include="System.Xml.Linq" />
+		</ProjectItems>
+		
+		<PropertyGroup>
+			<OutputType>Exe</OutputType>
+			<ProjectTypeGuids>{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+			<AppDesignerFolder>Properties</AppDesignerFolder>
+		</PropertyGroup>
+		
+		<PropertyGroup configuration="Debug">
+			<OutputPath>bin\debug\</OutputPath>
+		</PropertyGroup>
+		
+		<PropertyGroup configuration="Release">
+			<OutputPath>bin\release\</OutputPath>
+		</PropertyGroup>
+
+		<Files>
+
+			<File name="App_Start\DependencyConfig.cs">
+<![CDATA[${StandardHeader.C#}
+using System;
+using System.Reflection;
+using System.Web.Http;
+using Autofac;
+using Autofac.Integration.WebApi;
+using Owin;
+using ${StandardNamespace}.Middleware;
+using ${StandardNamespace}.Services;
+
+namespace ${StandardNamespace}.App_Start
+{
+
+	public static class DependencyConfig
+	{
+
+		public static void Register(ref IAppBuilder app, ref HttpConfiguration config, ref ContainerBuilder builder)
+		{
+		
+			// Register Web API controller in executing assembly.
+			builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
+
+			// Register a logger service to be used by the controller and middleware.
+			builder.Register(c => new LoggerService()).As<ILoggerService>().InstancePerRequest();
+
+			// Autofac will add middleware to IAppBuilder in the order registered.
+			// The middleware will execute in the order added to IAppBuilder.
+			builder.RegisterType<RequestLogger>().InstancePerRequest();
+			
+			var container = builder.Build();
+			
+			// Create and assign a dependency resolver for Web API to use.
+			config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
+			
+			// This should be the first middleware added to the IAppBuilder.
+			app.UseAutofacMiddleware(container);
+			
+			// Make sure the Autofac lifetime scope is passed to Web API.
+			app.UseAutofacWebApi(config);
+			
+		}
+
+	}
+
+}]]>
+			</File>
+
+			<File name="App_Start\Startup.cs">
+<![CDATA[${StandardHeader.C#}
+using System;
+using System.Web.Http;
+using Autofac;
+using Owin;
+
+namespace ${StandardNamespace}.App_Start
+{
+
+	public class Startup
+	{
+
+		public void Configuration(IAppBuilder app)
+		{
+			var config = new HttpConfiguration();
+			var builder = new ContainerBuilder();
+
+			// Remove comment if WinAuth is needed (Intranet)
+			// app.UseWinauth();
+
+			app.RegisterDependencies(ref config, ref builder);
+			app.UseWebApi(ref config);
+			
+			// Default if no url matches the "api" route (e. g. http://locahost:9999/myfoo)
+			app.UseWelcomePage();
+		}
+
+	}
+
+}]]>
+			</File>
+
+			<File name="App_Start\StartUpExtensions.cs">
+<![CDATA[${StandardHeader.C#}
+using System;
+using System.Web.Http;
+using Autofac;
+using Owin;
+
+namespace ${StandardNamespace}.App_Start
+{
+
+	public static class StartUpExtensions
+	{
+
+		public static void UseWinauth(this IAppBuilder app)
+		{
+			WinAuthConfig.Register(ref app);
+		}
+
+
+		public static void UseWebApi(this IAppBuilder app, ref HttpConfiguration config)
+		{
+			WebApiConfig.Register(ref app, ref config);
+		}
+
+
+		public static void RegisterDependencies(this IAppBuilder app, ref HttpConfiguration config, ref ContainerBuilder builder)
+		{
+			DependencyConfig.Register(ref app, ref config, ref builder);
+		}
+
+	}
+
+}]]>
+			</File>
+
+			<File name="App_Start\WebApiConfig.cs">
+<![CDATA[${StandardHeader.C#}
+using System;
+using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Formatting;
+using System.Web.Http;
+using System.Web.Http.Cors;
+using System.Web.Http.Routing;
+using Newtonsoft.Json.Serialization;
+using Owin;
+
+namespace ${StandardNamespace}.App_Start
+{
+
+	public static class WebApiConfig
+	{
+		public static string BaseAddress = "http://localhost:9999/";
+#
+		public static void Register(ref IAppBuilder app, ref HttpConfiguration config)
+		{
+			// Enable CORS if needed either using a global rule
+			//var cors = new EnableCorsAttribute(origins: "http://localhost:9999", headers: "*", methods: "*");
+			//config.EnableCors(cors);
+
+			// ... or just prepare CORS for further usage
+			//config.EnableCors();
+
+			config.MapHttpAttributeRoutes();
+
+			// As an example for regex constraints only alphanumerical (12 uppercase characters) 
+			// or plain integers are accepted. Remove the 'constraints' parrameter if not needed.
+			// But be aware you then also have to check all the routes if they'll still work.
+
+			config.Routes.MapHttpRoute(
+				name: "DefaultApiWithId", 
+				routeTemplate:"api/{controller}/{id}", 
+				defaults: new { id = RouteParameter.Optional }, 
+				constraints: new { id = @"(^[A-Z0-9]{12}$)|(^\d+$)" }
+			);
+
+			config.Routes.MapHttpRoute(
+				name: "DefaultApiWithActionAndId",
+				routeTemplate: "api/{controller}/{action}/{id}",
+				defaults: new { id = RouteParameter.Optional },
+				constraints: new { id = @"(^[A-Z0-9]{12}$)|(^\d+$)" }
+			);
+
+			config.Routes.MapHttpRoute(
+				name: "DefaultApiWithAction", 
+				routeTemplate: "api/{controller}/{action}"
+			);
+
+			config.Routes.MapHttpRoute(
+				name: "DefaultApiGet", 
+				routeTemplate: "api/{controller}",
+				defaults: new { action = "Get" }, 
+				constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Get) }
+			);
+
+			config.Routes.MapHttpRoute(
+				name: "DefaultApiPost", 
+				routeTemplate: "api/{controller}/post",
+				defaults: new { action = "Post" }, 
+				constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Post) }
+			);
+
+			config.Routes.MapHttpRoute(
+				name: "DefaultApiPut", 
+				routeTemplate: "api/{controller}/put",
+				defaults: new { action = "Put" }, 
+				constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Put) }
+
+				// Workaround if CORS is not needed or PUT and DELETE is generally blocked.
+				// This is also a way to avoid X-HTTP-METHOD-OVERRIDE:
+				// constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Post) }
+			);
+
+			config.Routes.MapHttpRoute(
+				name: "DefaultApiDelete", 
+				routeTemplate: "api/{controller}/delete",
+				defaults: new { action = "Delete" }, 
+				constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Delete) }
+
+				// Workaround if CORS is not needed or PUT and DELETE is generally blocked.
+				// This is also a way to avoid X-HTTP-METHOD-OVERRIDE:
+				// constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Post) }
+			);
+ 
+			config.Formatters.Remove(config.Formatters.XmlFormatter);
+			var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
+			jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
+			app.UseWebApi(config);
+		
+		}
+
+	}
+
+}]]>
+			</File>
+
+			<File name="App_Start\WinAuthConfig.cs">
+<![CDATA[${StandardHeader.C#}
+using System;
+using System.Net;
+using Owin;
+
+namespace ${StandardNamespace}.App_Start
+{
+
+	public static class WinAuthConfig
+	{
+
+		public static void Register (ref IAppBuilder app)
+		{
+			HttpListener listener = 
+				(HttpListener)app.Properties["System.Net.HttpListener"];
+			listener.AuthenticationSchemes = 
+				AuthenticationSchemes.IntegratedWindowsAuthentication;
+				// If this should fail try this:
+				// AuthenticationSchemes.Ntlm;
+		}
+
+	}
+
+}]]>
+			</File>
+
+			<File name="Controllers\ValuesController.cs">
+<![CDATA[${StandardHeader.C#}
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using ${StandardNamespace}.Models;
+using ${StandardNamespace}.Services;
+
+namespace ${StandardNamespace}.Controllers
+{
+
+	//[Authorize(Roles = "DomainGroup1, DomainGroup2")]
+	public class ValuesController : ApiController
+	{
+
+		private ILoggerService _loggerService;
+		
+		public ValuesController(ILoggerService loggerService)
+		{
+			_loggerService = loggerService;
+		}
+		
+		
+		// GET api/values
+		public HttpResponseMessage Get()
+		{
+			var result = new List<Value> 
+			{
+				new Value {Key = 1, Val="Value 1"}
+				,new Value {Key = 2, Val="Value 2"}
+			};
+			
+			_loggerService.Log("Requested all values");
+			
+			return Request.CreateResponse(HttpStatusCode.OK, result);
+		}
+
+		
+		// GET api/values/5
+		public HttpResponseMessage Get(int id)
+		{
+			_loggerService.Log("Requested a single value");
+			
+			return Request.CreateResponse(HttpStatusCode.OK,
+				new Value{Key = id, Val = "Samplevalue"});
+		}
+
+		// POST api/values
+		public HttpResponseMessage Post([FromBody]Value postedValue)
+		{
+			_loggerService.Log("Posted a new value");
+			
+			return Request.CreateResponse(HttpStatusCode.OK, postedValue);
+		}
+
+		// PUT api/values/5
+		// Alternatively: POST api/values/put
+		// [HttpPost]
+		public HttpResponseMessage Put(int id, [FromBody]Value putValue)
+		{
+			_loggerService.Log("Updated a value");
+			
+			return Request.CreateResponse(HttpStatusCode.OK, putValue);
+		}
+
+		// DELETE api/values/5
+		// Alternatively: POST api/values/delete/5
+		// [HttpPost]
+		public HttpResponseMessage Delete(int id)
+		{
+			_loggerService.Log("Deleted a value");
+			
+			return Request.CreateResponse(HttpStatusCode.OK, "Deleted");
+		}
+
+	}
+
+}]]>
+			</File>
+
+			<File name="Controllers\TestController.cs">
+<![CDATA[${StandardHeader.C#}
+using System;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using ${StandardNamespace}.Pipeline;
+
+namespace ${StandardNamespace}.Controllers
+{
+	// [CustomAuth]
+	// [Authorize (Roles = "DomainGroup1, DomainGroup2")]
+	public class TestController : ApiController
+	{
+		public HttpResponseMessage Get()
+		{
+			return Request.CreateResponse(HttpStatusCode.OK, "Autohrized!");
+		}
+		
+		public HttpResponseMessage Post()
+		{
+			return Request.CreateResponse(HttpStatusCode.OK, "Post Done!");
+		}
+		
+		[HttpPost]
+		public HttpResponseMessage Put()
+		{
+			return Request.CreateResponse(HttpStatusCode.OK, "Update Done!");
+		}
+		
+		[HttpPost]
+		public HttpResponseMessage Delete()
+		{
+			return Request.CreateResponse(HttpStatusCode.OK, "Deleted!");
+		}
+		
+		
+		[HttpGet]
+		public HttpResponseMessage Foo()
+		{
+			return Request.CreateResponse(HttpStatusCode.OK, "This is my foo!");
+		}
+		
+		
+		[HttpGet]
+		public HttpResponseMessage DoTheFoo()
+		{
+			return Request.CreateResponse(HttpStatusCode.OK, "Did the foo!");
+		}
+
+	}
+
+}]]>
+			</File>
+
+			<File name="Middleware\RequestLogger.cs">
+<![CDATA[${StandardHeader.C#}
+using System;
+using System.Threading.Tasks;
+using Microsoft.Owin;
+using ${StandardNamespace}.Services;
+
+namespace ${StandardNamespace}.Middleware
+{
+
+	public class RequestLogger : OwinMiddleware
+	{
+
+		private ILoggerService _loggerService;
+		
+		public RequestLogger(OwinMiddleware next, ILoggerService loggerService) : base(next)
+		{
+			_loggerService = loggerService;
+		}
+
+
+		public override async Task Invoke(IOwinContext context)
+		{
+			_loggerService.Log(String.Format("Requesting: {0} {1}", context.Request.Method, context.Request.Path));
+
+			await Next.Invoke(context);
+		}
+
+	}
+
+}]]>
+			</File>
+
+			<File name="Models\Value.cs">
+<![CDATA[${StandardHeader.C#}
+using System;
+
+namespace ${StandardNamespace}.Models
+{
+
+	public class Value
+	{
+		public int Key { get; set; }
+		public string Val { get; set; }
+	}
+
+}]]>
+			</File>	
+
+			<File name="Pipeline\CustomAuthAttribute.cs">
+<![CDATA[${StandardHeader.C#}
+using System;
+using System.Web.Http;
+
+namespace ${StandardNamespace}.Pipeline
+{
+
+	[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false)]
+	public class CustomAuthAttribute : AuthorizeAttribute
+	{
+
+		protected override bool IsAuthorized(System.Web.Http.Controllers.HttpActionContext actionContext)
+		{
+			Console.WriteLine(String.Format("CustomAuth: {0}", actionContext.RequestContext.Principal.Identity.Name));
+			return true;
+		}
+
+	}
+
+}]]>
+			</File>
+
+			<File name="Pipeline\CustomEnableCorsAttribute.cs">
+<![CDATA[${StandardHeader.C#}
+using System;
+using System.Threading.Tasks;
+using System.Web.Cors;
+using Microsoft.Owin;
+using Microsoft.Owin.Cors;
+using ${StandardNamespace}.App_Start;
+
+namespace ${StandardNamespace}.Pipeline
+{
+
+	[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false)]
+	public class CustomEnableCorsAttribute : Attribute, ICorsPolicyProvider
+	{
+
+		private CorsPolicy _policy;
+		
+		public CustomEnableCorsAttribute()
+		{
+			
+			_policy = new CorsPolicy
+			{
+				AllowAnyMethod = true,
+				AllowAnyHeader = true
+			};
+			_policy.Origins.Add(WebApiConfig.BaseAddress);
+			_policy.SupportsCredentials = true;
+
+		}
+
+
+		public Task<CorsPolicy> GetCorsPolicyAsync(IOwinRequest request)
+		{
+			return Task.FromResult(_policy);
+		}
+
+	}
+
+}]]>
+			</File>
+
+			<File name="Services\ILoggerService.cs">
+<![CDATA[${StandardHeader.C#}
+using System;
+
+namespace ${StandardNamespace}.Services
+{
+
+	public interface ILoggerService
+	{
+		void Log(string Message);
+	}
+
+}]]>
+			</File>
+
+			<File name="Services\LoggerService.cs">
+<![CDATA[${StandardHeader.C#}
+using System;
+
+namespace ${StandardNamespace}.Services
+{
+
+	public class LoggerService : ILoggerService
+	{
+
+		public void Log(string Message)
+		{
+			Console.WriteLine(Message);
+		}
+
+	}
+
+}]]>
+			</File>
+
+			<File name="Properties\AssemblyInfo.cs" src="DefaultAssemblyInfo.cs" />
+			
+			<File name="app.config">
+<![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+	<startup>
+		<supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.5.1" />
+	</startup>
+	<runtime>
+		<assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
+			<dependentAssembly>
+				<assemblyIdentity name="System.Web.Http" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+				<bindingRedirect oldVersion="0.0.0.0-5.2.2.0" newVersion="5.2.2.0" />
+			</dependentAssembly>
+			<dependentAssembly>
+				<assemblyIdentity name="System.Net.Http.Formatting" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+				<bindingRedirect oldVersion="0.0.0.0-5.2.2.0" newVersion="5.2.2.0" />
+			</dependentAssembly>
+			<dependentAssembly>
+				<assemblyIdentity name="System.Web.Http.Owin" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+				<bindingRedirect oldVersion="0.0.0.0-5.2.2.0" newVersion="5.2.2.0" />
+			</dependentAssembly>
+			<dependentAssembly>
+				<assemblyIdentity name="Microsoft.Owin" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+				<bindingRedirect oldVersion="0.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
+			</dependentAssembly>
+			<dependentAssembly>
+				<assemblyIdentity name="System.Web.Cors" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+				<bindingRedirect oldVersion="0.0.0.0-5.2.2.0" newVersion="5.2.2.0" />
+			</dependentAssembly>
+		</assemblyBinding>
+	</runtime>
+</configuration>]]>
+			</File>
+
+
+			<File name="packages.config">
+<![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<packages>
+  <package id="Autofac" version="3.5.0" targetFramework="net451" />
+  <package id="Autofac.Owin" version="3.1.0" targetFramework="net451" />
+  <package id="Autofac.WebApi2" version="3.4.0" targetFramework="net451" />
+  <package id="Autofac.WebApi2.Owin" version="3.2.0" targetFramework="net451" />
+  <package id="Microsoft.AspNet.Cors" version="5.2.2" targetFramework="net451" />
+  <package id="Microsoft.AspNet.WebApi.Client" version="5.2.2" targetFramework="net451" />
+  <package id="Microsoft.AspNet.WebApi.Core" version="5.2.2" targetFramework="net451" />
+  <package id="Microsoft.AspNet.WebApi.Cors" version="5.2.2" targetFramework="net451" />
+  <package id="Microsoft.AspNet.WebApi.Owin" version="5.2.2" targetFramework="net451" />
+  <package id="Microsoft.AspNet.WebApi.OwinSelfHost" version="5.2.2" targetFramework="net45" />
+  <package id="Microsoft.Owin" version="3.0.0" targetFramework="net451" />
+  <package id="Microsoft.Owin.Cors" version="3.0.0" targetFramework="net451" />
+  <package id="Microsoft.Owin.Diagnostics" version="3.0.0" targetFramework="net451" />
+  <package id="Microsoft.Owin.Host.HttpListener" version="3.0.0" targetFramework="net451" />
+  <package id="Microsoft.Owin.Host.SystemWeb" version="3.0.0" targetFramework="net451" />
+  <package id="Microsoft.Owin.Hosting" version="3.0.0" targetFramework="net451" />
+  <package id="Microsoft.Owin.SelfHost" version="3.0.0" targetFramework="net451" />
+  <package id="Newtonsoft.Json" version="6.0.4" targetFramework="net451" />
+  <package id="Owin" version="1.0" targetFramework="net451" />
+</packages>]]>
+			</File>
+
+			<File name="Program.cs">
+<![CDATA[${StandardHeader.C#}
+using System;
+using Microsoft.Owin.Hosting;
+using ${StandardNamespace}.App_Start;
+
+namespace ${StandardNamespace}
+{
+
+	class Program
+	{
+
+		public static void Main(string[] args)
+		{
+
+			using (WebApp.Start<Startup>(WebApiConfig.BaseAddress))
+			{
+				Console.WriteLine(String.Format("WebApi is running ({0})... Press any key to stop.", 
+					WebApiConfig.BaseAddress);
+				Console.ReadKey();
+			}
+
+		}
+
+	}
+
+}]]>
+			</File>
+
+		</Files>
+	</Project>
+</Template>
